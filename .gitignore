@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.coverage
+coverage.xml
+
+# Virtual envs
+.venv/
+venv/
+
+# Playwright / test artifacts
+playwright-report/
+test-results/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Local runtime data
+.env
+tmp/
+logs/

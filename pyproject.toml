@@ -1,0 +1,61 @@
+[project]
+name = "rapidcull"
+version = "0.1.0"
+description = "Linux-first local photo culling and organization toolkit"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "black>=24.0.0",
+  "mypy==1.19.1",
+  "playwright>=1.55.0",
+  "pytest>=8.0.0",
+  "pytest-benchmark>=5.0.0",
+  "pytest-cov>=5.0.0",
+  "pytest-xdist>=3.6.0",
+  "ruff>=0.6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]
+markers = [
+  "fr: functional requirement tests",
+  "nfr: non-functional requirement tests",
+  "ui: browser UI tests",
+  "integration: integration tests",
+  "slow: long-running tests",
+  "security: security tests",
+  "performance: performance tests",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+show_error_codes = true
+pretty = true
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
+namespace_packages = true
+explicit_package_bases = true
+cache_dir = ".mypy_cache"
+sqlite_cache = true
+exclude = [
+  '^build/',
+  '^dist/',
+  '^\\.venv/',
+]

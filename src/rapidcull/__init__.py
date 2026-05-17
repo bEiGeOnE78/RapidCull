@@ -1,0 +1,1 @@
+"""RapidCull core package."""

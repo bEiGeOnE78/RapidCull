@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-14T00:00:00Z",
+  "libraries": {
+    "mypy": {
+      "files": [
+        {
+          "filename": "python-3-11-pyproject-best-practices.md",
+          "topic": "Python 3.11 pyproject.toml best practices",
+          "tech_stack": "Python 3.11",
+          "fetched": "2026-03-07T00:00:00Z",
+          "source": "Context7 API + mypy official docs"
+        },
+        {
+          "filename": "missing-pytyped-marker-src-layout-remediation.md",
+          "topic": "missing py.typed marker and installed-module import resolution in src layout",
+          "tech_stack": "Python src layout",
+          "fetched": "2026-03-07T00:00:00Z",
+          "source": "Context7 API + mypy official docs"
+        }
+      ]
+    },
+    "exiftool": {
+      "files": [
+        {
+          "filename": "persistent-batch-mode-python.md",
+          "topic": "persistent batch mode metadata extraction in Python",
+          "tech_stack": "Python subprocess persistent process",
+          "fetched": "2026-03-14T00:00:00Z",
+          "source": "Context7 API + official docs"
+        }
+      ]
+    }
+  }
+}
