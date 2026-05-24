@@ -1,0 +1,1 @@
+verify_system_deps.sh assumes Debian/Ubuntu. How do we make this work for more distros? Specifically, Arch.

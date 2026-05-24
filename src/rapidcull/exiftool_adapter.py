@@ -142,7 +142,7 @@ class RealExifToolBatchExtractor:
         marker = f"{{ready{self._request_id}}}"
 
         self._process.stdin.write("-j\n")
-        self._process.stdin.write("-G4\n")
+        self._process.stdin.write("-G\n")
         self._process.stdin.write("-n\n")
         self._process.stdin.write("-api\n")
         self._process.stdin.write("structformat=jsonq\n")

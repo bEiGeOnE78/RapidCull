@@ -148,3 +148,10 @@ class GalleriesIndexRebuildResult:
     skipped_count: int
     failed_count: int
     failures: list[GalleriesIndexFailure]
+
+
+@dataclass(frozen=True)
+class CollectionQueryResult:
+    matching_ids: list[str]
+    total_count: int
+    query_expression_text: str
