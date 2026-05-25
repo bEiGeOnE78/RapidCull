@@ -69,45 +69,62 @@ class TestValidQuery:
         response = client.post(_query_url(), json={"query_text": "camera=LeicaQ2"})
         assert response.status_code == 200
         body = response.json()
-        assert set(body["matching_ids"]) == {"img_001", "img_003"}
-        assert body["total_count"] == 3
-        assert body["query_expression"] == "camera=LeicaQ2"
+        assert body["ok"] is True
+        data = body["data"]
+        assert set(data["matching_ids"]) == {"img_001", "img_003"}
+        assert data["total_count"] == 3
+        assert data["query_expression"] == "camera=LeicaQ2"
 
     def test_iso_filter_returns_correct_subset(self, client: TestClient) -> None:
         response = client.post(_query_url(), json={"query_text": "iso>400"})
         assert response.status_code == 200
         body = response.json()
-        assert set(body["matching_ids"]) == {"img_002", "img_003"}
+        assert body["ok"] is True
+        assert set(body["data"]["matching_ids"]) == {"img_002", "img_003"}
 
     def test_no_matches_returns_empty_list(self, client: TestClient) -> None:
         response = client.post(_query_url(), json={"query_text": "camera=Pentax"})
         assert response.status_code == 200
         body = response.json()
-        assert body["matching_ids"] == []
-        assert body["total_count"] == 3
+        assert body["ok"] is True
+        data = body["data"]
+        assert data["matching_ids"] == []
+        assert data["total_count"] == 3
 
 
 class TestParseError:
     def test_unknown_field_returns_400(self, client: TestClient) -> None:
         response = client.post(_query_url(), json={"query_text": "badfield=foo"})
         assert response.status_code == 400
-        assert "badfield" in response.json()["detail"].lower()
+        body = response.json()
+        assert body["ok"] is False
+        assert body["error"]["code"] == "QUERY_PARSE_ERROR"
+        assert "badfield" in body["error"]["message"].lower()
 
     def test_invalid_syntax_returns_400(self, client: TestClient) -> None:
         response = client.post(_query_url(), json={"query_text": "AND camera=LeicaQ2"})
         assert response.status_code == 400
-        assert response.json()["detail"]
+        body = response.json()
+        assert body["ok"] is False
+        assert body["error"]["code"] == "QUERY_PARSE_ERROR"
+        assert body["error"]["message"]
 
     def test_error_message_is_human_readable(self, client: TestClient) -> None:
         response = client.post(_query_url(), json={"query_text": "iso=notanumber"})
         assert response.status_code == 400
-        detail = response.json()["detail"]
-        assert isinstance(detail, str)
-        assert len(detail) > 0
+        body = response.json()
+        assert body["ok"] is False
+        assert body["error"]["code"] == "QUERY_PARSE_ERROR"
+        message = body["error"]["message"]
+        assert isinstance(message, str)
+        assert len(message) > 0
 
 
 class TestCollectionNotFound:
     def test_unknown_collection_returns_404(self, client: TestClient) -> None:
         response = client.post(_query_url("nonexistent-col"), json={"query_text": "camera=LeicaQ2"})
         assert response.status_code == 404
-        assert "nonexistent-col" in response.json()["detail"]
+        body = response.json()
+        assert body["ok"] is False
+        assert body["error"]["code"] == "COLLECTION_NOT_FOUND"
+        assert "nonexistent-col" in body["error"]["message"]

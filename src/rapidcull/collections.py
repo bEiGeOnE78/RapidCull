@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Mapping
 
 from rapidcull.query_evaluator import QueryRecord, evaluate_query
 from rapidcull.query_grammar import QueryExpression
