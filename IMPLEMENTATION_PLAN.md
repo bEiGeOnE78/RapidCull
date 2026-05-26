@@ -1,54 +1,59 @@
-# Implementation Plan: CLI Service Lifecycle (FR-042)
+# Implementation Plan: Security Baseline (FR-043–046)
 
-**Branch**: `feature/fr-042-cli-lifecycle`
-**Scope**: FR-042 (CLI start/stop/restart + unified process-new pipeline)
+**Branch**: `feature/fr-043-security-baseline`
+**Scope**: FR-043 (localhost auth off), FR-044 (LAN mutating auth), FR-045 (CORS), FR-046/046a (path validation)
 
-## Stage 1: Service lifecycle commands (start/stop/restart)
+## Stage 1: Mode-aware CORS (FR-045)
 
-**Goal**: `rapidcull start/stop/restart` with PID-file management and actionable diagnostics
-
-**Success Criteria**:
-- `rapidcull start [--host] [--port] [--pid-file]` launches uvicorn background process, writes PID file
-- `rapidcull stop [--pid-file]` kills process by PID, removes PID file
-- `rapidcull restart` = stop (if running) + start
-- Error messages: "already running (PID=N)", "port N already in use", "no running service found"
-- `click>=8.0.0` in `[project.optional-dependencies] cli`
-- `[project.scripts] rapidcull = "rapidcull.cli:main"` in pyproject.toml
-
-**Tests**: `tests/integration/cli/test_cli_service.py`
-- start creates PID file
-- start when already running prints error, exits nonzero
-- start when port in use prints error, exits nonzero
-- stop kills process and removes PID file
-- stop when no PID file prints error
-- stale PID file (process dead) cleaned up gracefully
-- restart invokes stop then start
-
-**Status**: In Progress
-
----
-
-## Stage 2: process-new pipeline command
-
-**Goal**: `rapidcull process-new --source-dir DIR` runs discover → plan → ingest → proxy → summary
+**Goal**: CORSMiddleware wired into FastAPI app with env-var-driven origin config
 
 **Success Criteria**:
-- Discovers supported media in source-dir recursively
-- Runs metadata extraction (ExifTool) and proxy generation
-- Prints: `Processed: N | Skipped: N | Failed: N`
-- source-dir must exist; actionable error if not
+- `RAPIDCULL_MODE=localhost` (default): allows `http://localhost`, `http://127.0.0.1`
+- `RAPIDCULL_MODE=lan` + `RAPIDCULL_ALLOWED_ORIGINS=...`: uses explicit origin list, no wildcard
+- `src/rapidcull/security.py` contains `Settings` dataclass + `get_settings()` + `configure_cors(app)`
+- Integration tests verify CORS response headers in both modes
 
-**Tests**: `tests/integration/cli/test_cli_process_new.py`
-- happy path with mocked adapters reports correct counts
-- empty source-dir reports 0|0|0
-- missing source-dir exits nonzero with message
-- failed extraction items appear in failed count
+**Tests**: `tests/integration/api/test_security_cors.py`
 
 **Status**: Not Started
 
 ---
 
-## Stage 3: Quality gates
+## Stage 2: Mode-aware auth middleware (FR-043/044)
+
+**Goal**: Mutating endpoints (POST/PUT/PATCH/DELETE) reject unauthenticated requests in LAN mode
+
+**Success Criteria**:
+- `RAPIDCULL_MODE=localhost`: no auth required on any endpoint
+- `RAPIDCULL_MODE=lan` + `RAPIDCULL_AUTH_TOKEN=<tok>`: mutating endpoints require `Authorization: Bearer <tok>`
+- Missing/wrong token → 401 with JSON body `{"detail": "Unauthorized"}`
+- Read-only endpoints (GET) never require auth
+- Implemented as Starlette middleware (not per-route dependency)
+
+**Tests**: `tests/integration/api/test_security_auth.py`
+
+**Status**: Not Started
+
+---
+
+## Stage 3: Path normalization utility (FR-046/046a)
+
+**Goal**: `normalize_path()` utility rejects traversal attempts; wired into CLI process-new
+
+**Success Criteria**:
+- `normalize_path(path)` returns resolved `Path`
+- `normalize_path(path, base_dir=X)` raises `ValueError` if resolved path not inside `X`
+- Path traversal strings (`../../etc/passwd`) rejected when base_dir provided
+- CLI `process-new --source-dir` uses `normalize_path` (replaces ad-hoc check)
+- ExifTool adapter verified: uses list args, no `shell=True`
+
+**Tests**: `tests/unit/test_path_utils.py`
+
+**Status**: Not Started
+
+---
+
+## Stage 4: Quality gates
 
 **Goal**: All gates green
 **Success Criteria**: `black`, `ruff`, `mypy --strict src/rapidcull`, `pytest` all pass

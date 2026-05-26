@@ -17,6 +17,7 @@ from rapidcull.ingest import (
     plan_ingest_actions,
 )
 from rapidcull.models import FailedIngestItem
+from rapidcull.path_utils import normalize_path
 from rapidcull.proxies import execute_proxy_generation
 from rapidcull.summaries import build_ingest_run_summary
 
@@ -170,14 +171,7 @@ def restart(ctx: click.Context, host: str, port: int, pid_file: str) -> None:
 )
 def process_new(source_dir: str, raw_pipeline: bool) -> None:
     """Process new media from source directory."""
-    source_path = Path(source_dir)
-
-    # Validate source directory
-    if not source_path.exists() or not source_path.is_dir():
-        click.echo(
-            f"Error: source directory '{source_dir}' does not exist or is not a directory", err=True
-        )
-        sys.exit(1)
+    source_path = normalize_path(source_dir)
 
     # Discover supported media
     discovered = discover_supported_media([source_path])

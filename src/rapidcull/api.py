@@ -9,6 +9,7 @@ from rapidcull.api_envelope import ApiError, ok, register_handlers
 from rapidcull.api_jobs import router as jobs_router
 from rapidcull.collections import Collection
 from rapidcull.query_grammar import parse_query
+from rapidcull.security import configure_app
 
 app = FastAPI(title="RapidCull API")
 
@@ -17,6 +18,9 @@ register_handlers(app)
 
 # Mount job-orchestration endpoints.
 app.include_router(jobs_router)
+
+# Configure CORS and auth middleware from environment settings.
+configure_app(app)
 
 # In-memory collection registry — keyed by collection_id.
 _collections: dict[str, Collection] = {}
