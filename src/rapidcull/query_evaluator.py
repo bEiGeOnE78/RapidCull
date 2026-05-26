@@ -44,15 +44,21 @@ def _evaluate_comparison(expression: QueryComparison, record: QueryRecord) -> bo
     if expression.field == "date":
         return _evaluate_date_comparison(expression.operator, expression.value, value)
     if expression.field in INTEGER_FIELDS:
-        return _evaluate_numeric_comparison(
-            expression.operator, int(expression.value), _as_int(value)
-        )
+        try:
+            query_int = int(expression.value)
+        except ValueError as exc:
+            raise ValueError(
+                f"Cannot cast '{expression.value}' to int for field '{expression.field}'"
+            ) from exc
+        return _evaluate_numeric_comparison(expression.operator, query_int, _as_int(value))
     if expression.field in NUMBER_FIELDS:
-        return _evaluate_numeric_comparison(
-            expression.operator,
-            float(expression.value),
-            _as_number(value),
-        )
+        try:
+            query_float = float(expression.value)
+        except ValueError as exc:
+            raise ValueError(
+                f"Cannot cast '{expression.value}' to float for field '{expression.field}'"
+            ) from exc
+        return _evaluate_numeric_comparison(expression.operator, query_float, _as_number(value))
     raise ValueError(f"Unsupported field: {expression.field}")
 
 

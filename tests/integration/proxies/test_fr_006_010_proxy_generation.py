@@ -326,6 +326,10 @@ def test_fr_007a_generates_heic_proxy_when_heif_capability_is_available(tmp_path
 
 @pytest.mark.fr
 @pytest.mark.integration
+@pytest.mark.skipif(
+    not detect_heif_support(),
+    reason="HEIF support not available in current environment (ImageMagick not built with HEIF)",
+)
 def test_fr_007a_detect_heif_support_is_true_in_current_environment() -> None:
     assert detect_heif_support() is True
 

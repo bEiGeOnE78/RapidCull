@@ -61,7 +61,7 @@ class JobProgressEntry:
     percent: float | None = None
 
 
-@dataclass
+@dataclass(frozen=True)
 class Job:
     job_id: str
     kind: str
@@ -78,8 +78,8 @@ class Job:
         allowed = VALID_TRANSITIONS.get(self.state, set())
         if to_state not in allowed:
             raise InvalidJobTransition(self.state, to_state)
-        self.state = to_state
-        self.updated_at = datetime.now(UTC)
+        object.__setattr__(self, "state", to_state)
+        object.__setattr__(self, "updated_at", datetime.now(UTC))
 
     def add_progress(self, message: str, percent: float | None = None) -> None:
         """Append a progress entry (append-only)."""
@@ -134,7 +134,7 @@ class JobStore:
         with self._lock:
             job = self._jobs[job_id]
             job.transition(JobState.SUCCEEDED)
-            job.result = result
+            object.__setattr__(job, "result", result)
             return job
 
     def mark_failed(self, job_id: str, error: str) -> Job:
@@ -142,7 +142,7 @@ class JobStore:
         with self._lock:
             job = self._jobs[job_id]
             job.transition(JobState.FAILED)
-            job.error = error
+            object.__setattr__(job, "error", error)
             return job
 
     def cancel(self, job_id: str) -> Job:

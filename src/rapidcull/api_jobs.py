@@ -41,7 +41,7 @@ def _job_to_dict(job: Job) -> dict[str, Any]:
         "job_id": job.job_id,
         "kind": job.kind,
         "params": job.params,
-        "state": str(job.state),
+        "state": job.state.value,
         "created_at": _serialize_datetime(job.created_at),
         "updated_at": _serialize_datetime(job.updated_at),
         "result": job.result,

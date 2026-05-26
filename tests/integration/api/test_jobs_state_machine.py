@@ -2,9 +2,12 @@
 
 Covers all 25 state-pair combinations: legal ones succeed, illegal ones raise
 InvalidJobTransition. Also covers JobStore.cancel() rejecting terminal jobs.
+Also covers Job frozen-dataclass immutability (B1).
 """
 
 from __future__ import annotations
+
+from dataclasses import FrozenInstanceError
 
 import pytest
 
@@ -178,6 +181,44 @@ class TestProgressEntries:
 # ---------------------------------------------------------------------------
 # JobStore.cancel rejects terminal jobs
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Job frozen-dataclass immutability tests (B1)
+# ---------------------------------------------------------------------------
+
+
+class TestJobImmutability:
+    def test_direct_state_assignment_raises_frozen_instance_error(self) -> None:
+        """Directly setting job.state must raise FrozenInstanceError."""
+        job = _make_job(JobState.QUEUED)
+        with pytest.raises(FrozenInstanceError):
+            job.state = JobState.RUNNING  # type: ignore[misc]
+
+    def test_direct_result_assignment_raises_frozen_instance_error(self) -> None:
+        """Directly setting job.result must raise FrozenInstanceError."""
+        job = _make_job(JobState.QUEUED)
+        with pytest.raises(FrozenInstanceError):
+            job.result = {"count": 1}  # type: ignore[misc]
+
+    def test_direct_error_assignment_raises_frozen_instance_error(self) -> None:
+        """Directly setting job.error must raise FrozenInstanceError."""
+        job = _make_job(JobState.QUEUED)
+        with pytest.raises(FrozenInstanceError):
+            job.error = "boom"  # type: ignore[misc]
+
+    def test_guarded_transition_still_works_on_frozen_job(self) -> None:
+        """The transition() method must still succeed via object.__setattr__."""
+        job = _make_job(JobState.QUEUED)
+        job.transition(JobState.RUNNING)
+        assert job.state == JobState.RUNNING
+
+    def test_add_progress_still_works_on_frozen_job(self) -> None:
+        """The add_progress() method must still append to the progress list."""
+        job = _make_job(JobState.QUEUED)
+        job.add_progress("step", percent=50.0)
+        assert len(job.progress) == 1
+        assert job.progress[0].message == "step"
 
 
 class TestJobStoreCancelTerminal:

@@ -74,6 +74,12 @@ def test_fr_015_rebuilds_central_galleries_index_from_current_gallery_metadata(
         ],
     }
 
+    # Idempotence: a second rebuild must produce the same index ordering.
+    result2 = rebuild_galleries_index(galleries_root=galleries_root)
+    payload2 = json.loads(index_path.read_text())
+    assert result2 == result
+    assert payload2 == payload
+
 
 @pytest.mark.fr
 @pytest.mark.integration

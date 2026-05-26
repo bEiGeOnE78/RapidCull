@@ -5,6 +5,28 @@ import pytest
 from rapidcull.query_evaluator import evaluate_query
 from rapidcull.query_grammar import QueryBinary, QueryComparison, QueryNot
 
+# ---------------------------------------------------------------------------
+# B3: guard int()/float() casts with descriptive errors
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.fr
+@pytest.mark.integration
+def test_evaluate_comparison_raises_descriptive_error_for_non_int_iso_value() -> None:
+    """evaluate_query must raise ValueError with context when ISO value is not an integer."""
+    expr = QueryComparison(field="iso", operator="=", value="notanint")
+    with pytest.raises(ValueError, match="Cannot cast 'notanint' to int for field 'iso'"):
+        evaluate_query(expr, {"iso": 800})
+
+
+@pytest.mark.fr
+@pytest.mark.integration
+def test_evaluate_comparison_raises_descriptive_error_for_non_float_fnumber_value() -> None:
+    """evaluate_query must raise ValueError with context when fnumber value is not a number."""
+    expr = QueryComparison(field="fnumber", operator="=", value="notafloat")
+    with pytest.raises(ValueError, match="Cannot cast 'notafloat' to float for field 'fnumber'"):
+        evaluate_query(expr, {"fnumber": 2.8})
+
 
 @pytest.mark.fr
 @pytest.mark.integration
