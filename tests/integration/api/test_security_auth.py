@@ -85,7 +85,29 @@ class TestLanMode:
         response = lan_client.get("/test/read")
         assert response.status_code == 200
 
-    def test_401_response_has_detail_field(self, lan_client: TestClient) -> None:
+    def test_401_response_has_envelope_format(self, lan_client: TestClient) -> None:
+        """FR-039: 401 auth rejection uses the standard error envelope."""
         response = lan_client.post("/test/mutate")
         body = response.json()
-        assert "detail" in body
+        assert body["ok"] is False
+        assert body["error"]["code"] == "UNAUTHORIZED"
+        assert isinstance(body["error"]["message"], str)
+        assert len(body["error"]["message"]) > 0
+
+
+class TestMisconfiguredLanMode:
+    """FR-039, FR-044: Misconfigured LAN mode (no auth token) returns envelope-shaped 503."""
+
+    def test_503_no_auth_token_has_envelope_format(self) -> None:
+        settings = Settings(
+            mode="lan",
+            auth_token=None,
+            allowed_origins=["http://localhost"],
+        )
+        client = TestClient(_make_app(settings), raise_server_exceptions=False)
+        response = client.post("/test/mutate")
+        assert response.status_code == 503
+        body = response.json()
+        assert body["ok"] is False
+        assert body["error"]["code"] == "AUTH_MISCONFIGURED"
+        assert isinstance(body["error"]["message"], str)

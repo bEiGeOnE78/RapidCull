@@ -15,10 +15,13 @@ from dataclasses import dataclass, field
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.types import ASGIApp
+
+from rapidcull.api_envelope import err
 
 _LOCALHOST_ORIGINS: list[str] = [
     "http://localhost",
@@ -61,17 +64,18 @@ class AuthMiddleware(BaseHTTPMiddleware):
         if self._settings.mode == "lan" and request.method in _MUTATING_METHODS:
             token = self._settings.auth_token
             if not token:
-                return Response(
-                    content='{"detail":"Server misconfiguration: auth token not configured"}',
+                return JSONResponse(
                     status_code=503,
-                    media_type="application/json",
+                    content=err(
+                        "AUTH_MISCONFIGURED",
+                        "Server misconfiguration: auth token not configured.",
+                    ),
                 )
             auth_header = request.headers.get("authorization", "")
             if auth_header != f"Bearer {token}":
-                return Response(
-                    content='{"detail":"Unauthorized"}',
+                return JSONResponse(
                     status_code=401,
-                    media_type="application/json",
+                    content=err("UNAUTHORIZED", "Unauthorized."),
                 )
         return await call_next(request)
 

@@ -66,7 +66,11 @@ def err(
 
 async def api_error_handler(request: Request, exc: Exception) -> JSONResponse:
     """Handle ApiError instances — emits the error envelope."""
-    assert isinstance(exc, ApiError)
+    if not isinstance(exc, ApiError):
+        return JSONResponse(
+            status_code=500,
+            content=err("INTERNAL_ERROR", "Unexpected exception type in ApiError handler."),
+        )
     return JSONResponse(
         status_code=exc.http_status,
         content=err(exc.code, exc.message, exc.details),
@@ -75,7 +79,11 @@ async def api_error_handler(request: Request, exc: Exception) -> JSONResponse:
 
 async def http_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """Convert FastAPI/Starlette HTTPException to the error envelope."""
-    assert isinstance(exc, HTTPException)
+    if not isinstance(exc, HTTPException):
+        return JSONResponse(
+            status_code=500,
+            content=err("INTERNAL_ERROR", "Unexpected exception type in HTTPException handler."),
+        )
     code = f"HTTP_{exc.status_code}"
     message = str(exc.detail) if exc.detail is not None else "An error occurred."
     return JSONResponse(
@@ -86,7 +94,11 @@ async def http_exception_handler(request: Request, exc: Exception) -> JSONRespon
 
 async def validation_error_handler(request: Request, exc: Exception) -> JSONResponse:
     """Convert Pydantic RequestValidationError to the error envelope."""
-    assert isinstance(exc, RequestValidationError)
+    if not isinstance(exc, RequestValidationError):
+        return JSONResponse(
+            status_code=500,
+            content=err("INTERNAL_ERROR", "Unexpected exception type in validation handler."),
+        )
     return JSONResponse(
         status_code=422,
         content=err(
