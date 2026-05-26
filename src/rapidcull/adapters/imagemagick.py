@@ -24,10 +24,11 @@ class ImageMagickAdapter:
         return result.returncode
 
     def generate_still_thumbnail(self, path: Path) -> ImageMagickProxyOutcome:
+        output_path = path.with_name(path.stem + ".proxy.jpg")
         command = [
             "magick",
             str(path.resolve()),
-            str(path.resolve()),
+            str(output_path.resolve()),
         ]
         try:
             exit_code = self._run_command(command)
@@ -42,10 +43,11 @@ class ImageMagickAdapter:
         if not self._heif_supported:
             return ImageMagickProxyOutcome(ok=False, reason="imagemagick_heif_unsupported")
 
+        output_path = path.with_name(path.stem + ".proxy.jpg")
         command = [
             "magick",
             str(path.resolve()),
-            str(path.resolve()),
+            str(output_path.resolve()),
         ]
         try:
             exit_code = self._run_command(command)

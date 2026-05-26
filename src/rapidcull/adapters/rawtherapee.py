@@ -18,10 +18,11 @@ class RawTherapeeAdapter:
 
     def generate_raw_proxy(self, path: Path, pipeline_available: bool) -> RawTherapeeProxyOutcome:
         if pipeline_available:
+            output_path = path.with_name(path.stem + ".proxy.jpg")
             command = [
                 "rawtherapee-cli",
                 "-o",
-                str(path.resolve()),
+                str(output_path.resolve()),
                 str(path.resolve()),
             ]
             try:

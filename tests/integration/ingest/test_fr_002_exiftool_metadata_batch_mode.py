@@ -4,7 +4,11 @@ from pathlib import Path
 
 import pytest
 
-from rapidcull.exiftool_adapter import ExifToolBatchExtractor
+from rapidcull.exiftool_adapter import (
+    ExifToolBatchExtractor,
+    ExifToolExtractionFailure,
+    ExifToolExtractionOutcome,
+)
 from rapidcull.ingest import extract_metadata_for_ingest
 from rapidcull.models import FailedIngestItem
 
@@ -152,6 +156,31 @@ def test_fr_002d_records_failure_when_retry_exhausted_after_transport_failure(
     extractor.enqueue_transport_failure(path=target)
 
     result = extract_metadata_for_ingest(paths=[target], extractor=extractor)
+
+    assert result.metadata_by_path == {}
+    assert result.failed_items == [
+        FailedIngestItem(path=str(target.resolve()), reason="tool_error"),
+    ]
+
+
+@pytest.mark.fr
+@pytest.mark.integration
+def test_fr_002d_restart_exception_does_not_break_continue_on_error(tmp_path: Path) -> None:
+    """If restart() raises an exception, the item is still recorded as failed.
+
+    FR-002d: continue-on-error must hold even when restart itself crashes.
+    """
+    target = tmp_path / "target.jpg"
+    target.write_text("a")
+
+    class RestartRaisesExtractor:
+        def extract(self, path: Path) -> ExifToolExtractionOutcome:
+            return ExifToolExtractionFailure(path=path, reason="transport_error")
+
+        def restart(self) -> None:
+            raise RuntimeError("ExifTool process died irrecoverably")
+
+    result = extract_metadata_for_ingest(paths=[target], extractor=RestartRaisesExtractor())
 
     assert result.metadata_by_path == {}
     assert result.failed_items == [

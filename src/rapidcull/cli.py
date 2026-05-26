@@ -90,6 +90,7 @@ def start(host: str, port: int, pid_file: str) -> None:
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         start_new_session=True,
+        env=os.environ.copy(),
     )
 
     # Write PID file

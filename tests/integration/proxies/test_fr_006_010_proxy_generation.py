@@ -577,11 +577,12 @@ def test_fr_008a_rawtherapee_adapter_invokes_subprocess_when_pipeline_available(
     adapter = RawTherapeeAdapter()
     outcome = adapter.generate_raw_proxy(path=raw, pipeline_available=True)
 
+    expected_output = raw.with_name(raw.stem + ".proxy.jpg")
     assert recorded_commands == [
         [
             "rawtherapee-cli",
             "-o",
-            str(raw.resolve()),
+            str(expected_output.resolve()),
             str(raw.resolve()),
         ]
     ]
@@ -630,11 +631,12 @@ def test_fr_006a_imagemagick_adapter_invokes_subprocess_for_still_thumbnail(
     adapter = ImageMagickAdapter(heif_supported=True)
     outcome = adapter.generate_still_thumbnail(path=still)
 
+    expected_output = still.with_name(still.stem + ".proxy.jpg")
     assert recorded_commands == [
         [
             "magick",
             str(still.resolve()),
-            str(still.resolve()),
+            str(expected_output.resolve()),
         ]
     ]
     assert outcome == ImageMagickProxyOutcome(ok=True, reason=None)
@@ -661,11 +663,12 @@ def test_fr_007a_imagemagick_adapter_invokes_subprocess_for_heic_proxy(
     adapter = ImageMagickAdapter(heif_supported=True)
     outcome = adapter.generate_heic_proxy(path=heic)
 
+    expected_output = heic.with_name(heic.stem + ".proxy.jpg")
     assert recorded_commands == [
         [
             "magick",
             str(heic.resolve()),
-            str(heic.resolve()),
+            str(expected_output.resolve()),
         ]
     ]
     assert outcome == ImageMagickProxyOutcome(ok=True, reason=None)

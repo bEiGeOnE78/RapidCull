@@ -80,6 +80,24 @@ class TestStartCommand:
         assert result.exit_code == 0
         assert pid_file.read_text().strip() == "54321"
 
+    def test_start_passes_env_to_subprocess(self, runner: CliRunner, tmp_path: Path) -> None:
+        """Start command passes an explicit env dict to Popen for reliable PATH inheritance."""
+        pid_file = tmp_path / "env_test.pid"
+        mock_proc = MagicMock()
+        mock_proc.pid = 55555
+
+        with (
+            patch("rapidcull.cli._process_alive", return_value=False),
+            patch("rapidcull.cli._port_in_use", return_value=False),
+            patch("subprocess.Popen", return_value=mock_proc) as mock_popen,
+        ):
+            result = runner.invoke(cli, ["start", "--pid-file", str(pid_file)])
+
+        assert result.exit_code == 0
+        call_kwargs = mock_popen.call_args.kwargs
+        assert "env" in call_kwargs
+        assert call_kwargs["env"] is not None
+
 
 class TestStopCommand:
     def test_stop_removes_pid_file(self, runner: CliRunner, tmp_path: Path) -> None:

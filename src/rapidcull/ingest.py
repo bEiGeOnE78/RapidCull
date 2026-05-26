@@ -129,7 +129,18 @@ def extract_metadata_for_ingest(
             isinstance(extraction_result, ExifToolExtractionFailure)
             and extraction_result.reason == "transport_error"
         ):
-            extractor.restart()
+            try:
+                extractor.restart()
+            except Exception:
+                # Restart itself failed — record item as failed and move on.
+                # FR-002d: continue-on-error must hold even when restart crashes.
+                failed_items.append(
+                    FailedIngestItem(
+                        path=str(path.resolve()),
+                        reason="tool_error",
+                    )
+                )
+                continue
             extraction_result = extractor.extract(path)
 
         if isinstance(extraction_result, ExifToolExtractionSuccess):
