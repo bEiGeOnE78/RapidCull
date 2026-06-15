@@ -1,0 +1,1677 @@
+{
+  "/home/vader/source/RapidCull/.claude/settings.local.json": {
+    "mtime": 1781490862.7304242,
+    "ast_hash": "e952a227711b2a0bfd8acde4cf871a9a",
+    "semantic_hash": "e952a227711b2a0bfd8acde4cf871a9a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/config/paths.json": {
+    "mtime": 1772898980.0,
+    "ast_hash": "aba9d775833e42933f487bb277291edf",
+    "semantic_hash": "aba9d775833e42933f487bb277291edf"
+  },
+  "/home/vader/source/RapidCull/.opencode/package.json": {
+    "mtime": 1775563095.0,
+    "ast_hash": "af1cf010216804df0e883b75c9a2b904",
+    "semantic_hash": "af1cf010216804df0e883b75c9a2b904"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/task-management/router.sh": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6863fb95a894de062ee1a3c4c48b0195",
+    "semantic_hash": "6863fb95a894de062ee1a3c4c48b0195"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/task-management/scripts/task-cli.ts": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2e46987fd1b9d10131c9c412a205ad8a",
+    "semantic_hash": "2e46987fd1b9d10131c9c412a205ad8a"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/.manifest.json": {
+    "mtime": 1773492858.0,
+    "ast_hash": "e67aec6e4590f91222f4a4dbdf080638",
+    "semantic_hash": "e67aec6e4590f91222f4a4dbdf080638"
+  },
+  "/home/vader/source/RapidCull/scripts/bootstrap.sh": {
+    "mtime": 1773457984.0,
+    "ast_hash": "08e6ea1490fb221e9b8430b520bf1cc7",
+    "semantic_hash": "08e6ea1490fb221e9b8430b520bf1cc7"
+  },
+  "/home/vader/source/RapidCull/scripts/verify_system_deps.sh": {
+    "mtime": 1773541511.0,
+    "ast_hash": "a03a1222960f295fcf6fade6dcf042ef",
+    "semantic_hash": "a03a1222960f295fcf6fade6dcf042ef"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/__init__.py": {
+    "mtime": 1772905763.0,
+    "ast_hash": "c1410992f6ab5dd9d4a99bb18fd3c04b",
+    "semantic_hash": "c1410992f6ab5dd9d4a99bb18fd3c04b"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/adapters/__init__.py": {
+    "mtime": 1773541511.0,
+    "ast_hash": "0fa744db63da8ad2f0b6cb1a14e3f226",
+    "semantic_hash": "0fa744db63da8ad2f0b6cb1a14e3f226"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/adapters/imagemagick.py": {
+    "mtime": 1779765789.4215088,
+    "ast_hash": "005b372e9f1f84aaa3bf24ff559f8436",
+    "semantic_hash": "005b372e9f1f84aaa3bf24ff559f8436"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/adapters/rawtherapee.py": {
+    "mtime": 1779765789.4215088,
+    "ast_hash": "0a8e7e9bc77da1af2c08be548f9a58f0",
+    "semantic_hash": "0a8e7e9bc77da1af2c08be548f9a58f0"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/api.py": {
+    "mtime": 1779762669.4652095,
+    "ast_hash": "45f8deb3e23da8a1bedffef821714449",
+    "semantic_hash": "45f8deb3e23da8a1bedffef821714449"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/api_envelope.py": {
+    "mtime": 1779764668.4045644,
+    "ast_hash": "d028a70c93682ba84434ae17eb5dd6f3",
+    "semantic_hash": "d028a70c93682ba84434ae17eb5dd6f3"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/api_jobs.py": {
+    "mtime": 1779766905.9898362,
+    "ast_hash": "d9e7188b6fc26270ba71b2ce016b3641",
+    "semantic_hash": "d9e7188b6fc26270ba71b2ce016b3641"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/cli.py": {
+    "mtime": 1779765789.4215088,
+    "ast_hash": "289379670d3254a5534a85a689ef9da2",
+    "semantic_hash": "289379670d3254a5534a85a689ef9da2"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/collections.py": {
+    "mtime": 1779745232.1996431,
+    "ast_hash": "fda6313c70b60df987a6831ee5f332f9",
+    "semantic_hash": "fda6313c70b60df987a6831ee5f332f9"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/exiftool_adapter.py": {
+    "mtime": 1779632123.861746,
+    "ast_hash": "862d0b2d87d3f44c1bb2d4f3ca94ff0d",
+    "semantic_hash": "862d0b2d87d3f44c1bb2d4f3ca94ff0d"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/galleries.py": {
+    "mtime": 1773457101.0,
+    "ast_hash": "7fea31ba1ceebe74de71cbf4e6f3622d",
+    "semantic_hash": "7fea31ba1ceebe74de71cbf4e6f3622d"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/identity.py": {
+    "mtime": 1772912338.0,
+    "ast_hash": "c748a37d0c79e518b4f21a99b0e20f9f",
+    "semantic_hash": "c748a37d0c79e518b4f21a99b0e20f9f"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/ingest.py": {
+    "mtime": 1779765789.4215088,
+    "ast_hash": "5abb469d35679acbcd84e7b6a45988d7",
+    "semantic_hash": "5abb469d35679acbcd84e7b6a45988d7"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/jobs.py": {
+    "mtime": 1779766905.9898362,
+    "ast_hash": "d7dd1993df27a286a911e604965b45e0",
+    "semantic_hash": "d7dd1993df27a286a911e604965b45e0"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/models.py": {
+    "mtime": 1779631914.6094677,
+    "ast_hash": "e18d4af8332e6aa049968f01ffd9242e",
+    "semantic_hash": "e18d4af8332e6aa049968f01ffd9242e"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/path_utils.py": {
+    "mtime": 1779762669.4652095,
+    "ast_hash": "f424afa4aecdbd83f044b5e56a244870",
+    "semantic_hash": "f424afa4aecdbd83f044b5e56a244870"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/proxies.py": {
+    "mtime": 1773587156.0,
+    "ast_hash": "ed47783d450977ba7e31326e1bfc4e49",
+    "semantic_hash": "ed47783d450977ba7e31326e1bfc4e49"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/query_evaluator.py": {
+    "mtime": 1779766905.9898362,
+    "ast_hash": "7a4aedb8dc03e94873463bbbb048530f",
+    "semantic_hash": "7a4aedb8dc03e94873463bbbb048530f"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/query_grammar.py": {
+    "mtime": 1774754681.0,
+    "ast_hash": "ecc7e64c96eb77afc3a8f794aca55631",
+    "semantic_hash": "ecc7e64c96eb77afc3a8f794aca55631"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/schema.py": {
+    "mtime": 1772912338.0,
+    "ast_hash": "55dcc1d95dce2263efa51acffef702aa",
+    "semantic_hash": "55dcc1d95dce2263efa51acffef702aa"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/security.py": {
+    "mtime": 1779764668.4045644,
+    "ast_hash": "55ad36574d334d90211c1b2630c60053",
+    "semantic_hash": "55ad36574d334d90211c1b2630c60053"
+  },
+  "/home/vader/source/RapidCull/src/rapidcull/summaries.py": {
+    "mtime": 1772912338.0,
+    "ast_hash": "52b476e542da05b497744ea348df8ef9",
+    "semantic_hash": "52b476e542da05b497744ea348df8ef9"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/__init__.py": {
+    "mtime": 1779632338.6596367,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_collection_query_api.py": {
+    "mtime": 1779745232.200643,
+    "ast_hash": "8b4a5e1fb5fe845597ae9ed3a07d49cc",
+    "semantic_hash": "8b4a5e1fb5fe845597ae9ed3a07d49cc"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_e2e_job_orchestration.py": {
+    "mtime": 1779745232.200643,
+    "ast_hash": "917847972d801c418fbf1c1330d1eb41",
+    "semantic_hash": "917847972d801c418fbf1c1330d1eb41"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_jobs_endpoints.py": {
+    "mtime": 1779745232.200643,
+    "ast_hash": "7a8e79cb0e2e477b3ec4678a3e8e923c",
+    "semantic_hash": "7a8e79cb0e2e477b3ec4678a3e8e923c"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_jobs_state_machine.py": {
+    "mtime": 1779766905.9898362,
+    "ast_hash": "16abca4b24828612ad4feb9c2c2194a1",
+    "semantic_hash": "16abca4b24828612ad4feb9c2c2194a1"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_response_envelope.py": {
+    "mtime": 1779745232.200643,
+    "ast_hash": "bc92c2ae82a80fbf3384e6f4b22b63c9",
+    "semantic_hash": "bc92c2ae82a80fbf3384e6f4b22b63c9"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_security_auth.py": {
+    "mtime": 1779764668.4045644,
+    "ast_hash": "fa32077baceaa14ba872b727dc6b29fb",
+    "semantic_hash": "fa32077baceaa14ba872b727dc6b29fb"
+  },
+  "/home/vader/source/RapidCull/tests/integration/api/test_security_cors.py": {
+    "mtime": 1779762669.4662094,
+    "ast_hash": "87427a06b5aac64b7ec1a8bd756cd0f3",
+    "semantic_hash": "87427a06b5aac64b7ec1a8bd756cd0f3"
+  },
+  "/home/vader/source/RapidCull/tests/integration/cli/__init__.py": {
+    "mtime": 1779761802.11383,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/vader/source/RapidCull/tests/integration/cli/test_cli_process_new.py": {
+    "mtime": 1779761802.11383,
+    "ast_hash": "43ecbada4b62e79e7d82e673d27604b1",
+    "semantic_hash": "43ecbada4b62e79e7d82e673d27604b1"
+  },
+  "/home/vader/source/RapidCull/tests/integration/cli/test_cli_service.py": {
+    "mtime": 1779765789.4225087,
+    "ast_hash": "33d08c6dc8b584ede1366b78ed5fc6cd",
+    "semantic_hash": "33d08c6dc8b584ede1366b78ed5fc6cd"
+  },
+  "/home/vader/source/RapidCull/tests/integration/collections/test_collection_query.py": {
+    "mtime": 1779631754.9094381,
+    "ast_hash": "80b5e4423783123a002cb59b0ddcd0e7",
+    "semantic_hash": "80b5e4423783123a002cb59b0ddcd0e7"
+  },
+  "/home/vader/source/RapidCull/tests/integration/galleries/test_fr_012_gallery_hardlink_creation.py": {
+    "mtime": 1772942833.0,
+    "ast_hash": "882c8d08ac7b4ffe55b285246f9b96f0",
+    "semantic_hash": "882c8d08ac7b4ffe55b285246f9b96f0"
+  },
+  "/home/vader/source/RapidCull/tests/integration/galleries/test_fr_013_gallery_source_selection_modes.py": {
+    "mtime": 1772943636.0,
+    "ast_hash": "e4746a7c1fea3af459db9faba3f466e2",
+    "semantic_hash": "e4746a7c1fea3af459db9faba3f466e2"
+  },
+  "/home/vader/source/RapidCull/tests/integration/galleries/test_fr_014_gallery_metadata_rebuild.py": {
+    "mtime": 1772947059.0,
+    "ast_hash": "8b3f9dc25d3d1e86ed9227e1cf42e43a",
+    "semantic_hash": "8b3f9dc25d3d1e86ed9227e1cf42e43a"
+  },
+  "/home/vader/source/RapidCull/tests/integration/galleries/test_fr_015_galleries_index_refresh.py": {
+    "mtime": 1779766905.9898362,
+    "ast_hash": "d02e196129e25713a0a287e2efb113aa",
+    "semantic_hash": "d02e196129e25713a0a287e2efb113aa"
+  },
+  "/home/vader/source/RapidCull/tests/integration/galleries/test_fr_016_gallery_mutation_security.py": {
+    "mtime": 1773456954.0,
+    "ast_hash": "edb5d31dc28ef61987af818f6156d930",
+    "semantic_hash": "edb5d31dc28ef61987af818f6156d930"
+  },
+  "/home/vader/source/RapidCull/tests/integration/ingest/test_fr_001_005_ingest_identity_summary.py": {
+    "mtime": 1772940799.0,
+    "ast_hash": "fcfe3ed6f5e0287f75391d6ea4395e95",
+    "semantic_hash": "fcfe3ed6f5e0287f75391d6ea4395e95"
+  },
+  "/home/vader/source/RapidCull/tests/integration/ingest/test_fr_002_exiftool_metadata_batch_mode.py": {
+    "mtime": 1779765789.4225087,
+    "ast_hash": "607f94395da705e39949a27c2851a5be",
+    "semantic_hash": "607f94395da705e39949a27c2851a5be"
+  },
+  "/home/vader/source/RapidCull/tests/integration/ingest/test_fr_002_exiftool_real_integration.py": {
+    "mtime": 1773525010.0,
+    "ast_hash": "bea69fc6beb69d6b5705f45248a743d8",
+    "semantic_hash": "bea69fc6beb69d6b5705f45248a743d8"
+  },
+  "/home/vader/source/RapidCull/tests/integration/proxies/test_fr_006_010_proxy_generation.py": {
+    "mtime": 1779766905.9908364,
+    "ast_hash": "7d62d81c8a2c971b3dcc07f9b4b670f3",
+    "semantic_hash": "7d62d81c8a2c971b3dcc07f9b4b670f3"
+  },
+  "/home/vader/source/RapidCull/tests/integration/query/test_fr_017_021_query_grammar_validation.py": {
+    "mtime": 1774754681.0,
+    "ast_hash": "8115b177b78bd148723b6d6deb19bd2d",
+    "semantic_hash": "8115b177b78bd148723b6d6deb19bd2d"
+  },
+  "/home/vader/source/RapidCull/tests/integration/query/test_fr_022_query_behavior_docs.py": {
+    "mtime": 1774788006.0,
+    "ast_hash": "4ae6f2799a5b1978a6898a002290972b",
+    "semantic_hash": "4ae6f2799a5b1978a6898a002290972b"
+  },
+  "/home/vader/source/RapidCull/tests/integration/query/test_query_evaluation_contract_v1.py": {
+    "mtime": 1774989050.0,
+    "ast_hash": "0476e1c0fd9f4b5707d8dbead377e23c",
+    "semantic_hash": "0476e1c0fd9f4b5707d8dbead377e23c"
+  },
+  "/home/vader/source/RapidCull/tests/integration/query/test_query_evaluator_baseline_v1.py": {
+    "mtime": 1779766905.9908364,
+    "ast_hash": "cf2a3f4c3cc2a9f435275b2e7d5636a6",
+    "semantic_hash": "cf2a3f4c3cc2a9f435275b2e7d5636a6"
+  },
+  "/home/vader/source/RapidCull/tests/unit/__init__.py": {
+    "mtime": 1779762669.4662094,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/vader/source/RapidCull/tests/unit/test_path_utils.py": {
+    "mtime": 1779762669.4662094,
+    "ast_hash": "6c4ea945a8f0120c947d30cb34f237cb",
+    "semantic_hash": "6c4ea945a8f0120c947d30cb34f237cb"
+  },
+  "/home/vader/source/RapidCull/.opencode/README.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8c8db07e3b435e7edb0195236c385264",
+    "semantic_hash": "8c8db07e3b435e7edb0195236c385264"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/core/openagent.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "9cc204683fa054a88edd254ccc0f0bc4",
+    "semantic_hash": "9cc204683fa054a88edd254ccc0f0bc4"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/core/opencoder.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4c770e0c95c1ffc90038d11d86c7c018",
+    "semantic_hash": "4c770e0c95c1ffc90038d11d86c7c018"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/code/build-agent.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "246579cd1a5205bdcea3c97a41bdfec0",
+    "semantic_hash": "246579cd1a5205bdcea3c97a41bdfec0"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/code/coder-agent.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2457070b953fea424a4d473bebc0ef4d",
+    "semantic_hash": "2457070b953fea424a4d473bebc0ef4d"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/code/reviewer.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "891319e273f7992cac6f60b54be1b527",
+    "semantic_hash": "891319e273f7992cac6f60b54be1b527"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/code/test-engineer.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "928d1b1ad723a13288a4e8f579fcbbb9",
+    "semantic_hash": "928d1b1ad723a13288a4e8f579fcbbb9"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/core/contextscout.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "06e3aa53ab8a3b12c9cd2f1df2e508d3",
+    "semantic_hash": "06e3aa53ab8a3b12c9cd2f1df2e508d3"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/core/documentation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5b76d8b26ae6e7842b2fb67ea4e66736",
+    "semantic_hash": "5b76d8b26ae6e7842b2fb67ea4e66736"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/core/externalscout.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "30a0a4cc8e59e5e74715b2f4453ffc1e",
+    "semantic_hash": "30a0a4cc8e59e5e74715b2f4453ffc1e"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/core/task-manager.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "28dc994ebb07c6ce6c54dada51631f51",
+    "semantic_hash": "28dc994ebb07c6ce6c54dada51631f51"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/development/devops-specialist.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8356bb8a5f0ddb93e769f90d02be459e",
+    "semantic_hash": "8356bb8a5f0ddb93e769f90d02be459e"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/development/frontend-specialist.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8e086bc28469c3fe9b8e8d05c51f626d",
+    "semantic_hash": "8e086bc28469c3fe9b8e8d05c51f626d"
+  },
+  "/home/vader/source/RapidCull/.opencode/agent/subagents/system-builder/context-organizer.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "979bdfa269550cdc59cd6a7e8521df17",
+    "semantic_hash": "979bdfa269550cdc59cd6a7e8521df17"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/add-context.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5edb04d4ea3127d1cad7aec18b5546f5",
+    "semantic_hash": "5edb04d4ea3127d1cad7aec18b5546f5"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/analyze-patterns.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c36400d9b9728d204fc206a7bede2746",
+    "semantic_hash": "c36400d9b9728d204fc206a7bede2746"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/clean.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "662b176b03f08978542376dfef7457f2",
+    "semantic_hash": "662b176b03f08978542376dfef7457f2"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/commit.md": {
+    "mtime": 1772945041.0,
+    "ast_hash": "2e050485d999d52a5d29e94317967b43",
+    "semantic_hash": "2e050485d999d52a5d29e94317967b43"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/context.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1234b3cad3a4c64394be5ce8e250386b",
+    "semantic_hash": "1234b3cad3a4c64394be5ce8e250386b"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/openagents/check-context-deps.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "15b6665a11a975fa32b7818da0ee4ff9",
+    "semantic_hash": "15b6665a11a975fa32b7818da0ee4ff9"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/optimize.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "cf539a306bd2d76ec4bc9518db9863ff",
+    "semantic_hash": "cf539a306bd2d76ec4bc9518db9863ff"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/pr.md": {
+    "mtime": 1772945043.0,
+    "ast_hash": "74468202bf3ecb5b3fdd76382c632d3f",
+    "semantic_hash": "74468202bf3ecb5b3fdd76382c632d3f"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/test.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4e484a01b2765cfcb5dd57d11e9bb929",
+    "semantic_hash": "4e484a01b2765cfcb5dd57d11e9bb929"
+  },
+  "/home/vader/source/RapidCull/.opencode/command/validate-repo.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2f0be202e2222af24d1e1f438f737335",
+    "semantic_hash": "2f0be202e2222af24d1e1f438f737335"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/config/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "88be4030c52377b247049d4ebf9098dc",
+    "semantic_hash": "88be4030c52377b247049d4ebf9098dc"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7ea3da506f82bf29372021934d03a505",
+    "semantic_hash": "7ea3da506f82bf29372021934d03a505"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/CHANGELOG.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "87855a32b7b95a93fa159a95dc225393",
+    "semantic_hash": "87855a32b7b95a93fa159a95dc225393"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/examples/navigation-examples.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "f7b9d675951a4ec0190a6828d2890293",
+    "semantic_hash": "f7b9d675951a4ec0190a6828d2890293"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/compact.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "a1f43607762b9730d46fcf8864a7658b",
+    "semantic_hash": "a1f43607762b9730d46fcf8864a7658b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/creation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8cf94eb0110f94a4223c06d8b9455652",
+    "semantic_hash": "8cf94eb0110f94a4223c06d8b9455652"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/navigation-design-basics.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "58b4203b9299603eab09d272bab3ad51",
+    "semantic_hash": "58b4203b9299603eab09d272bab3ad51"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/navigation-templates.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "92a38bab7d9e5b5220dd4b85c0a85371",
+    "semantic_hash": "92a38bab7d9e5b5220dd4b85c0a85371"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/organizing-context.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "b0a31c258602fcf872915e00e5973f69",
+    "semantic_hash": "b0a31c258602fcf872915e00e5973f69"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/guides/workflows.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "53f7219547eda493207f5f38ceb835b3",
+    "semantic_hash": "53f7219547eda493207f5f38ceb835b3"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "217ce740d1dd4fbd523850b44bb5e7aa",
+    "semantic_hash": "217ce740d1dd4fbd523850b44bb5e7aa"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/error.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4ab84e984784658fd1f1e12295384b7e",
+    "semantic_hash": "4ab84e984784658fd1f1e12295384b7e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/extract.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4dfff9e8fde572478d43c993babdfbfc",
+    "semantic_hash": "4dfff9e8fde572478d43c993babdfbfc"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/harvest.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "9920906adf94a01779247ab8d20a5eb9",
+    "semantic_hash": "9920906adf94a01779247ab8d20a5eb9"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/migrate.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "dd5a180dcda318d55fba9bbf99ba55e4",
+    "semantic_hash": "dd5a180dcda318d55fba9bbf99ba55e4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/organize.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6af1bf8d8cfe24fd824ea6313ad6bf7d",
+    "semantic_hash": "6af1bf8d8cfe24fd824ea6313ad6bf7d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/operations/update.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fa472c759b86b6a56f4e24815bdb1ccd",
+    "semantic_hash": "fa472c759b86b6a56f4e24815bdb1ccd"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/standards/codebase-references.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "9db48dd5b4f00c7e026c1b2d01b4aedf",
+    "semantic_hash": "9db48dd5b4f00c7e026c1b2d01b4aedf"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/standards/frontmatter.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "cde8d6d4312c0b9f2d59372a6e0961ac",
+    "semantic_hash": "cde8d6d4312c0b9f2d59372a6e0961ac"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/standards/mvi.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3c4757a87e1e233da0f84eaa9dea8fee",
+    "semantic_hash": "3c4757a87e1e233da0f84eaa9dea8fee"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/standards/structure.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "0b53d5a4a6cdbdf3d096317bd6844cde",
+    "semantic_hash": "0b53d5a4a6cdbdf3d096317bd6844cde"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/context-system/standards/templates.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "59f826e40402ae2875d767617156bc52",
+    "semantic_hash": "59f826e40402ae2875d767617156bc52"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/essential-patterns.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4d0994af345d33bcb91d1d572e9b0a7a",
+    "semantic_hash": "4d0994af345d33bcb91d1d572e9b0a7a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "98b9d2a5bb1de7dac1a6f488273b8fd4",
+    "semantic_hash": "98b9d2a5bb1de7dac1a6f488273b8fd4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/code-analysis.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6651b2646bb02854e21fc54f028a138d",
+    "semantic_hash": "6651b2646bb02854e21fc54f028a138d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/code-quality.md": {
+    "mtime": 1772947059.0,
+    "ast_hash": "74352fe789bad4488bbf7160bcdade44",
+    "semantic_hash": "74352fe789bad4488bbf7160bcdade44"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/documentation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fc0b459d2fe661c6de8e3d5ef1edc08d",
+    "semantic_hash": "fc0b459d2fe661c6de8e3d5ef1edc08d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4912100dd6104e8e32fe31bff85c453f",
+    "semantic_hash": "4912100dd6104e8e32fe31bff85c453f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/project-intelligence-management.md": {
+    "mtime": 1772945038.0,
+    "ast_hash": "069b4d4226b0b25915ddcfbb7b4a96d8",
+    "semantic_hash": "069b4d4226b0b25915ddcfbb7b4a96d8"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/project-intelligence.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "637d5ff30bd4566392a24602b2e87b12",
+    "semantic_hash": "637d5ff30bd4566392a24602b2e87b12"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/security-patterns.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4ddaa08c525e6ef0406a494d29c6b12f",
+    "semantic_hash": "4ddaa08c525e6ef0406a494d29c6b12f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/standards/test-coverage.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "280ad3fe50ff6929e2703649afe9bc07",
+    "semantic_hash": "280ad3fe50ff6929e2703649afe9bc07"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/system/context-guide.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e7ee1d9d4c9d7288120a43e88b3bf492",
+    "semantic_hash": "e7ee1d9d4c9d7288120a43e88b3bf492"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/system/context-paths.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c8ba13e270813d9d16bfabb685124626",
+    "semantic_hash": "c8ba13e270813d9d16bfabb685124626"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/system/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "724e18a9544d3c5d31b8f00d48df4330",
+    "semantic_hash": "724e18a9544d3c5d31b8f00d48df4330"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/task-management/guides/managing-tasks.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "93b8c66570a02f8cb8ebb35cdd041d28",
+    "semantic_hash": "93b8c66570a02f8cb8ebb35cdd041d28"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/task-management/guides/splitting-tasks.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "437dd8eea56ee7b31afa0ee8e02ea98c",
+    "semantic_hash": "437dd8eea56ee7b31afa0ee8e02ea98c"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/task-management/lookup/task-commands.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "63670433fdcff22e325c1b1f56563b16",
+    "semantic_hash": "63670433fdcff22e325c1b1f56563b16"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/task-management/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fef7b9facd348f3a36a30a6f0cd52bfc",
+    "semantic_hash": "fef7b9facd348f3a36a30a6f0cd52bfc"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/task-management/standards/task-schema.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "959d47c421c7454fce3fc74480769541",
+    "semantic_hash": "959d47c421c7454fce3fc74480769541"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/visual-development.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "80f5797a235a282658a33d274a152155",
+    "semantic_hash": "80f5797a235a282658a33d274a152155"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/code-review.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "832475de41c9c8c3f06f04d2f15e1b7e",
+    "semantic_hash": "832475de41c9c8c3f06f04d2f15e1b7e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/component-planning.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "650911da977909d1e0a83210c7a00bd8",
+    "semantic_hash": "650911da977909d1e0a83210c7a00bd8"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/delegation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d463bcd32b715ad462652e23c5afeb72",
+    "semantic_hash": "d463bcd32b715ad462652e23c5afeb72"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-best-practices.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5f72d03ccd1c8b88c72fce29d1551ef3",
+    "semantic_hash": "5f72d03ccd1c8b88c72fce29d1551ef3"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-overview.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "de21aaf7572776228cbad65016afc332",
+    "semantic_hash": "de21aaf7572776228cbad65016afc332"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-plan-file.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "b3831d971cbc20f0340aad988b0bb794",
+    "semantic_hash": "b3831d971cbc20f0340aad988b0bb794"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-plan-iterations.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "378a462d4aec0cdcc949b29ea7de1c2a",
+    "semantic_hash": "378a462d4aec0cdcc949b29ea7de1c2a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-stage-animation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "591bb75fde7b5a0a26c4f704b9b324e7",
+    "semantic_hash": "591bb75fde7b5a0a26c4f704b9b324e7"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-stage-implementation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "333ed7c34860845dd7bc88a4509ba1d1",
+    "semantic_hash": "333ed7c34860845dd7bc88a4509ba1d1"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-stage-layout.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "71e02a9188e871a87f036ac9d3941e22",
+    "semantic_hash": "71e02a9188e871a87f036ac9d3941e22"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-stage-theme.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "879f833fde0f5f907b36546a3817468d",
+    "semantic_hash": "879f833fde0f5f907b36546a3817468d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/design-iteration-visual-content.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e232d36abdc458aac7d8ec0a80fa739f",
+    "semantic_hash": "e232d36abdc458aac7d8ec0a80fa739f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/external-context-integration.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d9994dad2000193ed1d7cc9634323059",
+    "semantic_hash": "d9994dad2000193ed1d7cc9634323059"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/external-context-management.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e407c6ced0630c39b5d301b93ad0bf26",
+    "semantic_hash": "e407c6ced0630c39b5d301b93ad0bf26"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/external-libraries-faq.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "bcdb13ee3df488dbd38e31fe1c88172c",
+    "semantic_hash": "bcdb13ee3df488dbd38e31fe1c88172c"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/external-libraries-scenarios.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "980c97d00f2b089d8c06abeeba4dc7ed",
+    "semantic_hash": "980c97d00f2b089d8c06abeeba4dc7ed"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/feature-breakdown.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d20632ea6f4333516fe0eb3fa6b0847c",
+    "semantic_hash": "d20632ea6f4333516fe0eb3fa6b0847c"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "376c4c47a71d31acf14c8fa04d938598",
+    "semantic_hash": "376c4c47a71d31acf14c8fa04d938598"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/review.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "136fb5412d35eae0efa5345f1b10945f",
+    "semantic_hash": "136fb5412d35eae0efa5345f1b10945f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/session-management.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "806db4a81649cf63dc60b54cdb40eb68",
+    "semantic_hash": "806db4a81649cf63dc60b54cdb40eb68"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/task-delegation-basics.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "128bb56eb821673514a0baebdd24a448",
+    "semantic_hash": "128bb56eb821673514a0baebdd24a448"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/task-delegation-caching.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fc49a82f60d23fb4d4eaffe76564b0d5",
+    "semantic_hash": "fc49a82f60d23fb4d4eaffe76564b0d5"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/core/workflows/task-delegation-specialists.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "24ff992c19150952a8c14eaa3659acc3",
+    "semantic_hash": "24ff992c19150952a8c14eaa3659acc3"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/concepts/agents-tools.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "76e0b343ab8368931ce2ae041ad23fc5",
+    "semantic_hash": "76e0b343ab8368931ce2ae041ad23fc5"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/concepts/core.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "df5e8ba4638872ce85606e066b7df36b",
+    "semantic_hash": "df5e8ba4638872ce85606e066b7df36b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/concepts/evaluations.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "cc34602f5e956aec6087523bd7b2a756",
+    "semantic_hash": "cc34602f5e956aec6087523bd7b2a756"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/concepts/storage.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c491349823b5c2cef20f7ed6875fc872",
+    "semantic_hash": "c491349823b5c2cef20f7ed6875fc872"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/concepts/workflows.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5755df03eba780eed64dc0ff294f0d21",
+    "semantic_hash": "5755df03eba780eed64dc0ff294f0d21"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/errors/mastra-errors.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "aa720bba8a7f77b59b1befef5932ba8b",
+    "semantic_hash": "aa720bba8a7f77b59b1befef5932ba8b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/examples/workflow-example.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "019f2ee1fc930b005d602773f1d3c7c4",
+    "semantic_hash": "019f2ee1fc930b005d602773f1d3c7c4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/guides/modular-building.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "88f3085efc13c105d6a05a22a698cca4",
+    "semantic_hash": "88f3085efc13c105d6a05a22a698cca4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/guides/testing.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "251815f0b0768ec89ecdb5bccb991186",
+    "semantic_hash": "251815f0b0768ec89ecdb5bccb991186"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/guides/workflow-step-structure.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1e0cffee139f58da9a32308c351ab9eb",
+    "semantic_hash": "1e0cffee139f58da9a32308c351ab9eb"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/mastra-ai/lookup/mastra-config.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d1034f64cd5cbb13a8d4f0c5c08574c4",
+    "semantic_hash": "d1034f64cd5cbb13a8d4f0c5c08574c4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ai/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "0b67fe375dd4c1d027a4ec1980cf45ef",
+    "semantic_hash": "0b67fe375dd4c1d027a4ec1980cf45ef"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/backend-navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1eea4610cf5f4f4e7fc43ac8b89bf99b",
+    "semantic_hash": "1eea4610cf5f4f4e7fc43ac8b89bf99b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/backend/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1a5a87384bd1497f5c162038c60ca306",
+    "semantic_hash": "1a5a87384bd1497f5c162038c60ca306"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/data/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d78ab173130a6638d8fab408bc222b4f",
+    "semantic_hash": "d78ab173130a6638d8fab408bc222b4f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/frameworks/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "f3a77eecce92a13b2d4f585f8c38c1c4",
+    "semantic_hash": "f3a77eecce92a13b2d4f585f8c38c1c4"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/frontend/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "de700d3ae69f5f3e7b5043aa649a7011",
+    "semantic_hash": "de700d3ae69f5f3e7b5043aa649a7011"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/frontend/when-to-delegate.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7e8879241a62379156583f88bbf0f192",
+    "semantic_hash": "7e8879241a62379156583f88bbf0f192"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/fullstack-navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "87ec8de02e99773d6e212c968a0d434d",
+    "semantic_hash": "87ec8de02e99773d6e212c968a0d434d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/infrastructure/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "04a20ff1f3fd25cf184fbed15a50aeaf",
+    "semantic_hash": "04a20ff1f3fd25cf184fbed15a50aeaf"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/integration/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "84ed6bc27f725e45f232f5bbc1dd1f5b",
+    "semantic_hash": "84ed6bc27f725e45f232f5bbc1dd1f5b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "f7e9e4becc96509eb2c9cc028911848d",
+    "semantic_hash": "f7e9e4becc96509eb2c9cc028911848d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/principles/api-design.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8508272678ef9238a892d081dbe8e6e6",
+    "semantic_hash": "8508272678ef9238a892d081dbe8e6e6"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/principles/clean-code.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3faff29e0205ccc54428e1d8a641e3a0",
+    "semantic_hash": "3faff29e0205ccc54428e1d8a641e3a0"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/principles/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e334bd3993bfe719bbe77ff84089e6f0",
+    "semantic_hash": "e334bd3993bfe719bbe77ff84089e6f0"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/development/ui-navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "39cc320cac3e3fcce3e8b94278a5ee1b",
+    "semantic_hash": "39cc320cac3e3fcce3e8b94278a5ee1b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "205ac2c432401824f979a3267b5f884b",
+    "semantic_hash": "205ac2c432401824f979a3267b5f884b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/blueprints/context-bundle-template.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "125c6fb92b33899456e3439afab65ad7",
+    "semantic_hash": "125c6fb92b33899456e3439afab65ad7"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/blueprints/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "57bf12bcf379dac78dd87cc9a095a423",
+    "semantic_hash": "57bf12bcf379dac78dd87cc9a095a423"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/concepts/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "800d4f6a175627caa92694bde4057c05",
+    "semantic_hash": "800d4f6a175627caa92694bde4057c05"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/concepts/subagent-testing-modes.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "82ce87131e205293ebdbb4ae931eecac",
+    "semantic_hash": "82ce87131e205293ebdbb4ae931eecac"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/agent-metadata.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3a01deed7fffc99540f573dea0e6c56c",
+    "semantic_hash": "3a01deed7fffc99540f573dea0e6c56c"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/agents.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "ae994516061ea69219defd02ef99cf1a",
+    "semantic_hash": "ae994516061ea69219defd02ef99cf1a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/categories.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c254c2ef36657e7a3a527fdeb1665c4d",
+    "semantic_hash": "c254c2ef36657e7a3a527fdeb1665c4d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/evals.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2ae9b0dcb605f985ad9a60c6b7268fd1",
+    "semantic_hash": "2ae9b0dcb605f985ad9a60c6b7268fd1"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "42f2db67beabc75beb7b2925ceedf196",
+    "semantic_hash": "42f2db67beabc75beb7b2925ceedf196"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/core-concepts/registry.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7c5989f79d2a4ddb95f950c8f82083e8",
+    "semantic_hash": "7c5989f79d2a4ddb95f950c8f82083e8"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/errors/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "497a580a47a2a63d185f1a11ca7ef16a",
+    "semantic_hash": "497a580a47a2a63d185f1a11ca7ef16a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/errors/tool-permission-errors.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6d67904575b92a6bb018846bd747a3be",
+    "semantic_hash": "6d67904575b92a6bb018846bd747a3be"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/examples/context-bundle-example.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "554b0c3d39ca3d66008eb1fcdc9ce81a",
+    "semantic_hash": "554b0c3d39ca3d66008eb1fcdc9ce81a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/examples/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e3e67c10d079312b2a47167d622a9b8f",
+    "semantic_hash": "e3e67c10d079312b2a47167d622a9b8f"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/examples/subagent-prompt-structure.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "9bd64b5e626264c2257f7d158e71ad58",
+    "semantic_hash": "9bd64b5e626264c2257f7d158e71ad58"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/adding-agent-basics.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "46875d331733a97a813f5db6a2ffc322",
+    "semantic_hash": "46875d331733a97a813f5db6a2ffc322"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/adding-agent-testing.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "747854f88a2453a389d17282fc6af0f0",
+    "semantic_hash": "747854f88a2453a389d17282fc6af0f0"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/adding-skill-basics.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "ad753012fcd3031734df8f92348be889",
+    "semantic_hash": "ad753012fcd3031734df8f92348be889"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/adding-skill-example.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "bf7213ca7c82071ef3abcb28f0a66825",
+    "semantic_hash": "bf7213ca7c82071ef3abcb28f0a66825"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/adding-skill-implementation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "bf23887ea81a08716d4f9d6ca79c2122",
+    "semantic_hash": "bf23887ea81a08716d4f9d6ca79c2122"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/building-cli-compact.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3101ea9ae38017b88ecf934942c19579",
+    "semantic_hash": "3101ea9ae38017b88ecf934942c19579"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/creating-release.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "10ef517733c98622b589fbf9f170c11d",
+    "semantic_hash": "10ef517733c98622b589fbf9f170c11d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/debugging.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6dc8f68b5ab5a2df7df972c8b4fcb582",
+    "semantic_hash": "6dc8f68b5ab5a2df7df972c8b4fcb582"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/external-libraries-workflow.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "d6f8cf6b6f4b7c03e9fb18e81348c1ba",
+    "semantic_hash": "d6f8cf6b6f4b7c03e9fb18e81348c1ba"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/github-issues-workflow.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "dc0f611dc4d87ffa53828e0f59e651ae",
+    "semantic_hash": "dc0f611dc4d87ffa53828e0f59e651ae"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "cf4b09562d87079c2c01853372470591",
+    "semantic_hash": "cf4b09562d87079c2c01853372470591"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/npm-publishing.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "253ec12c136b86da3f9487bbf5224941",
+    "semantic_hash": "253ec12c136b86da3f9487bbf5224941"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/profile-validation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4d50c002e61c08cd8a307c4d4083880e",
+    "semantic_hash": "4d50c002e61c08cd8a307c4d4083880e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/resolving-installer-wildcard-failures.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8a029992ed01df3a3691ed9bcd45acb2",
+    "semantic_hash": "8a029992ed01df3a3691ed9bcd45acb2"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/subagent-invocation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "75e32fdbb39ec774086a1e6bf47ce0dd",
+    "semantic_hash": "75e32fdbb39ec774086a1e6bf47ce0dd"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/testing-agent.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7657cb9fb52b9d01026581d17dfd3365",
+    "semantic_hash": "7657cb9fb52b9d01026581d17dfd3365"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/testing-subagents-approval.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "dc4e9d914ab5f52d664acebf0a4ca8aa",
+    "semantic_hash": "dc4e9d914ab5f52d664acebf0a4ca8aa"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/testing-subagents.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "90efd41bac079509ee6ebd415df12c28",
+    "semantic_hash": "90efd41bac079509ee6ebd415df12c28"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/guides/updating-registry.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c6fc08b62c38346bdebb13b491b0f28e",
+    "semantic_hash": "c6fc08b62c38346bdebb13b491b0f28e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/lookup/commands.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "0c67f72016c9d4e8578b8ee178ff4aab",
+    "semantic_hash": "0c67f72016c9d4e8578b8ee178ff4aab"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/lookup/file-locations.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "b2e4aac5343e27f713d3651a8962c83e",
+    "semantic_hash": "b2e4aac5343e27f713d3651a8962c83e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/lookup/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "b41d24d3145dcfb38d992cee9cd6f104",
+    "semantic_hash": "b41d24d3145dcfb38d992cee9cd6f104"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/lookup/subagent-framework-maps.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "55c4bbb48f3290fc0c6ebf36a6cdca57",
+    "semantic_hash": "55c4bbb48f3290fc0c6ebf36a6cdca57"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/lookup/subagent-test-commands.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "ecc978a55d61a81aef90ec982f7c609a",
+    "semantic_hash": "ecc978a55d61a81aef90ec982f7c609a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2d6db73f2f2ffc703e1a877c4843bae5",
+    "semantic_hash": "2d6db73f2f2ffc703e1a877c4843bae5"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/architecture/lifecycle.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "f26deffe55ef05ea50c7f1f23b17b960",
+    "semantic_hash": "f26deffe55ef05ea50c7f1f23b17b960"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/architecture/overview.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fca97a1de56d0c1047a3f418b238ed90",
+    "semantic_hash": "fca97a1de56d0c1047a3f418b238ed90"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/capabilities/agents.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4790fbac0d3d9e8fad4059f48cd93763",
+    "semantic_hash": "4790fbac0d3d9e8fad4059f48cd93763"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/capabilities/events.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "e0f26a3e4d380e9603a174ef3e17d356",
+    "semantic_hash": "e0f26a3e4d380e9603a174ef3e17d356"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/capabilities/events_skills.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5722fa2712b1288a258bfc8477011102",
+    "semantic_hash": "5722fa2712b1288a258bfc8477011102"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/capabilities/tools.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "675c92e2ee2b4e3d3eb941300cca893c",
+    "semantic_hash": "675c92e2ee2b4e3d3eb941300cca893c"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/context-overview.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3f719b0b46d934e936d9e2d16f633062",
+    "semantic_hash": "3f719b0b46d934e936d9e2d16f633062"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/context/reference/best-practices.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "358bed3fadec7b81ff3d2c10e94bcb7a",
+    "semantic_hash": "358bed3fadec7b81ff3d2c10e94bcb7a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/plugins/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "13d3eb4b736a1f34fadc19df3c25f7bf",
+    "semantic_hash": "13d3eb4b736a1f34fadc19df3c25f7bf"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/quality/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7add3a3c07c6e17eb38739f93d712845",
+    "semantic_hash": "7add3a3c07c6e17eb38739f93d712845"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/quality/registry-dependencies.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1795c057a85fef7fff065d8af78e5a7a",
+    "semantic_hash": "1795c057a85fef7fff065d8af78e5a7a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/quick-start.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "6a68c697f87063b50e233b9118ef9a8e",
+    "semantic_hash": "6a68c697f87063b50e233b9118ef9a8e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/templates/context-bundle-template.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "fa7241c285ff89be2b0420e39d32014e",
+    "semantic_hash": "fa7241c285ff89be2b0420e39d32014e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/openagents-repo/templates/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "2cf8ced8122a155f4dca96bd2942895b",
+    "semantic_hash": "2cf8ced8122a155f4dca96bd2942895b"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/business-domain.md": {
+    "mtime": 1774620286.0,
+    "ast_hash": "8b76e2592bc16d89907fabd19bb8b9bc",
+    "semantic_hash": "8b76e2592bc16d89907fabd19bb8b9bc"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/business-tech-bridge.md": {
+    "mtime": 1774620769.0,
+    "ast_hash": "aad69f4a0d404a7a07e1b6194548376a",
+    "semantic_hash": "aad69f4a0d404a7a07e1b6194548376a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions-log.md": {
+    "mtime": 1774619797.0,
+    "ast_hash": "98a766651a5b2c1d2a0d63dc68ac98c6",
+    "semantic_hash": "98a766651a5b2c1d2a0d63dc68ac98c6"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/architecture.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "fa022c16cdf694705ed2afbce1c751aa",
+    "semantic_hash": "fa022c16cdf694705ed2afbce1c751aa"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/navigation.md": {
+    "mtime": 1774619797.0,
+    "ast_hash": "1e888cce9a5e07df228531296ed838fe",
+    "semantic_hash": "1e888cce9a5e07df228531296ed838fe"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/pending-decisions.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "42efdfa7dc840fe2b6b5d84bb4fd6f2a",
+    "semantic_hash": "42efdfa7dc840fe2b6b5d84bb4fd6f2a"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/pipeline-contracts.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "a913255d6677c4d759589aabc324415e",
+    "semantic_hash": "a913255d6677c4d759589aabc324415e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/runtime-tooling.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "60c278c6ae51e2579d66c4d64e8d217e",
+    "semantic_hash": "60c278c6ae51e2579d66c4d64e8d217e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/decisions/security-operations.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "1ff512d0279a9e2a9ba0e94ee4d70a68",
+    "semantic_hash": "1ff512d0279a9e2a9ba0e94ee4d70a68"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/living-notes.md": {
+    "mtime": 1774989050.0,
+    "ast_hash": "fb9aace805f0d10066acabeb6b674411",
+    "semantic_hash": "fb9aace805f0d10066acabeb6b674411"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/navigation.md": {
+    "mtime": 1774619798.0,
+    "ast_hash": "2c6239fde1b1a55bc8d3dd8cb502310d",
+    "semantic_hash": "2c6239fde1b1a55bc8d3dd8cb502310d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project-intelligence/technical-domain.md": {
+    "mtime": 1774618818.0,
+    "ast_hash": "cc7eee1118357e1675f8945431195872",
+    "semantic_hash": "cc7eee1118357e1675f8945431195872"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/project/project-context.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "cbb0859eef4a1512a984ec84bd010ce8",
+    "semantic_hash": "cbb0859eef4a1512a984ec84bd010ce8"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "646dd16d5f7bf8f54e6fb74a419c24af",
+    "semantic_hash": "646dd16d5f7bf8f54e6fb74a419c24af"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/terminal/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "a38dded8af7b21b990957415225e2406",
+    "semantic_hash": "a38dded8af7b21b990957415225e2406"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-advanced.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "f192ddba082f5e048670d4d6022e2278",
+    "semantic_hash": "f192ddba082f5e048670d4d6022e2278"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-basics.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "59beb85b3816b99bd84be6f3122a7969",
+    "semantic_hash": "59beb85b3816b99bd84be6f3122a7969"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-chat.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "1a942892749ce41556e89f66e8808a38",
+    "semantic_hash": "1a942892749ce41556e89f66e8808a38"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-components.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "716ca4d57f025b0f9e28c5eeb3901361",
+    "semantic_hash": "716ca4d57f025b0f9e28c5eeb3901361"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-forms.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "201cca7bf835b0e679319c09c8dc8fbe",
+    "semantic_hash": "201cca7bf835b0e679319c09c8dc8fbe"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/animation-loading.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "3a5a38c1da3df0d7f4a0d2506c501ac9",
+    "semantic_hash": "3a5a38c1da3df0d7f4a0d2506c501ac9"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design-systems.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "c8f103f940411ba33d9930048a6c471d",
+    "semantic_hash": "c8f103f940411ba33d9930048a6c471d"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design/concepts/scroll-linked-animations.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "8952b53c14cc73ada559185785d97b85",
+    "semantic_hash": "8952b53c14cc73ada559185785d97b85"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design/examples/scrollytelling-headphone.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "be926d9b55ecb635688d08736610ce99",
+    "semantic_hash": "be926d9b55ecb635688d08736610ce99"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design/guides/building-scrollytelling-pages.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "665d533adee840b45c953c34b0359e89",
+    "semantic_hash": "665d533adee840b45c953c34b0359e89"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design/lookup/scroll-animation-prompts.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "4929ae52abce2bf1c68fb07e79ae93a8",
+    "semantic_hash": "4929ae52abce2bf1c68fb07e79ae93a8"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/design/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "ceecf61e6a34f4420d8d24c2a0f51119",
+    "semantic_hash": "ceecf61e6a34f4420d8d24c2a0f51119"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5f29deedb64f7cfbf425a1fa563ed70e",
+    "semantic_hash": "5f29deedb64f7cfbf425a1fa563ed70e"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/react-patterns.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "151bf6b4acb0d4d6f7443a33f20df032",
+    "semantic_hash": "151bf6b4acb0d4d6f7443a33f20df032"
+  },
+  "/home/vader/source/RapidCull/.opencode/context/ui/web/ui-styling-standards.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "eb99eed4a4bb0c0a4d8f4f34e1763216",
+    "semantic_hash": "eb99eed4a4bb0c0a4d8f4f34e1763216"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/context7/README.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "7771ffac06a547a4c4ffd9c4098210d0",
+    "semantic_hash": "7771ffac06a547a4c4ffd9c4098210d0"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/context7/SKILL.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "68bae3ad4175859d9264923f4ac1c1dd",
+    "semantic_hash": "68bae3ad4175859d9264923f4ac1c1dd"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/context7/library-registry.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "5f045ccbf111166c79c63ca854944ed3",
+    "semantic_hash": "5f045ccbf111166c79c63ca854944ed3"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/context7/navigation.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "78f915d04e51743be13548ba976b5cdf",
+    "semantic_hash": "78f915d04e51743be13548ba976b5cdf"
+  },
+  "/home/vader/source/RapidCull/.opencode/skills/task-management/SKILL.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "b9ab36b2777ddf6775795fcc0bced4e8",
+    "semantic_hash": "b9ab36b2777ddf6775795fcc0bced4e8"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/exiftool/persistent-batch-mode-python.md": {
+    "mtime": 1773492847.0,
+    "ast_hash": "8f7aace94f942d890517439e4d8634a4",
+    "semantic_hash": "8f7aace94f942d890517439e4d8634a4"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/mypy/missing-pytyped-marker-src-layout-remediation.md": {
+    "mtime": 1772941870.0,
+    "ast_hash": "e6e986f85caed1ac25d66d1e046bc686",
+    "semantic_hash": "e6e986f85caed1ac25d66d1e046bc686"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/mypy/python-3-11-pyproject-best-practices.md": {
+    "mtime": 1772906044.0,
+    "ast_hash": "460556558158dcdf8940528365cb5db6",
+    "semantic_hash": "460556558158dcdf8940528365cb5db6"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/pyenv/linux-user-space-noninteractive-python-3-11-venv.md": {
+    "mtime": 1772904223.0,
+    "ast_hash": "7cc6aa2af8bb32a34dc454b35c793e52",
+    "semantic_hash": "7cc6aa2af8bb32a34dc454b35c793e52"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/pytest/venv-pytest-invocation-remediation.md": {
+    "mtime": 1772903376.0,
+    "ast_hash": "3d931cd802705f4b44fe51a2869c69b4",
+    "semantic_hash": "3d931cd802705f4b44fe51a2869c69b4"
+  },
+  "/home/vader/source/RapidCull/.tmp/external-context/python-packaging/requires-python-editable-install-python-3-10-vs-3-11.md": {
+    "mtime": 1772903919.0,
+    "ast_hash": "20babe85cb0deb000b3296be666ab774",
+    "semantic_hash": "20babe85cb0deb000b3296be666ab774"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-14-fr-006-007-008-slice-1/context.md": {
+    "mtime": 1773531062.0,
+    "ast_hash": "d89b834623ab3083d417d7054e74c676",
+    "semantic_hash": "d89b834623ab3083d417d7054e74c676"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-27-query-parser-foundation/context.md": {
+    "mtime": 1774623715.0,
+    "ast_hash": "aa7f3de236980a0091fbf36e1a153f8d",
+    "semantic_hash": "aa7f3de236980a0091fbf36e1a153f8d"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-021-grouped-expression-diagnostics/context.md": {
+    "mtime": 1774750697.0,
+    "ast_hash": "31eb470a169c16e21dd06df5bd239a2b",
+    "semantic_hash": "31eb470a169c16e21dd06df5bd239a2b"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-021-grouped-start-boolean-diagnostics/context.md": {
+    "mtime": 1774752940.0,
+    "ast_hash": "0da96f197e0fb0c90c52afffebb4eb31",
+    "semantic_hash": "0da96f197e0fb0c90c52afffebb4eb31"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-021-malformed-boolean-pairs/context.md": {
+    "mtime": 1774754229.0,
+    "ast_hash": "d1ab8cc9181b0fab80832ce8b85d0582",
+    "semantic_hash": "d1ab8cc9181b0fab80832ce8b85d0582"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-021-not-diagnostic-hardening/context.md": {
+    "mtime": 1774752254.0,
+    "ast_hash": "5a31a60b58518b2e026b28105acf8ed2",
+    "semantic_hash": "5a31a60b58518b2e026b28105acf8ed2"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-021-open-group-eof-diagnostics/context.md": {
+    "mtime": 1774753726.0,
+    "ast_hash": "5003f6133c861a32f53bc8e0eb7a68f1",
+    "semantic_hash": "5003f6133c861a32f53bc8e0eb7a68f1"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-28-fr-022-query-behavior-docs/context.md": {
+    "mtime": 1774755590.0,
+    "ast_hash": "d9e39795dd6a16045b7bc7861d648ca1",
+    "semantic_hash": "d9e39795dd6a16045b7bc7861d648ca1"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-fr-022-query-docs-expansion/context.md": {
+    "mtime": 1774786032.0,
+    "ast_hash": "7b57bf79180e7d5c0b3554f1ec04508b",
+    "semantic_hash": "7b57bf79180e7d5c0b3554f1ec04508b"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-fr-022-query-docs-final-invalid-examples/context.md": {
+    "mtime": 1774787584.0,
+    "ast_hash": "3b1b35e0a1810126629d27b877e3de83",
+    "semantic_hash": "3b1b35e0a1810126629d27b877e3de83"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-query-evaluation-contract-v1/context.md": {
+    "mtime": 1774789554.0,
+    "ast_hash": "b6235ee37fe60c81f8d81a7b77e0572c",
+    "semantic_hash": "b6235ee37fe60c81f8d81a7b77e0572c"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-query-evaluation-semantics-v1/context.md": {
+    "mtime": 1774790949.0,
+    "ast_hash": "8f4560beef0542a28cde0f10521474e0",
+    "semantic_hash": "8f4560beef0542a28cde0f10521474e0"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-query-evaluator-baseline-v1/context.md": {
+    "mtime": 1774793168.0,
+    "ast_hash": "b4217274cb3e575988b23015130b526c",
+    "semantic_hash": "b4217274cb3e575988b23015130b526c"
+  },
+  "/home/vader/source/RapidCull/.tmp/sessions/2026-03-29-query-stale-doc-cleanup-v1/context.md": {
+    "mtime": 1774987767.0,
+    "ast_hash": "854f2017b50aeeb12bbe5bfc4a99e054",
+    "semantic_hash": "854f2017b50aeeb12bbe5bfc4a99e054"
+  },
+  "/home/vader/source/RapidCull/README.md": {
+    "mtime": 1772898980.0,
+    "ast_hash": "96dbe4e14f719e9c5ac5bfbf6f68fbe0",
+    "semantic_hash": "96dbe4e14f719e9c5ac5bfbf6f68fbe0"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T080227--photo-library-acceptance-tests__projects.md": {
+    "mtime": 1773492458.0,
+    "ast_hash": "b767ff14dd8b23a45fb3ebef97adb0e9",
+    "semantic_hash": "b767ff14dd8b23a45fb3ebef97adb0e9"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T080227--photo-library-requirements__projects.md": {
+    "mtime": 1773492458.0,
+    "ast_hash": "b98effbcb9043490b678a7e34709165c",
+    "semantic_hash": "b98effbcb9043490b678a7e34709165c"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T080227--photo-library-test-plan__projects.md": {
+    "mtime": 1773492458.0,
+    "ast_hash": "02e1511075a98d84f3fa411ed0aac551",
+    "semantic_hash": "02e1511075a98d84f3fa411ed0aac551"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T090000--photo-fixture-dataset-test-plan__projects.md": {
+    "mtime": 1772905763.0,
+    "ast_hash": "084d26f0fe78d5492c3f1cdc6827608a",
+    "semantic_hash": "084d26f0fe78d5492c3f1cdc6827608a"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T091500--photo-library-execution-checklist__projects.md": {
+    "mtime": 1772905763.0,
+    "ast_hash": "60b4648a056a38fe203da275d7efa983",
+    "semantic_hash": "60b4648a056a38fe203da275d7efa983"
+  },
+  "/home/vader/source/RapidCull/docs/20260307T093000--rapidcull-dependencies__projects.md": {
+    "mtime": 1773541511.0,
+    "ast_hash": "0dda66c442a5b1a151f4ab5d8f6a642c",
+    "semantic_hash": "0dda66c442a5b1a151f4ab5d8f6a642c"
+  },
+  "/home/vader/source/RapidCull/docs/20260328T223918--query-grammar-v1-behavior__projects.md": {
+    "mtime": 1774788006.0,
+    "ast_hash": "d9c5ea3fe9b326483a0170ed78eadb37",
+    "semantic_hash": "d9c5ea3fe9b326483a0170ed78eadb37"
+  },
+  "/home/vader/source/RapidCull/docs/20260329T080544--query-evaluation-contract-v1__projects.md": {
+    "mtime": 1774989050.0,
+    "ast_hash": "edddba6137914b984fe9fbe71743ef28",
+    "semantic_hash": "edddba6137914b984fe9fbe71743ef28"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T113500--photo-library-pr-plan-lessons-learned__projects.md": {
+    "mtime": 1772905763.0,
+    "ast_hash": "755d384ccabbbb200a7c604c2b7ef1d4",
+    "semantic_hash": "755d384ccabbbb200a7c604c2b7ef1d4"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T123000--fr-004-005-lessons-learned__projects.md": {
+    "mtime": 1772906883.0,
+    "ast_hash": "9638360f1923943ecc2ddfeea8c439a3",
+    "semantic_hash": "9638360f1923943ecc2ddfeea8c439a3"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T130500--fr-006-008-lessons-learned__projects.md": {
+    "mtime": 1772911438.0,
+    "ast_hash": "ec3529ad803ab5154d851fa136f0b8d8",
+    "semantic_hash": "ec3529ad803ab5154d851fa136f0b8d8"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T133500--foundation-split-separation-of-concerns-lessons-learned__projects.md": {
+    "mtime": 1772912338.0,
+    "ast_hash": "efafdeaf090d839a6450d67cd1f17e48",
+    "semantic_hash": "efafdeaf090d839a6450d67cd1f17e48"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T141500--fr-009-video-proxy-baseline-lessons-learned__projects.md": {
+    "mtime": 1772939926.0,
+    "ast_hash": "20aa5c09e29a6b79a7d2948635f187ff",
+    "semantic_hash": "20aa5c09e29a6b79a7d2948635f187ff"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T144500--fr-010-regeneration-selection-lessons-learned__projects.md": {
+    "mtime": 1772940596.0,
+    "ast_hash": "17e676aeeb04ee8dcf33f30a967c640f",
+    "semantic_hash": "17e676aeeb04ee8dcf33f30a967c640f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T151500--remove-foundation-and-split-integration-tests-lessons-learned__projects.md": {
+    "mtime": 1772940799.0,
+    "ast_hash": "7d73b5053656c616d3cd5b1f3bf2602b",
+    "semantic_hash": "7d73b5053656c616d3cd5b1f3bf2602b"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T153500--fr-011-orphan-cleanup-report-lessons-learned__projects.md": {
+    "mtime": 1772941100.0,
+    "ast_hash": "557fefaa589c78593c441e92aa8a7dc7",
+    "semantic_hash": "557fefaa589c78593c441e92aa8a7dc7"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260307T235900--fr-012-gallery-hardlinks-lessons-learned__projects.md": {
+    "mtime": 1772942833.0,
+    "ast_hash": "9b9a246f6a4a75f06b2fffc57a294d00",
+    "semantic_hash": "9b9a246f6a4a75f06b2fffc57a294d00"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260308T041500--fr-013-gallery-source-modes-lessons-learned__projects.md": {
+    "mtime": 1772943636.0,
+    "ast_hash": "9ccb74233f773b4b40145227cd70afd1",
+    "semantic_hash": "9ccb74233f773b4b40145227cd70afd1"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260308T043000--fr-014-single-gallery-metadata-rebuild-lessons-learned__projects.md": {
+    "mtime": 1772944149.0,
+    "ast_hash": "02a2e23bc66fc1de7e1b339b4e097b2f",
+    "semantic_hash": "02a2e23bc66fc1de7e1b339b4e097b2f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260308T050500--fr-014-rebuild-all-galleries-metadata-lessons-learned__projects.md": {
+    "mtime": 1772947059.0,
+    "ast_hash": "51158b2b9fe52acc4701da1d31916edd",
+    "semantic_hash": "51158b2b9fe52acc4701da1d31916edd"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260308T054500--fr-015-galleries-index-refresh-lessons-learned__projects.md": {
+    "mtime": 1773453351.0,
+    "ast_hash": "00fccf29ed5663178a9749792a5cf22f",
+    "semantic_hash": "00fccf29ed5663178a9749792a5cf22f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260308T061500--fr-015-index-hardening-invalid-metadata-lessons-learned__projects.md": {
+    "mtime": 1773455368.0,
+    "ast_hash": "a6a757834f5f377254d4068172ce2e55",
+    "semantic_hash": "a6a757834f5f377254d4068172ce2e55"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260313T120000--fr-016-slice-1-gallery-mutation-security-lessons-learned__projects.md": {
+    "mtime": 1773456672.0,
+    "ast_hash": "f4f4f72b960e07e36bbfa6767e0c9420",
+    "semantic_hash": "f4f4f72b960e07e36bbfa6767e0c9420"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260313T130000--fr-016-slice-2-gallery-mutation-structured-errors-lessons-learned__projects.md": {
+    "mtime": 1773457195.0,
+    "ast_hash": "768d4999938c5b5adabf40178f17b48e",
+    "semantic_hash": "768d4999938c5b5adabf40178f17b48e"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260313T140000--dependency-alignment-bootstrap-and-system-deps-lessons-learned__projects.md": {
+    "mtime": 1773457984.0,
+    "ast_hash": "d1a3ba6cdce5a031da4d98c2cc0a5bf4",
+    "semantic_hash": "d1a3ba6cdce5a031da4d98c2cc0a5bf4"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260314T170000--fr-002-exiftool-batch-mode-slice-1-lessons-learned__projects.md": {
+    "mtime": 1773525010.0,
+    "ast_hash": "4a457baae9adb07011154306966565a9",
+    "semantic_hash": "4a457baae9adb07011154306966565a9"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260314T183000--fr-002-exiftool-hardening-slice-2-lessons-learned__projects.md": {
+    "mtime": 1773526024.0,
+    "ast_hash": "ff7158c6d928af448203ececc210c036",
+    "semantic_hash": "ff7158c6d928af448203ececc210c036"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260314T210000--fr-006-008-slice-1-real-tool-adapters-and-heif-preflight-lessons-learned__projects.md": {
+    "mtime": 1773541511.0,
+    "ast_hash": "f600009f31947c7cc7e3ffb8ce98780a",
+    "semantic_hash": "f600009f31947c7cc7e3ffb8ce98780a"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260314T223000--fr-006-008-slice-2-batch-accounting-and-tool-summary-lessons-learned__projects.md": {
+    "mtime": 1773543485.0,
+    "ast_hash": "70591783eaadcbdeea4b5fa4d5c7e1bb",
+    "semantic_hash": "70591783eaadcbdeea4b5fa4d5c7e1bb"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260314T233000--fr-006-008-slice-3-taxonomy-normalization-checkpoint-lessons-learned__projects.md": {
+    "mtime": 1773544007.0,
+    "ast_hash": "b8461bb9c3d75acd59d88039d1eeb43f",
+    "semantic_hash": "b8461bb9c3d75acd59d88039d1eeb43f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T000500--fr-006-008-slice-3b-raw-reason-normalization-guardrail-lessons-learned__projects.md": {
+    "mtime": 1773578656.0,
+    "ast_hash": "67a216d4ea4f63efcb8e97e521bd914f",
+    "semantic_hash": "67a216d4ea4f63efcb8e97e521bd914f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T003500--fr-006-008-slice-3c-raw-subprocess-seam-checkpoint-lessons-learned__projects.md": {
+    "mtime": 1773580108.0,
+    "ast_hash": "e22f23517419273a297eb2d2acd8d362",
+    "semantic_hash": "e22f23517419273a297eb2d2acd8d362"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T011500--fr-006-008-slice-3d-imagemagick-subprocess-seam-checkpoint-lessons-learned__projects.md": {
+    "mtime": 1773581053.0,
+    "ast_hash": "8bc3efee46c046a5e08b46c35b00cce3",
+    "semantic_hash": "8bc3efee46c046a5e08b46c35b00cce3"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T133723--fr-006-008-slice-3e-heic-subprocess-taxonomy-hardening-lessons-learned__projects.md": {
+    "mtime": 1773582342.0,
+    "ast_hash": "9821908963aa3ac15547f082b787d2a5",
+    "semantic_hash": "9821908963aa3ac15547f082b787d2a5"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T145209--fr-007-slice-3f-heic-failure-subclasses-lessons-learned__projects.md": {
+    "mtime": 1773586409.0,
+    "ast_hash": "1506169f7cf2331747a3903f10e915c6",
+    "semantic_hash": "1506169f7cf2331747a3903f10e915c6"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260315T150439--fr-050-proxy-run-summary-contract-lessons-learned__projects.md": {
+    "mtime": 1773587156.0,
+    "ast_hash": "16bc33cd565d55f034ea7e15fc73340a",
+    "semantic_hash": "16bc33cd565d55f034ea7e15fc73340a"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260327T000000--fr-017-021-query-parser-foundation-lessons-learned__projects.md": {
+    "mtime": 1774625891.0,
+    "ast_hash": "f45795b07661cfd9c3fb301f5e97dc76",
+    "semantic_hash": "f45795b07661cfd9c3fb301f5e97dc76"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260327T010000--fr-017-021-query-value-validation-lessons-learned__projects.md": {
+    "mtime": 1774704239.0,
+    "ast_hash": "fcaaa581c4ea9dd38aa49cf86aaf637e",
+    "semantic_hash": "fcaaa581c4ea9dd38aa49cf86aaf637e"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260327T020000--fr-021-query-error-diagnostics-lessons-learned__projects.md": {
+    "mtime": 1774713799.0,
+    "ast_hash": "e006911af305d6803d57c95c2fa32224",
+    "semantic_hash": "e006911af305d6803d57c95c2fa32224"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260327T030000--fr-021-query-diagnostics-part-2-lessons-learned__projects.md": {
+    "mtime": 1774749998.0,
+    "ast_hash": "e6736893eae26f5f0c02fcb979981f1f",
+    "semantic_hash": "e6736893eae26f5f0c02fcb979981f1f"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T211809--fr-021-grouped-expression-diagnostics-hardening-lessons-learned__projects.md": {
+    "mtime": 1774751958.0,
+    "ast_hash": "a735cf00372826194bb658c7455eb8a2",
+    "semantic_hash": "a735cf00372826194bb658c7455eb8a2"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T214407--fr-021-not-diagnostic-hardening-lessons-learned__projects.md": {
+    "mtime": 1774752616.0,
+    "ast_hash": "f5974d9e9e1ff46ec58420e6dad392f9",
+    "semantic_hash": "f5974d9e9e1ff46ec58420e6dad392f9"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T215531--fr-021-grouped-start-boolean-diagnostics-lessons-learned__projects.md": {
+    "mtime": 1774753189.0,
+    "ast_hash": "f66833f10653489be7842b5798d06e9a",
+    "semantic_hash": "f66833f10653489be7842b5798d06e9a"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T220839--fr-021-open-group-eof-diagnostics-lessons-learned__projects.md": {
+    "mtime": 1774753927.0,
+    "ast_hash": "a8ef3d2af49471fd169849e0f20e3dee",
+    "semantic_hash": "a8ef3d2af49471fd169849e0f20e3dee"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T221702--fr-021-malformed-boolean-pairs-lessons-learned__projects.md": {
+    "mtime": 1774754681.0,
+    "ast_hash": "73e2a981c7fb886261039e5207f7c4f6",
+    "semantic_hash": "73e2a981c7fb886261039e5207f7c4f6"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260328T223918--fr-022-query-behavior-docs-lessons-learned__projects.md": {
+    "mtime": 1774757734.0,
+    "ast_hash": "4a2c8c7c7f2429512e3342e30af00299",
+    "semantic_hash": "4a2c8c7c7f2429512e3342e30af00299"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260329T070703--fr-022-query-docs-expansion-lessons-learned__projects.md": {
+    "mtime": 1774787093.0,
+    "ast_hash": "48071f3575860996dbdd44df2bfdd6c7",
+    "semantic_hash": "48071f3575860996dbdd44df2bfdd6c7"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260329T073252--fr-022-query-docs-final-invalid-examples-lessons-learned__projects.md": {
+    "mtime": 1774788006.0,
+    "ast_hash": "8638b38aec0c13e0d32c332951beda84",
+    "semantic_hash": "8638b38aec0c13e0d32c332951beda84"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260329T080544--query-evaluation-contract-v1-lessons-learned__projects.md": {
+    "mtime": 1774790340.0,
+    "ast_hash": "721bac04c277c8938e2d3bed9a1c6389",
+    "semantic_hash": "721bac04c277c8938e2d3bed9a1c6389"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260329T082637--query-evaluation-semantics-v1-lessons-learned__projects.md": {
+    "mtime": 1774792100.0,
+    "ast_hash": "329a676fa5cb3943634f8c2000130fcd",
+    "semantic_hash": "329a676fa5cb3943634f8c2000130fcd"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260329T090557--query-evaluator-baseline-v1-lessons-learned__projects.md": {
+    "mtime": 1774794893.0,
+    "ast_hash": "5d9d62f8e36c010296d4d4ae527a6e20",
+    "semantic_hash": "5d9d62f8e36c010296d4d4ae527a6e20"
+  },
+  "/home/vader/source/RapidCull/docs/lessons-learned/20260331T150919--query-stale-doc-cleanup-v1-lessons-learned__projects.md": {
+    "mtime": 1774989050.0,
+    "ast_hash": "1bbe2af0a1c3a7bc41a1df68e52570b8",
+    "semantic_hash": "1bbe2af0a1c3a7bc41a1df68e52570b8"
+  },
+  "/home/vader/source/RapidCull/scripts/script-notes.md": {
+    "mtime": 1779029242.908174,
+    "ast_hash": "49a8b5814672d4377f69406c5f963c9c",
+    "semantic_hash": "49a8b5814672d4377f69406c5f963c9c"
+  }
+}
