@@ -155,3 +155,31 @@ class CollectionQueryResult:
     matching_ids: list[str]
     total_count: int
     query_expression_text: str
+
+
+@dataclass(frozen=True)
+class FaceRecord:
+    face_id: str
+    image_id: str
+    person_id: str | None
+    embedding: bytes
+    bbox_x: int
+    bbox_y: int
+    bbox_w: int
+    bbox_h: int
+    detection_score: float
+
+
+@dataclass(frozen=True)
+class PersonRecord:
+    person_id: str
+    name: str
+    created_at: str
+
+
+@dataclass(frozen=True)
+class FaceDetectionResult:
+    processed_count: int
+    skipped_count: int
+    failed_count: int
+    failed_items: list[FailedIngestItem]

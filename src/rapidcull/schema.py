@@ -3,11 +3,34 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-CURRENT_SCHEMA_VERSION = 1
+CURRENT_SCHEMA_VERSION = 2
 
 
 class SchemaVersionMismatchError(RuntimeError):
     """Raised when the on-disk schema version doesn't match expected version."""
+
+
+def _apply_v2_tables(cursor: sqlite3.Cursor) -> None:
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS persons (
+          person_id TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          created_at TEXT NOT NULL
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS faces (
+          face_id TEXT PRIMARY KEY,
+          image_id TEXT NOT NULL REFERENCES images(image_id),
+          person_id TEXT REFERENCES persons(person_id),
+          embedding BLOB NOT NULL,
+          bbox_x INTEGER NOT NULL,
+          bbox_y INTEGER NOT NULL,
+          bbox_w INTEGER NOT NULL,
+          bbox_h INTEGER NOT NULL,
+          detection_score REAL NOT NULL
+        )
+    """)
 
 
 def create_or_validate_schema(db_path: Path) -> None:
@@ -28,10 +51,18 @@ def create_or_validate_schema(db_path: Path) -> None:
             cursor.execute(
                 "INSERT INTO schema_version (version) VALUES (?)", (CURRENT_SCHEMA_VERSION,)
             )
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS images (
+                  image_id TEXT PRIMARY KEY,
+                  path TEXT NOT NULL UNIQUE
+                )
+                """)
+            _apply_v2_tables(cursor)
             connection.commit()
             return
 
         existing_version = int(row[0])
+
         if existing_version != CURRENT_SCHEMA_VERSION:
             raise SchemaVersionMismatchError(
                 "Schema version mismatch detected. Please run migration tooling. "
@@ -44,4 +75,5 @@ def create_or_validate_schema(db_path: Path) -> None:
               path TEXT NOT NULL UNIQUE
             )
             """)
+        _apply_v2_tables(cursor)
         connection.commit()
