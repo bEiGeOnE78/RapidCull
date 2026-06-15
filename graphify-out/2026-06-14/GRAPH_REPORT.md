@@ -1,16 +1,16 @@
 # Graph Report - RapidCull  (2026-06-14)
 
 ## Corpus Check
-- 348 files · ~187,435 words
+- 345 files · ~186,042 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1720 nodes · 2856 edges · 315 communities (95 shown, 220 thin omitted)
-- Extraction: 82% EXTRACTED · 18% INFERRED · 0% AMBIGUOUS · INFERRED: 503 edges (avg confidence: 0.5)
+- 1667 nodes · 2737 edges · 313 communities (93 shown, 220 thin omitted)
+- Extraction: 82% EXTRACTED · 18% INFERRED · 0% AMBIGUOUS · INFERRED: 493 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `15c16eca`
+- Built from commit: `1329f799`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -323,8 +323,6 @@
 - [[_COMMUNITY_Community 310|Community 310]]
 - [[_COMMUNITY_Community 311|Community 311]]
 - [[_COMMUNITY_Community 312|Community 312]]
-- [[_COMMUNITY_Community 313|Community 313]]
-- [[_COMMUNITY_Community 314|Community 314]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `FailedIngestItem` - 55 edges
@@ -339,8 +337,6 @@
 10. `ProxyGenerationResult` - 23 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Any` --uses--> `Collection`  [INFERRED]
-  tests/integration/api/test_e2e_job_orchestration.py → src/rapidcull/collections.py
 - `TestProcessNewEmptyDir` --uses--> `FailedIngestItem`  [INFERRED]
   tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
 - `TestProcessNewHappyPath` --uses--> `FailedIngestItem`  [INFERRED]
@@ -349,9 +345,10 @@
   tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
 - `TestProcessNewSkippedItems` --uses--> `FailedIngestItem`  [INFERRED]
   tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
+- `TestProcessNewWithFailures` --uses--> `FailedIngestItem`  [INFERRED]
+  tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
 
 ## Import Cycles
-- 1-file cycle: `src/rapidcull/api.py -> src/rapidcull/api.py`
 - 1-file cycle: `src/rapidcull/api_jobs.py -> src/rapidcull/api_jobs.py`
 - 1-file cycle: `src/rapidcull/security.py -> src/rapidcull/security.py`
 - 1-file cycle: `tests/integration/api/test_security_auth.py -> tests/integration/api/test_security_auth.py`
@@ -479,23 +476,23 @@
 - **** — evaluate-query-function, query-ast, normalized-record-mapping, ordered-comparison-helper [INFERRED]
 - **** — query-evaluator-baseline-v1, contract-contradiction-resolution, approval-first-execution-pattern, red-green-gates-flow [INFERRED]
 
-## Communities (315 total, 220 thin omitted)
+## Communities (313 total, 220 thin omitted)
 
 ### Community 0 - "Proxy Generation & Caching"
 Cohesion: 0.06
-Nodes (63): _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped., process-new output follows 'Processed: N | Skipped: N | Failed: N' format., process-new sums failures from both extraction and proxy generation stages., process-new reports only extraction failures when proxy generation succeeds., Build an IngestMetadataExtractionResult with one metadata entry per path., process-new reports only proxy failures when metadata extraction fully succeeds. (+55 more)
+Nodes (62): _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped., process-new output follows 'Processed: N | Skipped: N | Failed: N' format., process-new sums failures from both extraction and proxy generation stages., process-new reports only extraction failures when proxy generation succeeds., Build an IngestMetadataExtractionResult with one metadata entry per path., process-new reports only proxy failures when metadata extraction fully succeeds. (+54 more)
 
 ### Community 1 - "Tool Adapters"
 Cohesion: 0.10
-Nodes (57): detect_heif_support(), ImageMagickAdapter, ImageMagickProxyOutcome, RawTherapeeAdapter, RawTherapeeProxyOutcome, ImageMagickAdapter, MonkeyPatch, OrphanCleanupReport (+49 more)
+Nodes (58): detect_heif_support(), ImageMagickAdapter, ImageMagickProxyOutcome, RawTherapeeAdapter, RawTherapeeProxyOutcome, ImageMagickAdapter, MonkeyPatch, OrphanCleanupReport (+50 more)
 
 ### Community 2 - "Query System"
-Cohesion: 0.15
-Nodes (13): assert_envelope(), client(), Stage 3 — End-to-end tests for job orchestration (FR-038..041).  Two E2E scenari, Every endpoint must return a structurally consistent envelope (ok at top level)., Missing 'kind' field triggers validation — must come back as error envelope., Reset both the JobStore and the collection registry before each test., Assert the top-level envelope structure is present and ok matches expectation., Full lifecycle: create -> GET (queued) -> mark running -> mark succeeded     -> (+5 more)
+Cohesion: 0.06
+Nodes (32): client(), _query_url(), Populate the in-memory registry before each test and clean up after., setup_and_teardown_registry(), TestCollectionNotFound, TestParseError, TestValidQuery, assert_envelope() (+24 more)
 
 ### Community 3 - "Query System"
 Cohesion: 0.14
-Nodes (27): evaluate_query must raise ValueError with context when ISO value is not an integ, evaluate_query must raise ValueError with context when fnumber value is not a nu, test_evaluate_comparison_raises_descriptive_error_for_non_float_fnumber_value(), test_evaluate_comparison_raises_descriptive_error_for_non_int_iso_value(), test_query_evaluator_applies_ordered_numeric_and_date_comparisons(), test_query_evaluator_honors_boolean_composition_for_canonical_contract_example(), test_query_evaluator_matches_any_value_in_multi_value_person_field(), test_query_evaluator_requires_present_field_for_text_inequality_match() (+19 more)
+Nodes (24): test_fr_020_honors_boolean_parentheses_and_not_precedence(), evaluate_query must raise ValueError with context when ISO value is not an integ, evaluate_query must raise ValueError with context when fnumber value is not a nu, test_evaluate_comparison_raises_descriptive_error_for_non_float_fnumber_value(), test_evaluate_comparison_raises_descriptive_error_for_non_int_iso_value(), test_query_evaluator_applies_ordered_numeric_and_date_comparisons(), test_query_evaluator_honors_boolean_composition_for_canonical_contract_example(), test_query_evaluator_matches_any_value_in_multi_value_person_field() (+16 more)
 
 ### Community 4 - "Query System"
 Cohesion: 0.10
@@ -506,8 +503,8 @@ Cohesion: 0.06
 Nodes (39): lan_client(), localhost_client(), _make_app(), Integration tests for authentication middleware (FR-043, FR-044)., Build a minimal test app with given settings applied., FR-043: In localhost mode, auth is disabled by default., FR-044: In LAN mode, mutating endpoints require Bearer token., Read-only endpoints never require auth, even in LAN mode. (+31 more)
 
 ### Community 6 - "Gallery Management"
-Cohesion: 0.06
-Nodes (96): ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionResult, FaceDetector, FaceRecord, _ConstDetector, db_path() (+88 more)
+Cohesion: 0.13
+Nodes (51): test_fr_012_creates_gallery_hardlinks_without_modifying_masters(), test_fr_013_creates_gallery_from_query_picks_and_face_sample_modes(), test_fr_013_returns_valid_empty_gallery_with_message_when_mode_matches_no_assets(), test_fr_014_rebuilds_metadata_for_all_galleries(), test_fr_014_rebuilds_single_gallery_metadata_json(), test_fr_014_returns_explicit_error_for_missing_gallery_path(), test_fr_015_continues_index_rebuild_when_one_gallery_metadata_is_invalid(), test_fr_015_rebuilds_central_galleries_index_from_current_gallery_metadata() (+43 more)
 
 ### Community 7 - "API & Routing"
 Cohesion: 0.05
@@ -518,20 +515,20 @@ Cohesion: 0.06
 Nodes (39): CodeReviewer, CoderAgent, ContextScout, Context7 API, Context7 Skill, Core Workflows Navigation, Delegation Context Template, Design Evolution Tracking (+31 more)
 
 ### Community 9 - "API & Routing"
-Cohesion: 0.09
-Nodes (26): Context, cli(), main(), _port_in_use(), _process_alive(), Stop the RapidCull API server., Restart the RapidCull API server., Main entry point for RapidCull CLI. (+18 more)
+Cohesion: 0.20
+Nodes (8): normalize_path(), Path normalization and validation utilities (FR-046).  All file/path inputs must, Resolve and normalize a path. Raise ValueError if it escapes base_dir.      Args, Path, Path, Unit tests for path normalization utility (FR-046)., TestNormalizePathBasic, TestNormalizePathWithBaseDir
 
 ### Community 10 - "API & Routing"
 Cohesion: 0.09
 Nodes (11): client(), FR-041: HTTP integration tests for /api/v1/jobs endpoints.  Uses FastAPI TestCli, List returns jobs in creation order on repeated calls., Clear the in-memory JobStore before each test., reset_job_store(), TestCancelJob, TestCreateJob, TestGetJob (+3 more)
 
 ### Community 11 - "API & Routing"
-Cohesion: 0.10
-Nodes (20): _drive_path(), _drive_to(), _make_job(), FR-040: Pure unit tests for Job state machine transitions.  Covers all 25 state-, Directly setting job.state must raise FrozenInstanceError., Directly setting job.result must raise FrozenInstanceError., Directly setting job.error must raise FrozenInstanceError., The transition() method must still succeed via object.__setattr__. (+12 more)
+Cohesion: 0.14
+Nodes (16): _drive_path(), _drive_to(), _make_job(), FR-040: Pure unit tests for Job state machine transitions.  Covers all 25 state-, Create a minimal Job in the given state (bypasses store)., Return the shortest legal transition sequence from start to target., TestIllegalTransitions, TestLegalTransitions (+8 more)
 
 ### Community 12 - "API & Routing"
-Cohesion: 0.14
-Nodes (26): ApiError, ok(), Standard response envelope helpers and exception handlers for the RapidCull API., Register all envelope exception handlers on a FastAPI application., Structured API error that maps to the standard error envelope., Build a success envelope., register_handlers(), cancel_job() (+18 more)
+Cohesion: 0.11
+Nodes (37): BaseModel, datetime, JobProgressEntry, ApiError, ok(), Standard response envelope helpers and exception handlers for the RapidCull API., Structured API error that maps to the standard error envelope., Build a success envelope. (+29 more)
 
 ### Community 13 - "Workflows & Patterns"
 Cohesion: 0.08
@@ -550,16 +547,16 @@ Cohesion: 0.09
 Nodes (27): GraphQL API Pattern, REST API Pattern, Clean Code, GraphQL, MAStra AI Framework, REST API, Workflow Step, AI Navigation Guide (+19 more)
 
 ### Community 17 - "Media Ingest Pipeline"
-Cohesion: 0.10
-Nodes (33): client(), db_path(), _make_embedding(), Integration tests for FR-026: Face boxes API endpoint., GET /api/v1/images/{image_id}/faces returns empty list when no faces stored., GET /api/v1/images/{image_id}/faces returns bbox and person_id for stored faces., GET /api/v1/images/{image_id}/faces returns 404 for unknown image_id., test_fr_026_face_boxes_empty() (+25 more)
+Cohesion: 0.17
+Nodes (21): ImageRecord, test_fr_001_initializes_schema_on_first_run(), test_fr_001_reports_actionable_error_on_schema_mismatch(), test_fr_002_discovers_only_supported_media_files(), test_fr_004_image_id_is_stable_across_reprocessing(), test_fr_005_builds_run_summary_with_failed_items_and_reason(), IngestRunSummary, create_image_record() (+13 more)
 
 ### Community 18 - "API & Routing"
-Cohesion: 0.13
-Nodes (31): FaceDetectionSuccess, _add_face_for_person(), _add_image(), _add_person(), _ConstDetector, db_path(), _make_embedding(), Integration tests for FR-025, FR-028: Person identity CRUD and deletion. (+23 more)
+Cohesion: 0.10
+Nodes (45): ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionResult, FaceDetector, FaceRecord, _ConstDetector, db_path() (+37 more)
 
 ### Community 19 - "API & Routing"
-Cohesion: 0.13
-Nodes (11): TestJobStoreCancelTerminal, JobStore, Create a new job in QUEUED state and return it., Return the job with the given id, or None if not found., Transition a job to RUNNING. Raises InvalidJobTransition if not allowed., Transition a job to SUCCEEDED and optionally set result., Transition a job to FAILED and record the error message., Reset the store (for testing only). (+3 more)
+Cohesion: 0.11
+Nodes (16): TestJobStoreCancelTerminal, Job, JobStore, Create a new job in QUEUED state and return it., Return the job with the given id, or None if not found., Return all jobs sorted by (created_at, job_id), optionally filtered by state., Transition a job to RUNNING. Raises InvalidJobTransition if not allowed., Transition a job to SUCCEEDED and optionally set result. (+8 more)
 
 ### Community 20 - "Community 20"
 Cohesion: 0.18
@@ -574,8 +571,8 @@ Cohesion: 0.12
 Nodes (17): cancel_job, start, create_job, CreateJobRequest, app, get_job, get_job_progress, Job (+9 more)
 
 ### Community 23 - "API & Routing"
-Cohesion: 0.20
-Nodes (14): Exception, api_error_handler(), err(), http_exception_handler(), Build an error envelope (body only — HTTP status set by the caller)., Handle ApiError instances — emits the error envelope., Convert FastAPI/Starlette HTTPException to the error envelope., Convert Pydantic RequestValidationError to the error envelope. (+6 more)
+Cohesion: 0.15
+Nodes (17): Exception, api_error_handler(), err(), http_exception_handler(), Register all envelope exception handlers on a FastAPI application., Build an error envelope (body only — HTTP status set by the caller)., Handle ApiError instances — emits the error envelope., Convert FastAPI/Starlette HTTPException to the error envelope. (+9 more)
 
 ### Community 24 - "Media Ingest Pipeline"
 Cohesion: 0.14
@@ -810,56 +807,48 @@ Cohesion: 0.67
 Nodes (3): Session Directory Structure, Session Management, Session Manifest
 
 ### Community 306 - "Community 306"
-Cohesion: 0.24
-Nodes (29): test_fr_017_parses_valid_grammar_query_into_typed_expression_tree(), test_fr_018_rejects_unknown_field_with_actionable_suggestion(), test_fr_019_rejects_non_integer_iso_value_with_expected_format_message(), test_fr_019_rejects_non_numeric_fnumber_value_with_expected_format_message(), test_fr_019_rejects_operator_not_supported_for_field_type(), test_fr_020_honors_boolean_parentheses_and_not_precedence(), test_fr_021_rejects_and_followed_by_or_with_actionable_error(), test_fr_021_rejects_bad_date_with_expected_format_message() (+21 more)
+Cohesion: 0.25
+Nodes (28): test_fr_017_parses_valid_grammar_query_into_typed_expression_tree(), test_fr_018_rejects_unknown_field_with_actionable_suggestion(), test_fr_019_rejects_non_integer_iso_value_with_expected_format_message(), test_fr_019_rejects_non_numeric_fnumber_value_with_expected_format_message(), test_fr_019_rejects_operator_not_supported_for_field_type(), test_fr_021_rejects_and_followed_by_or_with_actionable_error(), test_fr_021_rejects_bad_date_with_expected_format_message(), test_fr_021_rejects_double_equals_operator_with_expected_guidance() (+20 more)
 
 ### Community 307 - "Community 307"
-Cohesion: 0.18
-Nodes (9): client(), _query_url(), Tests for the standard response envelope (FR-039).  Verifies that every /api/v1/, meta may be null but the key must be present in the envelope., TestNotFoundEnvelope, TestParseErrorEnvelope, TestSuccessEnvelope, TestValidationErrorEnvelope (+1 more)
+Cohesion: 0.17
+Nodes (18): Context, cli(), main(), _port_in_use(), _process_alive(), Stop the RapidCull API server., Restart the RapidCull API server., Main entry point for RapidCull CLI. (+10 more)
 
 ### Community 308 - "Community 308"
 Cohesion: 0.43
 Nodes (4): _invalid_boolean_pair_error(), _missing_expression_after_boolean_error(), _Parser, QueryExpression
 
 ### Community 309 - "Community 309"
-Cohesion: 0.16
-Nodes (16): datetime, JobProgressEntry, CreateJobRequest, Job, JobNotCancellable, JobProgressEntry, JobState, In-memory job store with guarded state transitions for RapidCull job orchestrati (+8 more)
+Cohesion: 0.18
+Nodes (6): Directly setting job.state must raise FrozenInstanceError., Directly setting job.result must raise FrozenInstanceError., Directly setting job.error must raise FrozenInstanceError., The transition() method must still succeed via object.__setattr__., The add_progress() method must still append to the progress list., TestJobImmutability
 
 ### Community 310 - "Community 310"
-Cohesion: 0.24
-Nodes (8): client(), _query_url(), Populate the in-memory registry before each test and clean up after., setup_and_teardown_registry(), TestCollectionNotFound, TestParseError, TestValidQuery, TestClient
+Cohesion: 0.40
+Nodes (10): QueryRecordValue, _as_int(), _as_number(), _compare_ordered_number(), _compare_ordered_text(), _evaluate_comparison(), _evaluate_date_comparison(), _evaluate_numeric_comparison() (+2 more)
 
 ### Community 311 - "Community 311"
-Cohesion: 0.27
-Nodes (10): _double_operator_error(), _is_integer_value(), _is_number_value(), QueryComparison, _read_atom(), _read_operator(), _Token, _tokenize() (+2 more)
-
-### Community 313 - "Community 313"
-Cohesion: 0.24
-Nodes (9): Any, BaseModel, FastAPI, create_app(), query_collection(), QueryRequest, Query a collection by parse expression; returns matching image IDs., Create a FastAPI application instance with optional DB path for face endpoints. (+1 more)
-
-### Community 314 - "Community 314"
 Cohesion: 0.29
-Nodes (7): Collection, QueryResult, Apply query expression to collection, return matching image IDs., Create collection from metadata dict., QueryExpression, QueryRecord, QueryRecord
+Nodes (9): _double_operator_error(), _is_integer_value(), _is_number_value(), _read_atom(), _read_operator(), _Token, _tokenize(), _validate_comparison() (+1 more)
 
 ## Knowledge Gaps
-- **21 isolated node(s):** `Any`, `Path`, `CollectionQueryResult`, `PersonDeleteResult`, `@opencode-ai/plugin` (+16 more)
+- **19 isolated node(s):** `CollectionQueryResult`, `PersonRecord`, `@opencode-ai/plugin`, `fs`, `path` (+14 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **220 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `datetime` connect `Community 309` to `Media Ingest Pipeline`, `API & Routing`, `API & Routing`, `Gallery Management`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
-- **Why does `FailedIngestItem` connect `Tool Adapters` to `Proxy Generation & Caching`, `API & Routing`, `Gallery Management`, `Media Ingest Pipeline`?**
+- **Why does `datetime` connect `API & Routing` to `API & Routing`, `API & Routing`, `API & Routing`?**
+  _High betweenness centrality (0.116) - this node is a cross-community bridge._
+- **Why does `ApiError` connect `API & Routing` to `API & Routing`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `Collection` connect `Query System` to `Query System`, `API & Routing`, `Community 308`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Why does `ApiError` connect `API & Routing` to `Community 313`, `Community 309`, `API & Routing`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Are the 38 inferred relationships involving `FailedIngestItem` (e.g. with `TestProcessNewEmptyDir` and `TestProcessNewHappyPath`) actually correct?**
   _`FailedIngestItem` has 38 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `Path` (e.g. with `ImageMagickProxyOutcome` and `FailedIngestItem`) actually correct?**
   _`Path` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Any`, `Path`, `Query a collection by parse expression; returns matching image IDs.` to the rest of the system?**
-  _165 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `CollectionQueryResult`, `PersonRecord`, `Integration tests for FR-024, FR-027: Face clustering and re-cluster modes.` to the rest of the system?**
+  _153 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Proxy Generation & Caching` be split into smaller, more focused modules?**
-  _Cohesion score 0.057782754759238525 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05673758865248227 - nodes in this community are weakly interconnected._

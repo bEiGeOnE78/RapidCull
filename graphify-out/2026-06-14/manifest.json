@@ -60,9 +60,9 @@
     "semantic_hash": "0a8e7e9bc77da1af2c08be548f9a58f0"
   },
   "src/rapidcull/api.py": {
-    "mtime": 1781495718.6944962,
-    "ast_hash": "cc6451e71f0cc3ed084843b5a1c63c11",
-    "semantic_hash": ""
+    "mtime": 1779762669.4652095,
+    "ast_hash": "45f8deb3e23da8a1bedffef821714449",
+    "semantic_hash": "45f8deb3e23da8a1bedffef821714449"
   },
   "src/rapidcull/api_envelope.py": {
     "mtime": 1779764668.4045644,
@@ -110,8 +110,8 @@
     "semantic_hash": "d7dd1993df27a286a911e604965b45e0"
   },
   "src/rapidcull/models.py": {
-    "mtime": 1781495666.2087607,
-    "ast_hash": "1d0fa717fabfda98f14cbb3f8da94be8",
+    "mtime": 1781495462.642161,
+    "ast_hash": "ef1efe50516d2fd881060b3cbef6af63",
     "semantic_hash": ""
   },
   "src/rapidcull/path_utils.py": {
@@ -1722,21 +1722,6 @@
   "IMPLEMENTATION_PLAN.md": {
     "mtime": 1781493953.4319196,
     "ast_hash": "2471042808f89a317a5fc4ccf7765d58",
-    "semantic_hash": ""
-  },
-  "src/rapidcull/persons.py": {
-    "mtime": 1781495708.597376,
-    "ast_hash": "92be9207b70514790092b7669e405a63",
-    "semantic_hash": ""
-  },
-  "tests/integration/faces/test_fr_025_person_crud.py": {
-    "mtime": 1781495708.732556,
-    "ast_hash": "10c19137387a2f644a7ce414388818ee",
-    "semantic_hash": ""
-  },
-  "tests/integration/faces/test_fr_026_face_boxes_api.py": {
-    "mtime": 1781495708.731556,
-    "ast_hash": "ad03975ddf5c1f376320b2accc6e431d",
     "semantic_hash": ""
   }
 }
