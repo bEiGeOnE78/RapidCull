@@ -70,3 +70,7 @@ exclude = [
   '^dist/',
   '^\\.venv/',
 ]
+
+[[tool.mypy.overrides]]
+module = ["insightface", "insightface.*", "cv2", "cv2.*"]
+ignore_missing_imports = true
