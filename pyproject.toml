@@ -72,5 +72,5 @@ exclude = [
 ]
 
 [[tool.mypy.overrides]]
-module = ["insightface", "insightface.*", "cv2", "cv2.*"]
+module = ["insightface", "insightface.*", "cv2", "cv2.*", "sklearn", "sklearn.*"]
 ignore_missing_imports = true

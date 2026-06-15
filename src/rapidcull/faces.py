@@ -2,14 +2,25 @@ from __future__ import annotations
 
 import hashlib
 import sqlite3
+import uuid
+from datetime import UTC, datetime
 from pathlib import Path
+
+import numpy as np
+from sklearn.cluster import DBSCAN
 
 from rapidcull.adapters.insightface_adapter import (
     FaceDetectionFailure,
     FaceDetectionSuccess,
     FaceDetector,
 )
-from rapidcull.models import FaceDetectionResult, FaceRecord, FailedIngestItem
+from rapidcull.models import (
+    ClusterMode,
+    FaceClusterResult,
+    FaceDetectionResult,
+    FaceRecord,
+    FailedIngestItem,
+)
 
 
 def _generate_face_id(image_id: str, bbox_x: int, bbox_y: int, bbox_w: int, bbox_h: int) -> str:
@@ -127,3 +138,71 @@ def get_faces_for_image(db_path: Path, image_id: str) -> list[FaceRecord]:
         )
         for row in rows
     ]
+
+
+def cluster_faces(
+    db_path: Path,
+    mode: ClusterMode | None = None,
+    distance_threshold: float = 0.4,
+    min_samples: int = 2,
+) -> FaceClusterResult:
+    if mode is None:
+        mode = ClusterMode.ALL
+
+    with sqlite3.connect(db_path) as conn:
+        if mode == ClusterMode.NEW_ONLY:
+            rows = conn.execute(
+                "SELECT face_id, embedding FROM faces WHERE person_id IS NULL ORDER BY face_id"
+            ).fetchall()
+        else:
+            # ALL mode: clear existing assignments first
+            conn.execute("UPDATE faces SET person_id = NULL")
+            conn.commit()
+            rows = conn.execute("SELECT face_id, embedding FROM faces ORDER BY face_id").fetchall()
+
+    if not rows:
+        return FaceClusterResult(person_count=0, assigned_count=0, noise_count=0)
+
+    face_ids = [row[0] for row in rows]
+    embeddings = np.array(
+        [np.frombuffer(bytes(row[1]), dtype=np.float32) for row in rows],
+        dtype=np.float32,
+    )
+
+    clustering = DBSCAN(
+        eps=distance_threshold,
+        min_samples=min_samples,
+        metric="cosine",
+    ).fit(embeddings)
+
+    labels: list[int] = clustering.labels_.tolist()
+
+    # Map cluster label → person_id (create new persons as needed)
+    label_to_person: dict[int, str] = {}
+    now = datetime.now(UTC).isoformat()
+
+    with sqlite3.connect(db_path) as conn:
+        for label, face_id in zip(labels, face_ids, strict=True):
+            if label == -1:
+                continue  # noise — leave person_id NULL
+            if label not in label_to_person:
+                person_id = str(uuid.uuid4())
+                conn.execute(
+                    "INSERT OR IGNORE INTO persons (person_id, name, created_at) VALUES (?, ?, ?)",
+                    (person_id, f"Person {label + 1}", now),
+                )
+                label_to_person[label] = person_id
+            conn.execute(
+                "UPDATE faces SET person_id = ? WHERE face_id = ?",
+                (label_to_person[label], face_id),
+            )
+        conn.commit()
+
+    assigned = sum(1 for lbl in labels if lbl != -1)
+    noise = sum(1 for lbl in labels if lbl == -1)
+
+    return FaceClusterResult(
+        person_count=len(label_to_person),
+        assigned_count=assigned,
+        noise_count=noise,
+    )

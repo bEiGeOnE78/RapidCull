@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import enum
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TypeAlias
@@ -183,3 +184,15 @@ class FaceDetectionResult:
     skipped_count: int
     failed_count: int
     failed_items: list[FailedIngestItem]
+
+
+class ClusterMode(enum.Enum):
+    ALL = "all"
+    NEW_ONLY = "new_only"
+
+
+@dataclass(frozen=True)
+class FaceClusterResult:
+    person_count: int
+    assigned_count: int
+    noise_count: int
