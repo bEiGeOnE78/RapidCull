@@ -196,3 +196,16 @@ class FaceClusterResult:
     person_count: int
     assigned_count: int
     noise_count: int
+
+
+@dataclass(frozen=True)
+class PersonMergeResult:
+    reassigned_count: int
+    deleted_person_id: str
+
+
+@dataclass(frozen=True)
+class PersonDeleteResult:
+    deleted_person_id: str
+    deleted_face_count: int
+    unlinked_face_count: int
