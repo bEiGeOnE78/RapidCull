@@ -1,330 +1,106 @@
-# Graph Report - RapidCull  (2026-06-14)
+# Graph Report - .  (2026-06-19)
 
 ## Corpus Check
-- 348 files · ~187,435 words
+- 348 files · ~187,436 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1720 nodes · 2856 edges · 315 communities (95 shown, 220 thin omitted)
-- Extraction: 82% EXTRACTED · 18% INFERRED · 0% AMBIGUOUS · INFERRED: 503 edges (avg confidence: 0.5)
+- 1522 nodes · 3305 edges · 96 communities (78 shown, 18 thin omitted)
+- Extraction: 81% EXTRACTED · 19% INFERRED · 0% AMBIGUOUS · INFERRED: 613 edges (avg confidence: 0.56)
 - Token cost: 0 input · 0 output
 
-## Graph Freshness
-- Built from commit: `15c16eca`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
-
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Proxy Generation & Caching|Proxy Generation & Caching]]
-- [[_COMMUNITY_Tool Adapters|Tool Adapters]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Community 8|Community 8]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
+- [[_COMMUNITY_CLI Processing Pipeline|CLI Processing Pipeline]]
+- [[_COMMUNITY_ImageMagick Proxy Adapters|ImageMagick Proxy Adapters]]
+- [[_COMMUNITY_Collection Query API|Collection Query API]]
+- [[_COMMUNITY_Face Detection Schema|Face Detection Schema]]
+- [[_COMMUNITY_API Security Auth|API Security Auth]]
+- [[_COMMUNITY_Gallery Hard-Link Creation|Gallery Hard-Link Creation]]
+- [[_COMMUNITY_CLI Entry Point|CLI Entry Point]]
+- [[_COMMUNITY_InsightFace Adapter|InsightFace Adapter]]
+- [[_COMMUNITY_Job Endpoint Tests|Job Endpoint Tests]]
+- [[_COMMUNITY_OpenAgents Agent Framework|OpenAgents Agent Framework]]
+- [[_COMMUNITY_Person CRUD Operations|Person CRUD Operations]]
+- [[_COMMUNITY_Job State Machine|Job State Machine]]
+- [[_COMMUNITY_Job Store Cancel Logic|Job Store Cancel Logic]]
+- [[_COMMUNITY_Claude Agent Config|Claude Agent Config]]
+- [[_COMMUNITY_CLI Service Tests|CLI Service Tests]]
+- [[_COMMUNITY_Collection Query Tests|Collection Query Tests]]
+- [[_COMMUNITY_Context System Commands|Context System Commands]]
+- [[_COMMUNITY_Query Grammar Validation|Query Grammar Validation]]
+- [[_COMMUNITY_Architecture Decisions|Architecture Decisions]]
+- [[_COMMUNITY_Query Evaluator Tests|Query Evaluator Tests]]
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 21|Community 21]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
+- [[_COMMUNITY_Community 22|Community 22]]
+- [[_COMMUNITY_Community 23|Community 23]]
+- [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Documentation|Documentation]]
+- [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Requirements|Requirements]]
+- [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
-- [[_COMMUNITY_Tool Adapters|Tool Adapters]]
+- [[_COMMUNITY_Community 31|Community 31]]
 - [[_COMMUNITY_Community 32|Community 32]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Tool Adapters|Tool Adapters]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Query System|Query System]]
+- [[_COMMUNITY_Community 33|Community 33]]
+- [[_COMMUNITY_Community 34|Community 34]]
+- [[_COMMUNITY_Community 35|Community 35]]
+- [[_COMMUNITY_Community 36|Community 36]]
 - [[_COMMUNITY_Community 37|Community 37]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Requirements|Requirements]]
+- [[_COMMUNITY_Community 38|Community 38]]
+- [[_COMMUNITY_Community 39|Community 39]]
 - [[_COMMUNITY_Community 40|Community 40]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_UIUX Design|UI/UX Design]]
+- [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Query System|Query System]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
 - [[_COMMUNITY_Community 46|Community 46]]
 - [[_COMMUNITY_Community 47|Community 47]]
 - [[_COMMUNITY_Community 48|Community 48]]
-- [[_COMMUNITY_Animation System|Animation System]]
+- [[_COMMUNITY_Community 49|Community 49]]
 - [[_COMMUNITY_Community 50|Community 50]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Animation System|Animation System]]
-- [[_COMMUNITY_Animation System|Animation System]]
-- [[_COMMUNITY_Security & Auth|Security & Auth]]
-- [[_COMMUNITY_Community 58|Community 58]]
+- [[_COMMUNITY_Community 51|Community 51]]
+- [[_COMMUNITY_Community 52|Community 52]]
+- [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 55|Community 55]]
+- [[_COMMUNITY_Community 56|Community 56]]
+- [[_COMMUNITY_Community 57|Community 57]]
 - [[_COMMUNITY_Community 59|Community 59]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
+- [[_COMMUNITY_Community 60|Community 60]]
 - [[_COMMUNITY_Community 61|Community 61]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
+- [[_COMMUNITY_Community 62|Community 62]]
 - [[_COMMUNITY_Community 63|Community 63]]
 - [[_COMMUNITY_Community 64|Community 64]]
-- [[_COMMUNITY_Animation System|Animation System]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
+- [[_COMMUNITY_Community 65|Community 65]]
+- [[_COMMUNITY_Community 66|Community 66]]
 - [[_COMMUNITY_Community 67|Community 67]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
+- [[_COMMUNITY_Community 68|Community 68]]
 - [[_COMMUNITY_Community 69|Community 69]]
 - [[_COMMUNITY_Community 70|Community 70]]
 - [[_COMMUNITY_Community 71|Community 71]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Animation System|Animation System]]
-- [[_COMMUNITY_Animation System|Animation System]]
+- [[_COMMUNITY_Community 72|Community 72]]
+- [[_COMMUNITY_Community 73|Community 73]]
+- [[_COMMUNITY_Community 74|Community 74]]
 - [[_COMMUNITY_Community 75|Community 75]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
+- [[_COMMUNITY_Community 76|Community 76]]
+- [[_COMMUNITY_Community 77|Community 77]]
 - [[_COMMUNITY_Community 78|Community 78]]
 - [[_COMMUNITY_Community 79|Community 79]]
 - [[_COMMUNITY_Community 80|Community 80]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 82|Community 82]]
+- [[_COMMUNITY_Community 83|Community 83]]
 - [[_COMMUNITY_Community 84|Community 84]]
-- [[_COMMUNITY_Community 85|Community 85]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Proxy Generation & Caching|Proxy Generation & Caching]]
+- [[_COMMUNITY_Community 87|Community 87]]
 - [[_COMMUNITY_Community 88|Community 88]]
 - [[_COMMUNITY_Community 89|Community 89]]
 - [[_COMMUNITY_Community 90|Community 90]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
+- [[_COMMUNITY_Community 92|Community 92]]
 - [[_COMMUNITY_Community 93|Community 93]]
-- [[_COMMUNITY_Schema & Models|Schema & Models]]
-- [[_COMMUNITY_UIUX Design|UI/UX Design]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Community 98|Community 98]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 100|Community 100]]
-- [[_COMMUNITY_Community 101|Community 101]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Community 106|Community 106]]
-- [[_COMMUNITY_Community 107|Community 107]]
-- [[_COMMUNITY_Community 108|Community 108]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Animation System|Animation System]]
-- [[_COMMUNITY_Community 113|Community 113]]
-- [[_COMMUNITY_Community 114|Community 114]]
-- [[_COMMUNITY_Community 115|Community 115]]
-- [[_COMMUNITY_Community 116|Community 116]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Community 120|Community 120]]
-- [[_COMMUNITY_Community 121|Community 121]]
-- [[_COMMUNITY_Community 122|Community 122]]
-- [[_COMMUNITY_Community 123|Community 123]]
-- [[_COMMUNITY_Community 124|Community 124]]
-- [[_COMMUNITY_Community 125|Community 125]]
-- [[_COMMUNITY_Community 126|Community 126]]
-- [[_COMMUNITY_Community 127|Community 127]]
-- [[_COMMUNITY_Community 129|Community 129]]
-- [[_COMMUNITY_Community 130|Community 130]]
-- [[_COMMUNITY_Community 131|Community 131]]
-- [[_COMMUNITY_Community 132|Community 132]]
-- [[_COMMUNITY_Community 133|Community 133]]
-- [[_COMMUNITY_Community 134|Community 134]]
-- [[_COMMUNITY_Community 135|Community 135]]
-- [[_COMMUNITY_Community 136|Community 136]]
-- [[_COMMUNITY_Community 137|Community 137]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 139|Community 139]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 141|Community 141]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 143|Community 143]]
-- [[_COMMUNITY_Community 144|Community 144]]
-- [[_COMMUNITY_Community 145|Community 145]]
-- [[_COMMUNITY_Community 146|Community 146]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 148|Community 148]]
-- [[_COMMUNITY_Community 149|Community 149]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_UIUX Design|UI/UX Design]]
-- [[_COMMUNITY_Community 154|Community 154]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Documentation|Documentation]]
-- [[_COMMUNITY_Community 160|Community 160]]
-- [[_COMMUNITY_Community 161|Community 161]]
-- [[_COMMUNITY_Community 162|Community 162]]
-- [[_COMMUNITY_Community 163|Community 163]]
-- [[_COMMUNITY_Community 164|Community 164]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 166|Community 166]]
-- [[_COMMUNITY_Community 167|Community 167]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Community 169|Community 169]]
-- [[_COMMUNITY_Community 170|Community 170]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Community 172|Community 172]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Proxy Generation & Caching|Proxy Generation & Caching]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Proxy Generation & Caching|Proxy Generation & Caching]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Community 180|Community 180]]
-- [[_COMMUNITY_Community 181|Community 181]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Community 183|Community 183]]
-- [[_COMMUNITY_Community 184|Community 184]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 187|Community 187]]
-- [[_COMMUNITY_Community 188|Community 188]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Requirements|Requirements]]
-- [[_COMMUNITY_Community 196|Community 196]]
-- [[_COMMUNITY_Community 197|Community 197]]
-- [[_COMMUNITY_Community 198|Community 198]]
-- [[_COMMUNITY_Community 199|Community 199]]
-- [[_COMMUNITY_Community 200|Community 200]]
-- [[_COMMUNITY_Community 201|Community 201]]
-- [[_COMMUNITY_Community 202|Community 202]]
-- [[_COMMUNITY_Community 203|Community 203]]
-- [[_COMMUNITY_Community 204|Community 204]]
-- [[_COMMUNITY_Community 205|Community 205]]
-- [[_COMMUNITY_Community 206|Community 206]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 208|Community 208]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_Community 210|Community 210]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Community 212|Community 212]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_Community 215|Community 215]]
-- [[_COMMUNITY_Security & Auth|Security & Auth]]
-- [[_COMMUNITY_Security & Auth|Security & Auth]]
-- [[_COMMUNITY_Community 218|Community 218]]
-- [[_COMMUNITY_Community 219|Community 219]]
-- [[_COMMUNITY_Community 220|Community 220]]
-- [[_COMMUNITY_Schema & Models|Schema & Models]]
-- [[_COMMUNITY_Community 222|Community 222]]
-- [[_COMMUNITY_Community 223|Community 223]]
-- [[_COMMUNITY_Community 224|Community 224]]
-- [[_COMMUNITY_Community 225|Community 225]]
-- [[_COMMUNITY_Community 226|Community 226]]
-- [[_COMMUNITY_Community 227|Community 227]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 235|Community 235]]
-- [[_COMMUNITY_Community 236|Community 236]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Media Ingest Pipeline|Media Ingest Pipeline]]
-- [[_COMMUNITY_Community 242|Community 242]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 244|Community 244]]
-- [[_COMMUNITY_Community 245|Community 245]]
-- [[_COMMUNITY_Community 246|Community 246]]
-- [[_COMMUNITY_Community 247|Community 247]]
-- [[_COMMUNITY_Community 248|Community 248]]
-- [[_COMMUNITY_Community 249|Community 249]]
-- [[_COMMUNITY_Community 250|Community 250]]
-- [[_COMMUNITY_Community 251|Community 251]]
-- [[_COMMUNITY_Community 252|Community 252]]
-- [[_COMMUNITY_Community 253|Community 253]]
-- [[_COMMUNITY_Community 254|Community 254]]
-- [[_COMMUNITY_Community 255|Community 255]]
-- [[_COMMUNITY_Community 256|Community 256]]
-- [[_COMMUNITY_Community 257|Community 257]]
-- [[_COMMUNITY_Community 258|Community 258]]
-- [[_COMMUNITY_Community 260|Community 260]]
-- [[_COMMUNITY_Community 261|Community 261]]
-- [[_COMMUNITY_Community 262|Community 262]]
-- [[_COMMUNITY_Community 263|Community 263]]
-- [[_COMMUNITY_Community 264|Community 264]]
-- [[_COMMUNITY_Workflows & Patterns|Workflows & Patterns]]
-- [[_COMMUNITY_Community 266|Community 266]]
-- [[_COMMUNITY_Community 267|Community 267]]
-- [[_COMMUNITY_Community 268|Community 268]]
-- [[_COMMUNITY_Community 269|Community 269]]
-- [[_COMMUNITY_Community 270|Community 270]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_Query System|Query System]]
-- [[_COMMUNITY_API & Routing|API & Routing]]
-- [[_COMMUNITY_Community 286|Community 286]]
-- [[_COMMUNITY_Community 287|Community 287]]
-- [[_COMMUNITY_Gallery Management|Gallery Management]]
-- [[_COMMUNITY_Community 289|Community 289]]
-- [[_COMMUNITY_Community 290|Community 290]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Community 292|Community 292]]
-- [[_COMMUNITY_Community 293|Community 293]]
-- [[_COMMUNITY_Community 294|Community 294]]
-- [[_COMMUNITY_Community 295|Community 295]]
-- [[_COMMUNITY_Community 296|Community 296]]
-- [[_COMMUNITY_Community 297|Community 297]]
-- [[_COMMUNITY_Community 298|Community 298]]
-- [[_COMMUNITY_Testing & Validation|Testing & Validation]]
-- [[_COMMUNITY_Job Orchestration|Job Orchestration]]
-- [[_COMMUNITY_Community 302|Community 302]]
-- [[_COMMUNITY_Community 303|Community 303]]
-- [[_COMMUNITY_Community 304|Community 304]]
-- [[_COMMUNITY_Community 305|Community 305]]
-- [[_COMMUNITY_Community 306|Community 306]]
-- [[_COMMUNITY_Community 307|Community 307]]
-- [[_COMMUNITY_Community 308|Community 308]]
-- [[_COMMUNITY_Community 309|Community 309]]
-- [[_COMMUNITY_Community 310|Community 310]]
-- [[_COMMUNITY_Community 311|Community 311]]
-- [[_COMMUNITY_Community 312|Community 312]]
-- [[_COMMUNITY_Community 313|Community 313]]
-- [[_COMMUNITY_Community 314|Community 314]]
+- [[_COMMUNITY_Community 94|Community 94]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `FailedIngestItem` - 55 edges
@@ -334,21 +110,21 @@
 5. `QueryParseResult` - 28 edges
 6. `TestClient` - 26 edges
 7. `Job` - 25 edges
-8. `IngestPlan` - 24 edges
+8. `FaceDetectionSuccess` - 24 edges
 9. `JobStore` - 24 edges
-10. `ProxyGenerationResult` - 23 edges
+10. `IngestPlan` - 24 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Any` --uses--> `Collection`  [INFERRED]
-  tests/integration/api/test_e2e_job_orchestration.py → src/rapidcull/collections.py
-- `TestProcessNewEmptyDir` --uses--> `FailedIngestItem`  [INFERRED]
-  tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
-- `TestProcessNewHappyPath` --uses--> `FailedIngestItem`  [INFERRED]
-  tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
-- `TestProcessNewMissingSourceDir` --uses--> `FailedIngestItem`  [INFERRED]
-  tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
-- `TestProcessNewSkippedItems` --uses--> `FailedIngestItem`  [INFERRED]
-  tests/integration/cli/test_cli_process_new.py → src/rapidcull/models.py
+- `Graphify PreToolUse Hook` --rationale_for--> `ContextScout`  [INFERRED]
+  .claude/settings.json → .opencode/agent/subagents/core/contextscout.md
+- `add-context command` --references--> `External Context Manifest`  [INFERRED]
+  .opencode/command/add-context.md → .tmp/external-context/.manifest.json
+- `Session: FR-022 Query Behavior Documentation Baseline` --produces--> `tests/integration/query/test_fr_022_query_behavior_docs.py`  [INFERRED]
+  .tmp/sessions/2026-03-28-fr-022-query-behavior-docs/context.md → tests/integration/query/test_fr_022_query_behavior_docs.py
+- `Session: Query Evaluation Semantics v1` --references--> `tests/integration/query/test_query_evaluation_contract_v1.py`  [EXTRACTED]
+  .tmp/sessions/2026-03-29-query-evaluation-semantics-v1/context.md → tests/integration/query/test_query_evaluation_contract_v1.py
+- `Session: Query Evaluator Baseline v1` --references--> `src/rapidcull/query_grammar.py`  [EXTRACTED]
+  .tmp/sessions/2026-03-29-query-evaluator-baseline-v1/context.md → src/rapidcull/query_grammar.py
 
 ## Import Cycles
 - 1-file cycle: `src/rapidcull/api.py -> src/rapidcull/api.py`
@@ -358,508 +134,319 @@
 - 1-file cycle: `tests/integration/api/test_security_cors.py -> tests/integration/api/test_security_cors.py`
 - 2-file cycle: `src/rapidcull/api_jobs.py -> src/rapidcull/jobs.py -> src/rapidcull/api_jobs.py`
 
-## Hyperedges (group relationships)
-- **** — fastapi-app, jobs-router, create-job-endpoint, job-store [INFERRED]
-- **** — fastapi-app, api-error, api-error-handler, register-handlers [INFERRED]
-- **** — cli-process-new-command, discover-supported-media, plan-ingest-actions, extract-metadata-for-ingest [INFERRED]
-- **** — gallery-rename, gallery-delete, create-virtual-gallery-hardlinks [INFERRED]
-- **** — real-exiftool-batch-extractor, exiftool-extraction-success, exiftool-extraction-failure [INFERRED]
-- **** — job-store, job, job-state, invalid-job-transition [INFERRED]
-- **** — execute-proxy-generation, build-proxy-generation-plan, proxy-generation-result [INFERRED]
-- **** — execute-regeneration-selection, cleanup-orphan-artifacts, regeneration-selection-result, orphan-cleanup-report [INFERRED]
-- **** — parse-query, evaluate-query, query-comparison, query-binary, query-not, collection-query-result [INFERRED]
-- **** — configure-app, auth-middleware, get-settings, security-settings [INFERRED]
-- **** — test-security-auth, auth-middleware, configure-app [INFERRED]
-- **** — create-or-validate-schema, schema-version-mismatch-error [INFERRED]
-- **** — ingest-plan, ingest-metadata-extraction-result, ingest-run-summary, build-ingest-run-summary [INFERRED]
-- **** — gallery-creation-result, gallery-failed-item, gallery-metadata-rebuild-result, gallery-metadata-rebuild-summary, gallery-rename-result, gallery-delete-result [INFERRED]
-- **** — test-fr-001-005-ingest-identity-summary, ingest-module, identity-module, schema-module, exiftool-adapter [INFERRED]
-- **** — test-fr-006-010-proxy-generation, proxies-module, adapters-module, models-module [INFERRED]
-- **** — test-fr-014-015-016-gallery-management, galleries-module, path-utils-module, models-module [INFERRED]
-- **** — test-fr-017-021-query-grammar-validation, test-fr-022-query-behavior-docs, test-query-evaluation-contract-v1, test-query-evaluator-baseline-v1, query-grammar-module, query-evaluator-module [INFERRED]
-- **** — openagent-doc, opencoder-doc, context-scout-doc, coder-agent-doc, test-engineer-doc, code-reviewer-doc, approval-gate-pattern, context-loading-pattern [INFERRED]
-- **** — continue-on-error-pattern, deterministic-result-pattern, security-boundary-pattern, adapter-seam-pattern [INFERRED]
-- **** — external-scout-subagent, devops-specialist-subagent, frontend-specialist-subagent, context-organizer-subagent [EXTRACTED]
-- **** — mvi-principle, function-based-pattern, concern-based-pattern [EXTRACTED]
-- **** — add-context-command, context-command, check-context-deps-command [EXTRACTED]
-- **** — commit-command, pr-command [EXTRACTED]
-- **** — external-scout-workflow, task-manager-workflow, devops-workflow, frontend-workflow, context-organizer-workflow [EXTRACTED]
-- **** — add-context-workflow, context-harvest-operation [EXTRACTED]
-- **** — operation-extract, operation-organize, operation-migrate, operation-harvest [INFERRED]
-- **** — context-structure, mvi-principle, frontmatter-format, context-templates [INFERRED]
-- **** — operation-extract, operation-organize, operation-update, operation-error [INFERRED]
-- **** — function-concept, function-example, function-guide, function-lookup, function-error [INFERRED]
-- **** — pure-function-pattern, immutability-pattern, dependency-injection-pattern, error-handling-pattern [INFERRED]
-- **** — pattern-a-function-based, pattern-b-concern-based [INFERRED]
-- **** — design-iteration-workflow, design-stage-layout, design-stage-theme, design-stage-animation, design-stage-implementation [INFERRED]
-- **** — design-iteration-workflow, design-plan-file, design-iteration-plan-handling, design-evolution-tracking [INFERRED]
-- **** — task-management-system, task-lifecycle-workflow, task-splitting-guide, task-schema-base, task-cli-commands [INFERRED]
-- **** — context-system-guide, context-index-system, context-path-resolution, lazy-loading [INFERRED]
-- **** — security-patterns, error-handling-pattern, input-validation-pattern, file-system-safety-pattern, logging-pattern, configuration-pattern [INFERRED]
-- **** — design-stage-layout, design-stage-theme, wcag-compliance, design-system, design-evolution-tracking [INFERRED]
-- **** — visual-development-context, image-specialist, gemini-api, design-iteration-workflow [INFERRED]
-- **** — code-review-guidelines, security-patterns, test-coverage-standards, code-naming-standard, dependency-injection [INFERRED]
-- **** — external-scout, context7-api, external-context-caching, external-context-manifest [INFERRED]
-- **** — task-delegation-basics, task-delegation-stages, delegation-context-template, session-management [INFERRED]
-- **** — task-manager-agent, task-delegation-specialists, open-frontend-specialist, test-engineer-agent, code-reviewer-agent, coder-agent [INFERRED]
-- **** — design-iteration-workflow, design-iteration-stage-theme, design-system-selection, theme-approval-gate, open-frontend-specialist [INFERRED]
-- **** — mastra-core-concept, mastra-agents-tools, mastra-workflows, mastra-evaluations, mastra-storage [INFERRED]
-- **** — mastra-agent-definition, mastra-tool-definition, zod-schema-validation [INFERRED]
-- **** — mastra-workflow-step, mastra-workflow-chaining, mastra-hitl-support [INFERRED]
-- **** — mastra-modular-building, mastra-component-separation, mastra-shared-services, mastra-central-registry [INFERRED]
-- **** — task-breakdown-guidelines, task-phase-decomposition, task-dependency-mapping [INFERRED]
-- **** — context-scout, external-scout, task-delegation-basics, delegation-context-template [INFERRED]
-- **** — doc-development-navigation, doc-frontend-navigation, doc-backend-navigation, doc-data-navigation [INFERRED]
-- **** — doc-api-design, concept-rest-api, api-pattern-rest [INFERRED]
-- **** — doc-api-design, concept-graphql, api-pattern-graphql [INFERRED]
-- **** — doc-frontend-when-to-delegate, concept-subagent-delegation, pattern-delegation-workflow, context-bundle [INFERRED]
-- **** — doc-subagent-testing-modes, concept-testing-modes, concept-standalone-mode, concept-delegation-mode [INFERRED]
-- **** — doc-ai-navigation, doc-mastra-config, doc-workflow-step-structure [INFERRED]
-- **** — doc-fullstack-navigation, stack-mern, stack-t3, stack-python-fullstack [INFERRED]
-- **** — layer-frontend, layer-backend, layer-data [INFERRED]
-- **** — concept-clean-code, standard-code-quality, doc-clean-code [INFERRED]
-- **** — doc-context-bundle-template, doc-blueprints-navigation, doc-concepts-navigation, doc-context-navigation [INFERRED]
-- **** — agent-metadata-system, opencode-agent-fields, centralized-metadata-file, agent-auto-detect-script [INFERRED]
-- **** — agent-concept, category-system, registry-system [INFERRED]
-- **** — eval-framework, approval-gate-evaluator, context-loading-evaluator, tool-usage-evaluator, stop-on-failure-evaluator, execution-balance-evaluator [INFERRED]
-- **** — adding-agent-basics-guide, adding-agent-testing-guide, eval-framework [INFERRED]
-- **** — opencode-skill-concept, skill-directory-structure, task-management-skill-example, skill-cli-implementation [INFERRED]
-- **** — registry-system, registry-auto-detect, registry-validation, dependency-resolution [INFERRED]
-- **** — tool-permission-error, read-only-subagent-config, subagent-prompt-structure [INFERRED]
-- **** — testing-subagents-guide, subagent-parent-map, subagent-path-map, subagent-agent-map [INFERRED]
-- **** — opencode-plugins-overview, opencode-plugin-events, tool-execute-before-event, tool-execute-after-event [INFERRED]
-- **** — events-skills-implementation, tool-execute-before-event, tool-execute-after-event, plugin-best-practices [INFERRED]
-- **** — profile-validation-guide, profile-development, profile-business, profile-full, profile-advanced [INFERRED]
-- **** — updating-registry-guide, registry-json, commands-reference, file-locations-lookup [INFERRED]
-- **** — npm-publishing-guide, registry-json, profile-validation-guide, updating-registry-guide [INFERRED]
-- **** — registry-dependency-validation, check-context-deps-command, auto-detect-components-script, validate-registry-script [INFERRED]
-- **** — business-domain-rapidcull, business-tech-bridge-rapidcull, technical-domain-rapidcull [INFERRED]
-- **** — architecture-decisions-rapidcull, runtime-tooling-decisions, pipeline-contracts-decisions, security-operations-decisions [INFERRED]
-- **** — linux-first-local-first-posture, modular-local-first-monolith, sqlite-json-filesystem-model, rapidcull-architecture-pattern [INFERRED]
-- **** — python-3-11-baseline-decision, external-media-tools-adapter-decision, strict-validation-gates-decision, rapidcull-primary-stack [INFERRED]
-- **** — continue-on-error-decision, deterministic-result-contracts-decision, integration-tests-contract-guard-decision [INFERRED]
-- **** — validated-normalized-paths-decision, safe-subprocess-execution-decision, allowlist-gallery-mutation-decision [INFERRED]
-- **** — page-transition-animations, micro-interactions-patterns, chat-ui-animation-system [INFERRED]
-- **** — animation-basics, animation-components, animation-chat, animation-loading, animation-forms [INFERRED]
-- **** — scroll-linked-animations, scrollytelling-headphone-example, scrollytelling-guide, scroll-animation-prompts [INFERRED]
-- **** — design-systems, neo-brutalism-theme, modern-dark-mode-theme, oklch-color-space, typography-system [INFERRED]
-- **** — react-patterns, react-functional-components, react-custom-hooks, react-use-memo, react-use-callback [INFERRED]
-- **** — ui-styling-standards, tailwind-css-framework, flowbite-components, mobile-first-responsive [INFERRED]
-- **** — product-hero-shot-prompt, exploded-view-prompt, video-interpolation-pattern, ffmpeg-frame-extraction [INFERRED]
-- **** — context7-skill, externalscout-subagent, external-library-registry [INFERRED]
-- **** — mypy-py-typed-marker, mypy-src-layout-config, mypy-python-311-setup [INFERRED]
-- **** — query-parser, query-validator, query-models [EXTRACTED]
-- **** — fr-021-grouped-expression-diagnostics, fr-021-grouped-start-boolean, fr-021-malformed-boolean-pairs, fr-021-not-diagnostic, fr-021-open-group-eof [EXTRACTED]
-- **** — fr-022-query-behavior-docs, fr-022-docs-expansion, fr-022-invalid-examples [EXTRACTED]
-- **** — image-magick-adapter, raw-therapee-adapter, proxy-orchestration-component [EXTRACTED]
-- **** — fr-002-ingest, exiftool-batch-mode, continue-on-error-pattern [INFERRED]
-- **** — pyenv-linux-setup, python-venv-creation, pytest-venv-invocation, requires-python-metadata [INFERRED]
-- **** — query-evaluation-semantics-v1, query-evaluation-contract-v1, query-evaluator-baseline-v1 [EXTRACTED]
-- **** — tdd-workflow, approval-first-workflow, feature-branch-workflow, quality-gates [INFERRED]
-- **** — photo-library-requirements, photo-acceptance-tests, photo-test-plan, photo-fixture-plan [EXTRACTED]
-- **** — tdd-red-green-refactor, quality-gate-black, quality-gate-ruff, quality-gate-mypy, quality-gate-pytest [INFERRED]
-- **** — batch-execution-a-foundational, batch-execution-b-processing, batch-execution-c-ui-api, batch-execution-d-nfr [INFERRED]
-- **** — module-schema, module-ingest, module-identity, module-proxies, module-summaries, module-models [INFERRED]
-- **** — module-galleries, fr-012-gallery-hardlinks, fr-013-gallery-source-modes, fr-014-metadata-rebuild, fr-015-galleries-index, fr-016-gallery-mutation [INFERRED]
-- **** — dependency-python-3-11, dependency-pytest, dependency-black, dependency-ruff, dependency-mypy, script-bootstrap [INFERRED]
-- **** — dependency-exiftool, dependency-ffmpeg, dependency-imagemagick, dependency-rawtherapee-cli, script-verify-system-deps [INFERRED]
-- **** — doc-query-grammar-v1-behavior, doc-query-evaluation-contract-v1, query-field-person, query-operator-equals, query-boolean-and [INFERRED]
-- **** — model-failed-ingest-item, model-ingest-run-summary, model-generated-proxy, model-gallery-creation-result, model-orphan-cleanup-report, model-gallery-mutation-error [INFERRED]
-- **** — adapter-seam-pattern, rawtherapee-adapter-subprocess-seam, imagemagick-adapter-subprocess-seam, orchestration-normalization-guardrail [INFERRED]
-- **** — batch-accounting-pattern, tool-summary-contract, deterministic-ordering-contract, reason-taxonomy-normalization [INFERRED]
-- **** — tdd-incremental-loop, requirement-mapped-testing, slice-lifecycle-pattern, stop-on-failure-protocol [INFERRED]
-- **** — fr-017-021-query-grammar, query-parse-result-contract, query-validation-errors, fr-021-parser-diagnostics [INFERRED]
-- **** — fr-022-query-documentation, docs-smoke-testing, documentation-example-promotion, error-code-stability-pattern [INFERRED]
-- **** — heif-support-requirement, fail-fast-preflight, deterministic-capability-testing, heic-subprocess-execution [INFERRED]
-- **** — query-evaluation-contract-v1, query-evaluation-semantics-v1, query-evaluator-baseline-v1 [INFERRED]
-- **** — text-comparison-semantics, multi-value-field-matching, single-value-field-matching, missing-field-semantics [INFERRED]
-- **** — query-evaluation-contract-v1, query-evaluation-semantics-v1, query-stale-doc-cleanup-v1 [INFERRED]
-- **** — black-formatter-gate, ruff-linter-gate, mypy-type-checker, pytest-framework [INFERRED]
-- **** — spec-smoke-test-pattern, canonical-contract-examples, red-green-gates-flow [INFERRED]
-- **** — evaluate-query-function, query-ast, normalized-record-mapping, ordered-comparison-helper [INFERRED]
-- **** — query-evaluator-baseline-v1, contract-contradiction-resolution, approval-first-execution-pattern, red-green-gates-flow [INFERRED]
+## Communities (96 total, 18 thin omitted)
 
-## Communities (315 total, 220 thin omitted)
-
-### Community 0 - "Proxy Generation & Caching"
+### Community 0 - "CLI Processing Pipeline"
 Cohesion: 0.06
-Nodes (63): _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped., process-new output follows 'Processed: N | Skipped: N | Failed: N' format., process-new sums failures from both extraction and proxy generation stages., process-new reports only extraction failures when proxy generation succeeds., Build an IngestMetadataExtractionResult with one metadata entry per path., process-new reports only proxy failures when metadata extraction fully succeeds. (+55 more)
+Nodes (58): _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped., process-new output follows 'Processed: N | Skipped: N | Failed: N' format., process-new sums failures from both extraction and proxy generation stages., process-new reports only extraction failures when proxy generation succeeds., Build an IngestMetadataExtractionResult with one metadata entry per path., process-new reports only proxy failures when metadata extraction fully succeeds. (+50 more)
 
-### Community 1 - "Tool Adapters"
+### Community 1 - "ImageMagick Proxy Adapters"
 Cohesion: 0.10
-Nodes (57): detect_heif_support(), ImageMagickAdapter, ImageMagickProxyOutcome, RawTherapeeAdapter, RawTherapeeProxyOutcome, ImageMagickAdapter, MonkeyPatch, OrphanCleanupReport (+49 more)
+Nodes (58): detect_heif_support(), ImageMagickAdapter, ImageMagickProxyOutcome, RawTherapeeAdapter, RawTherapeeProxyOutcome, ImageMagickAdapter, MonkeyPatch, OrphanCleanupReport (+50 more)
 
-### Community 2 - "Query System"
-Cohesion: 0.15
-Nodes (13): assert_envelope(), client(), Stage 3 — End-to-end tests for job orchestration (FR-038..041).  Two E2E scenari, Every endpoint must return a structurally consistent envelope (ok at top level)., Missing 'kind' field triggers validation — must come back as error envelope., Reset both the JobStore and the collection registry before each test., Assert the top-level envelope structure is present and ok matches expectation., Full lifecycle: create -> GET (queued) -> mark running -> mark succeeded     -> (+5 more)
+### Community 2 - "Collection Query API"
+Cohesion: 0.06
+Nodes (31): client(), _query_url(), Populate the in-memory registry before each test and clean up after., setup_and_teardown_registry(), TestCollectionNotFound, TestParseError, TestValidQuery, assert_envelope() (+23 more)
 
-### Community 3 - "Query System"
-Cohesion: 0.14
-Nodes (27): evaluate_query must raise ValueError with context when ISO value is not an integ, evaluate_query must raise ValueError with context when fnumber value is not a nu, test_evaluate_comparison_raises_descriptive_error_for_non_float_fnumber_value(), test_evaluate_comparison_raises_descriptive_error_for_non_int_iso_value(), test_query_evaluator_applies_ordered_numeric_and_date_comparisons(), test_query_evaluator_honors_boolean_composition_for_canonical_contract_example(), test_query_evaluator_matches_any_value_in_multi_value_person_field(), test_query_evaluator_requires_present_field_for_text_inequality_match() (+19 more)
+### Community 3 - "Face Detection Schema"
+Cohesion: 0.06
+Nodes (54): Cursor, Integration tests for FR-023: Schema v2 with faces and persons tables., PersonRecord is a frozen dataclass with expected fields., FaceDetectionResult has processed/skipped/failed accounting., Schema version must be 2 to include faces and persons tables., Schema init creates persons table with expected columns., Schema init creates faces table with expected columns., Opening a v1 DB with v2 schema code raises SchemaVersionMismatchError. (+46 more)
 
-### Community 4 - "Query System"
-Cohesion: 0.10
-Nodes (28): collection(), Test exact match on single-value field (camera)., 5-10 images with realistic EXIF-like metadata., Test exact match on multi-value field (person)., Test pattern match on multi-value keyword field., Test numeric comparison on iso field., Test date range comparison., Test AND boolean composition of two conditions. (+20 more)
-
-### Community 5 - "API & Routing"
+### Community 4 - "API Security Auth"
 Cohesion: 0.06
 Nodes (39): lan_client(), localhost_client(), _make_app(), Integration tests for authentication middleware (FR-043, FR-044)., Build a minimal test app with given settings applied., FR-043: In localhost mode, auth is disabled by default., FR-044: In LAN mode, mutating endpoints require Bearer token., Read-only endpoints never require auth, even in LAN mode. (+31 more)
 
-### Community 6 - "Gallery Management"
-Cohesion: 0.06
-Nodes (96): ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionResult, FaceDetector, FaceRecord, _ConstDetector, db_path() (+88 more)
+### Community 5 - "Gallery Hard-Link Creation"
+Cohesion: 0.13
+Nodes (51): test_fr_012_creates_gallery_hardlinks_without_modifying_masters(), test_fr_013_creates_gallery_from_query_picks_and_face_sample_modes(), test_fr_013_returns_valid_empty_gallery_with_message_when_mode_matches_no_assets(), test_fr_014_rebuilds_metadata_for_all_galleries(), test_fr_014_rebuilds_single_gallery_metadata_json(), test_fr_014_returns_explicit_error_for_missing_gallery_path(), test_fr_015_continues_index_rebuild_when_one_gallery_metadata_is_invalid(), test_fr_015_rebuilds_central_galleries_index_from_current_gallery_metadata() (+43 more)
 
-### Community 7 - "API & Routing"
-Cohesion: 0.05
-Nodes (46): Batch A: Foundational Tests, Batch B: Processing Domains, Batch C: UI/API/Recovery, Batch D: Non-Functional Requirements, Black, ExifTool, FFmpeg, ImageMagick (+38 more)
-
-### Community 8 - "Community 8"
-Cohesion: 0.06
-Nodes (39): CodeReviewer, CoderAgent, ContextScout, Context7 API, Context7 Skill, Core Workflows Navigation, Delegation Context Template, Design Evolution Tracking (+31 more)
-
-### Community 9 - "API & Routing"
+### Community 6 - "CLI Entry Point"
 Cohesion: 0.09
-Nodes (26): Context, cli(), main(), _port_in_use(), _process_alive(), Stop the RapidCull API server., Restart the RapidCull API server., Main entry point for RapidCull CLI. (+18 more)
+Nodes (28): Context, cli(), main(), _port_in_use(), _process_alive(), process_new(), Stop the RapidCull API server., Restart the RapidCull API server. (+20 more)
 
-### Community 10 - "API & Routing"
+### Community 7 - "InsightFace Adapter"
+Cohesion: 0.09
+Nodes (28): _insightface_available(), InsightFaceAdapter, _make_embedding(), Integration tests for FR-023: Face detection adapter seam., FaceDetectionSuccess holds a list of DetectedFace., FaceDetectionFailure carries a canonical reason string., pipeline_available returns True iff insightface is importable., detect() returns FaceDetectionFailure when pipeline_available is False. (+20 more)
+
+### Community 8 - "Job Endpoint Tests"
 Cohesion: 0.09
 Nodes (11): client(), FR-041: HTTP integration tests for /api/v1/jobs endpoints.  Uses FastAPI TestCli, List returns jobs in creation order on repeated calls., Clear the in-memory JobStore before each test., reset_job_store(), TestCancelJob, TestCreateJob, TestGetJob (+3 more)
 
-### Community 11 - "API & Routing"
+### Community 9 - "OpenAgents Agent Framework"
+Cohesion: 0.08
+Nodes (36): Agent Creation Workflow (4 Steps), CLI Architecture: router.sh + skill-cli.ts, Context Bundle Pattern, Agent Eval Test Types (smoke/approval-gate/context-loading/tool-usage), ExternalScout: Fetch Live External Library Docs, GitHub Issues and Project Board Workflow, Installation Profiles (essential/developer/business/full/advanced), Installer Wildcard Context ID Path Alignment Fix (+28 more)
+
+### Community 10 - "Person CRUD Operations"
+Cohesion: 0.13
+Nodes (31): _add_face_for_person(), _add_image(), _add_person(), _ConstDetector, db_path(), _make_embedding(), Integration tests for FR-025, FR-028: Person identity CRUD and deletion., merge_persons: all faces of source reassigned to target; source deleted. (+23 more)
+
+### Community 11 - "Job State Machine"
 Cohesion: 0.10
 Nodes (20): _drive_path(), _drive_to(), _make_job(), FR-040: Pure unit tests for Job state machine transitions.  Covers all 25 state-, Directly setting job.state must raise FrozenInstanceError., Directly setting job.result must raise FrozenInstanceError., Directly setting job.error must raise FrozenInstanceError., The transition() method must still succeed via object.__setattr__. (+12 more)
 
-### Community 12 - "API & Routing"
-Cohesion: 0.14
-Nodes (26): ApiError, ok(), Standard response envelope helpers and exception handlers for the RapidCull API., Register all envelope exception handlers on a FastAPI application., Structured API error that maps to the standard error envelope., Build a success envelope., register_handlers(), cancel_job() (+18 more)
+### Community 12 - "Job Store Cancel Logic"
+Cohesion: 0.11
+Nodes (16): TestJobStoreCancelTerminal, Job, JobStore, Create a new job in QUEUED state and return it., Return the job with the given id, or None if not found., Return all jobs sorted by (created_at, job_id), optionally filtered by state., Transition a job to RUNNING. Raises InvalidJobTransition if not allowed., Transition a job to SUCCEEDED and optionally set result. (+8 more)
 
-### Community 13 - "Workflows & Patterns"
-Cohesion: 0.08
-Nodes (34): /add-context Command, /add-context 5-Stage Workflow, Approval Gate Rule, Codebase References, Concern-Based Organization Pattern, ContextOrganizer Subagent, ContextOrganizer Workflow, Context Structure (+26 more)
+### Community 13 - "Claude Agent Config"
+Cohesion: 0.18
+Nodes (30): Approval Gate Pattern, BuildAgent, Claude Settings Hooks, Claude Settings Local Permissions, CodeReviewer, CoderAgent, add-context command, analyze-patterns command (+22 more)
 
-### Community 14 - "Gallery Management"
-Cohesion: 0.08
-Nodes (31): Allowlist-based Gallery Mutation Boundaries Decision, RapidCull Architecture Decisions, RapidCull Business Domain, RapidCull Business ↔ Tech Bridge, Continue-on-Error Default Decision, RapidCull Decisions Log, RapidCull Decisions Navigation, Deterministic Result Contracts Decision (+23 more)
-
-### Community 15 - "Testing & Validation"
+### Community 14 - "CLI Service Tests"
 Cohesion: 0.12
 Nodes (17): Stop command kills the process and removes the PID file., Stop command errors when no PID file exists., Stop command removes a stale PID file when the process is no longer alive., Stop command escalates to SIGKILL when process does not exit after SIGTERM., Restart command stops a running process and then starts a new one., Start command writes PID to file and reports success., Restart starts fresh when no existing PID file is present., Start command errors when an existing process is alive. (+9 more)
 
-### Community 16 - "API & Routing"
-Cohesion: 0.09
-Nodes (27): GraphQL API Pattern, REST API Pattern, Clean Code, GraphQL, MAStra AI Framework, REST API, Workflow Step, AI Navigation Guide (+19 more)
-
-### Community 17 - "Media Ingest Pipeline"
+### Community 15 - "Collection Query Tests"
 Cohesion: 0.10
-Nodes (33): client(), db_path(), _make_embedding(), Integration tests for FR-026: Face boxes API endpoint., GET /api/v1/images/{image_id}/faces returns empty list when no faces stored., GET /api/v1/images/{image_id}/faces returns bbox and person_id for stored faces., GET /api/v1/images/{image_id}/faces returns 404 for unknown image_id., test_fr_026_face_boxes_empty() (+25 more)
+Nodes (28): collection(), Test exact match on single-value field (camera)., 5-10 images with realistic EXIF-like metadata., Test exact match on multi-value field (person)., Test pattern match on multi-value keyword field., Test numeric comparison on iso field., Test date range comparison., Test AND boolean composition of two conditions. (+20 more)
 
-### Community 18 - "API & Routing"
-Cohesion: 0.13
-Nodes (31): FaceDetectionSuccess, _add_face_for_person(), _add_image(), _add_person(), _ConstDetector, db_path(), _make_embedding(), Integration tests for FR-025, FR-028: Person identity CRUD and deletion. (+23 more)
+### Community 16 - "Context System Commands"
+Cohesion: 0.15
+Nodes (29): Context Manager Command, Function-Based Context Structure, Lazy Load Strategy, Minimal Viable Information Principle, Context Subagent Routing, ContextOrganizer Subagent, ContextScout Subagent, Pattern A: Function-Based Organization (+21 more)
 
-### Community 19 - "API & Routing"
+### Community 17 - "Query Grammar Validation"
+Cohesion: 0.25
+Nodes (28): test_fr_017_parses_valid_grammar_query_into_typed_expression_tree(), test_fr_018_rejects_unknown_field_with_actionable_suggestion(), test_fr_019_rejects_non_integer_iso_value_with_expected_format_message(), test_fr_019_rejects_non_numeric_fnumber_value_with_expected_format_message(), test_fr_019_rejects_operator_not_supported_for_field_type(), test_fr_021_rejects_and_followed_by_or_with_actionable_error(), test_fr_021_rejects_bad_date_with_expected_format_message(), test_fr_021_rejects_double_equals_operator_with_expected_guidance() (+20 more)
+
+### Community 18 - "Architecture Decisions"
 Cohesion: 0.13
-Nodes (11): TestJobStoreCancelTerminal, JobStore, Create a new job in QUEUED state and return it., Return the job with the given id, or None if not found., Transition a job to RUNNING. Raises InvalidJobTransition if not allowed., Transition a job to SUCCEEDED and optionally set result., Transition a job to FAILED and record the error message., Reset the store (for testing only). (+3 more)
+Nodes (28): Decision: Allowlist-based gallery mutation boundaries, Decision: Continue-on-error by default, Decision: Deterministic result contracts, Decision: External media tools behind adapter seams, Decision: Linux-first, local-first posture, Decision: Modular local-first monolith, Decision: Python 3.11+ baseline, Decision: Requirement-mapped integration tests as primary contract guard (+20 more)
+
+### Community 19 - "Query Evaluator Tests"
+Cohesion: 0.13
+Nodes (25): test_fr_020_honors_boolean_parentheses_and_not_precedence(), evaluate_query must raise ValueError with context when ISO value is not an integ, evaluate_query must raise ValueError with context when fnumber value is not a nu, test_evaluate_comparison_raises_descriptive_error_for_non_float_fnumber_value(), test_evaluate_comparison_raises_descriptive_error_for_non_int_iso_value(), test_query_evaluator_applies_ordered_numeric_and_date_comparisons(), test_query_evaluator_honors_boolean_composition_for_canonical_contract_example(), test_query_evaluator_matches_any_value_in_multi_value_person_field() (+17 more)
 
 ### Community 20 - "Community 20"
+Cohesion: 0.24
+Nodes (20): DetectedFace, FaceDetectionFailure, FaceDetectionSuccess, FaceDetector, ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionFailure (+12 more)
+
+### Community 21 - "Community 21"
+Cohesion: 0.12
+Nodes (22): Exception, create_app(), api_error_handler(), err(), http_exception_handler(), Standard response envelope helpers and exception handlers for the RapidCull API., Register all envelope exception handlers on a FastAPI application., Build an error envelope (body only — HTTP status set by the caller). (+14 more)
+
+### Community 22 - "Community 22"
+Cohesion: 0.18
+Nodes (21): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-023: Face detection orchestration and DB storage., Running detection twice on same image skips on second run., Image not in DB (no image_id) skipped with canonical reason., Adapter failure for one image does not abort remaining images., Embedding stored as bytes and retrieved identically. (+13 more)
+
+### Community 23 - "Community 23"
+Cohesion: 0.15
+Nodes (24): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-024, FR-027: Face clustering and re-cluster modes., Two faces with identical embeddings land in same cluster → 1 person., Two faces with maximally different embeddings land in separate clusters → 2 pers, Isolated face (no neighbours) with min_samples=2 becomes noise (person_id=NULL)., NEW_ONLY mode leaves already-assigned faces untouched. (+16 more)
+
+### Community 24 - "Community 24"
+Cohesion: 0.12
+Nodes (24): AI Development Navigation, Mastra Agent, Mastra Agents and Tools, Mastra Tool, LibSQLStore, Mastra Core Concept, Mastra Instance, Mastra Evaluations (+16 more)
+
+### Community 25 - "Community 25"
+Cohesion: 0.11
+Nodes (23): Delegation Testing Mode, Subagent Testing Modes, Standalone Testing Mode, Agent Metadata System, Valid OpenCode Agent Frontmatter Fields, Centralized Agent Metadata Schema, Agent Category System, Agents Core Concept (+15 more)
+
+### Community 26 - "Community 26"
+Cohesion: 0.18
+Nodes (18): BaseModel, datetime, JobProgressEntry, ApiError, Structured API error that maps to the standard error envelope., CreateJobRequest, query_collection(), QueryRequest (+10 more)
+
+### Community 27 - "Community 27"
+Cohesion: 0.10
+Nodes (22): Context Root Navigation, Full-Stack Development Navigation, Common Full-Stack Technology Stacks, Infrastructure Navigation, Integration Navigation, Development Navigation, API Design Patterns, GraphQL API Patterns (+14 more)
+
+### Community 28 - "Community 28"
+Cohesion: 0.19
+Nodes (20): ok(), Build a success envelope., cancel_job(), create_job(), get_job(), get_job_progress(), _job_to_dict(), list_jobs() (+12 more)
+
+### Community 29 - "Community 29"
 Cohesion: 0.18
 Nodes (19): cmdBlocked(), cmdComplete(), cmdDeps(), cmdNext(), cmdParallel(), cmdStatus(), cmdValidate(), COMPLETED_DIR (+11 more)
 
-### Community 21 - "Community 21"
-Cohesion: 0.11
-Nodes (19): Adding Agent Basics Guide, Auto-Detect Components Script, Agent, Agent File Format, Agent Metadata System, Centralized Metadata File, Content Category, Core Category (+11 more)
-
-### Community 22 - "Job Orchestration"
-Cohesion: 0.12
-Nodes (17): cancel_job, start, create_job, CreateJobRequest, app, get_job, get_job_progress, Job (+9 more)
-
-### Community 23 - "API & Routing"
-Cohesion: 0.20
-Nodes (14): Exception, api_error_handler(), err(), http_exception_handler(), Build an error envelope (body only — HTTP status set by the caller)., Handle ApiError instances — emits the error envelope., Convert FastAPI/Starlette HTTPException to the error envelope., Convert Pydantic RequestValidationError to the error envelope. (+6 more)
-
-### Community 24 - "Media Ingest Pipeline"
-Cohesion: 0.14
-Nodes (15): ExifTool persistent batch mode (FR-002b), FR-001: Schema Initialization, FR-002: Media Ingestion, FR-006: Thumbnail Generation, FR-007: HEIC Display Proxies, FR-017: Structured Query Grammar, FR-018: Query Fields, FR-019: Query Operators (+7 more)
-
-### Community 25 - "Community 25"
-Cohesion: 0.13
-Nodes (15): LibSQLStore, Mastra Agent Definition, Mastra Agents & Tools, Mastra Core, Mastra Evaluations, Human-in-the-Loop (HITL), Mastra Observability, Mastra Scorer (+7 more)
-
-### Community 26 - "Documentation"
-Cohesion: 0.24
-Nodes (12): Approval Gate, Batch Orchestration, BuildAgent, CodeReviewer, CoderAgent, Context Loading, ContextScout, DocWriter (+4 more)
-
-### Community 27 - "Community 27"
-Cohesion: 0.17
-Nodes (12): Code Review Guidelines, Code Standards, Configuration Pattern, Dependency Injection Pattern, Error Handling Pattern, Essential Patterns, File System Safety Pattern, Immutability Pattern (+4 more)
-
-### Community 28 - "Community 28"
-Cohesion: 0.21
-Nodes (12): FR-021 Grouped Expression Diagnostics, FR-021 Grouped-Start Boolean Diagnostics, FR-021 Malformed Boolean-Pair Diagnostics, FR-021 NOT Diagnostic Hardening, FR-021 Open-Group EOF Diagnostics, FR-022 Query Behavior Documentation Expansion, FR-022 Query Docs Invalid Examples, FR-022 Query Behavior Documentation (+4 more)
-
-### Community 29 - "Requirements"
-Cohesion: 0.20
-Nodes (11): FR-014, FR-015, FR-016, FR-046, rapidcull.galleries, rapidcull.path_utils, Security Boundary, test_fr_014_gallery_metadata_rebuild (+3 more)
-
 ### Community 30 - "Community 30"
-Cohesion: 0.18
-Nodes (11): Code Splitting with lazy/Suspense, Compound Components, Composition Over Props Drilling, Custom Hooks for Reusable Logic, Functional Components with Hooks, React Patterns & Best Practices, useCallback for Stable References, useEffect Dependencies (+3 more)
-
-### Community 31 - "Tool Adapters"
 Cohesion: 0.20
-Nodes (10): Adapter Seam, Canonical RAW Failure Reasons, Canonical Still Failure Reason, HEIC Failure Taxonomy, HEIC Subprocess Execution, ImageMagick Subprocess Seam, Monkeypatch Seam Testing, Orchestration Normalization Guardrail (+2 more)
+Nodes (20): Context Path Resolution Order, Git/PR Approval Workflow Gate, Lazy Loading Context Strategy, Lessons Learned Development Gate, Mypy as Blocking Type-Check Gate, Project Intelligence Living Documentation, Pure Functions Pattern, Essential Patterns - Core Development Guidelines (+12 more)
+
+### Community 31 - "Community 31"
+Cohesion: 0.26
+Nodes (19): Component Plan (master-plan + component spec), 4-Stage Design Iteration Workflow, Design Plan File (.tmp/design-plans/), Image Specialist Subagent, OpenFrontendSpecialist Subagent, Visual Development Context, Code Review Guidelines, Component-Based Planning Workflow (+11 more)
 
 ### Community 32 - "Community 32"
-Cohesion: 0.20
-Nodes (10): Background Color Matching, Exploded Technical View Prompt, FFmpeg Frame Extraction, Framer Motion Scroll Integration, HeadphoneScroll Component, Product Hero Shot Prompt, Lookup: Scroll Animation Image Generation Prompts, Guide: Building Scrollytelling Pages (+2 more)
+Cohesion: 0.14
+Nodes (18): cluster_faces(): DBSCAN-based face clustering, detect_and_store_faces(): face detection orchestration, FR-023: Face Detection and Embedding Storage, FR-025: Person Identity Management, FR-026: Face Boxes and Person Labels API, FR-027: Re-cluster-all and New-Faces-Only Modes, InsightFaceAdapter: face detection seam, Person CRUD: rename, merge, delete, list persons (+10 more)
 
-### Community 33 - "Workflows & Patterns"
-Cohesion: 0.22
-Nodes (10): Component-Based Planning Workflow, Context Files vs Reference Files, Delegation Workflow, Subtask Status Ownership, Task CLI Commands, Task Lifecycle Workflow, Task Management System, Task JSON Schema (Base) (+2 more)
+### Community 33 - "Community 33"
+Cohesion: 0.19
+Nodes (17): Docs-Smoke Test Pattern for Machine-Checkable Examples, Query Evaluation Contract v1 Spec, evaluate_query() Pure Boolean Evaluator Entry Point, Query Grammar v1 Parser and Typed AST, QueryParseResult Typed Contract, QueryValidationError Typed Contract, FR-017..021 Query Parser Foundation Lessons Learned, FR-017..021 Query Value Validation Lessons Learned (+9 more)
 
-### Community 34 - "Tool Adapters"
-Cohesion: 0.25
-Nodes (9): adapters, Deterministic Results, ImageMagickAdapter, ImageMagickProxyOutcome, rapidcull.proxies, rapidcull, RawTherapeeAdapter, RawTherapeeProxyOutcome (+1 more)
+### Community 34 - "Community 34"
+Cohesion: 0.15
+Nodes (17): Lookup: Command Reference, Installation Commands, Registry Commands, Testing Commands, Validation Commands, Workflow: Adding a New Agent, Lookup: File Locations, OpenAgents Lookup Navigation (+9 more)
 
-### Community 35 - "Testing & Validation"
-Cohesion: 0.22
-Nodes (9): Adding Agent Testing Guide, Approval Gate Evaluator, Context Loading Evaluator, Eval Framework, Eval Test Structure, Execution Balance Evaluator, Session Collection, Stop on Failure Evaluator (+1 more)
+### Community 35 - "Community 35"
+Cohesion: 0.36
+Nodes (5): _invalid_boolean_pair_error(), _missing_expression_after_boolean_error(), _Parser, _Token, QueryExpression
 
-### Community 36 - "Query System"
-Cohesion: 0.22
-Nodes (9): Approval-First Execution, Contract Contradiction Resolution, evaluate_query(), Mypy Type Checker, Normalized Record Mapping, Ordered Comparison Helper, Query AST, Query Evaluator Baseline v1 (+1 more)
+### Community 36 - "Community 36"
+Cohesion: 0.15
+Nodes (16): foundation.py Separation of Concerns Refactor, Gallery Creation via Hard Links (FR-012), Gallery Mutation Security (allowlist, traversal rejection, FR-016), Gallery Mutation Structured Errors (GalleryMutationError, ok/error payload), Gallery Source Selection Modes (query/picks/face sample), Proxy Baseline Modeling (plan/result dataclasses), RED-GREEN-REFACTOR TDD Cadence, Video Proxy Baseline (GeneratedProxy video_mp4_h264) (+8 more)
 
 ### Community 37 - "Community 37"
-Cohesion: 0.22
-Nodes (9): Batch Accounting Pattern, Deterministic Ordering Contract, Fail-Fast Preflight, FR-006/007/008 Proxy Generation, FR-050 Proxy Run Summary, HEIF Support as Runtime Requirement, Interpreter-Bound Command Execution, Tool Summary Contract (+1 more)
+Cohesion: 0.15
+Nodes (16): Code Review Guidelines, Lazy Initialization Pattern, Session Manifest JSON, Session Management, Session Directory Structure, CoderAgent, ContextScout Agent, Task Delegation Flow (+8 more)
 
-### Community 38 - "Testing & Validation"
-Cohesion: 0.31
-Nodes (9): Black Formatter, Canonical Contract Examples, Pytest Framework, Query Evaluation Contract v1, Query Parser Contract v1, Query Stale Doc Cleanup v1, Query Stale Doc Cleanup v1, RED → GREEN → Full Gates Flow (+1 more)
+### Community 38 - "Community 38"
+Cohesion: 0.18
+Nodes (9): test_fr_022_documented_query_examples_match_current_parser_contract(), _double_operator_error(), _is_integer_value(), _is_number_value(), _read_atom(), _read_operator(), _tokenize(), _validate_comparison() (+1 more)
 
-### Community 39 - "Requirements"
-Cohesion: 0.28
-Nodes (9): rapidcull.exiftool_adapter, FR-001, FR-002, rapidcull.identity, ingest, rapidcull.schema, test_fr_001_005_ingest_identity_summary, test_fr_002_exiftool_metadata_batch_mode (+1 more)
+### Community 39 - "Community 39"
+Cohesion: 0.14
+Nodes (14): RapidCull Business-Tech Bridge, Business to Technical Core Mapping, Gallery Lifecycle Mapping, Ingest and Metadata Foundation Mapping, Common Misalignments to Watch, Proxy Generation Mapping, Trade-off Decisions, RapidCull Business Constraints (+6 more)
 
 ### Community 40 - "Community 40"
+Cohesion: 0.24
+Nodes (13): Codebase References in Context Files, HTML Comment Frontmatter Format, Function-Based Folder Organization, MVI - Minimal Viable Information Principle, 8-Stage Organize Workflow, 8-Stage Update Workflow, Organize Operation, Update Operation (+5 more)
+
+### Community 41 - "Community 41"
 Cohesion: 0.22
-Nodes (9): Flexbox Layout Pattern, Flowbite Component Library, Grid Layout Pattern, Mobile-First Responsive Design, Semantic Color Naming, Tailwind CSS Framework, Typography Hierarchy, UI Styling Standards (+1 more)
+Nodes (13): Dependency Alignment (pyproject.toml canonical, bootstrap, verify_system_deps), HEIC/HEIF Runtime Capability Preflight, ImageMagickAdapter (proxy seam with heif_supported injection), Proxy Batch Accounting (per-item generated/failed, tool_summary), Proxy Failure Reason Taxonomy Normalization, RAW Reason Normalization Guardrail (rawtherapee_pipeline_unavailable / rawtherapee_failed), RawTherapeeAdapter (RAW proxy seam with _run_command), Dependency Alignment Bootstrap and System Deps Lessons Learned (+5 more)
 
-### Community 41 - "Workflows & Patterns"
-Cohesion: 0.29
-Nodes (8): Approval-First Implementation Workflow, Continue-on-Error, FR-006/007/008 Real-Tool Proxy Adapters Slice 1, FR-008: RAW JPG Proxies, Proxy orchestration component, Quality Gates, RawTherapee adapter component, Test-Driven Development (TDD) Workflow
-
-### Community 42 - "UI/UX Design"
-Cohesion: 0.25
-Nodes (8): Border Radius System, Design Systems, Modern Dark Mode Theme, Neo-Brutalism Theme, OKLCH Color Space, Shadow System, Spacing System, Typography System
+### Community 42 - "Community 42"
+Cohesion: 0.27
+Nodes (11): Continue-on-error pipeline pattern, ExifTool Persistent Batch Mode (-stay_open, -executeN), ExifTool Transport Recovery (restart + single retry), Galleries Index Refresh (galleries_index.json, FR-015), Gallery Metadata Rebuild (gallery.json, FR-014), FR-014 Single-Gallery Metadata Rebuild Lessons Learned, FR-014 Rebuild-All Galleries Metadata Lessons Learned, FR-015 Galleries Index Refresh Lessons Learned (+3 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.25
-Nodes (8): process_new, discover_supported_media, ExifToolExtractionFailure, ExifToolExtractionSuccess, extract_metadata_for_ingest, plan_ingest_actions, RealExifToolBatchExtractor, SUPPORTED_MEDIA_EXTENSIONS
+Cohesion: 0.40
+Nodes (10): QueryRecordValue, _as_int(), _as_number(), _compare_ordered_number(), _compare_ordered_text(), _evaluate_comparison(), _evaluate_date_comparison(), _evaluate_numeric_comparison() (+2 more)
 
-### Community 44 - "Testing & Validation"
-Cohesion: 0.25
-Nodes (8): Documentation smoke testing pattern, Documentation Example Promotion, Error Code Stability Pattern, FR-017..021 Query Grammar, FR-022 Query Behavior Documentation, Query Numeric Validation, Query Parse Result Contract, Query Validation Error Taxonomy
+### Community 44 - "Community 44"
+Cohesion: 0.38
+Nodes (10): FR-021: Query Grammar Validation, FR-022: Query Behavior Documentation, Session: FR-021 NOT Diagnostic Hardening, Session: FR-021 Open-Group EOF Diagnostics, Session: FR-022 Query Behavior Documentation Baseline, Session: FR-022 Query Docs Expansion, Session: FR-022 Query Docs Final Invalid Examples, src/rapidcull/query_grammar.py (+2 more)
 
-### Community 45 - "Query System"
-Cohesion: 0.25
-Nodes (8): evaluate_query(), parse_query(), QueryBinary, QueryComparison, QueryNot, QueryParseResult, QueryValidationError, test_collection_query_api
+### Community 45 - "Community 45"
+Cohesion: 0.24
+Nodes (10): Framer Motion useScroll/useTransform Pattern, React Functional Components and Hooks Best Practices, Scrollytelling: Scroll-Linked Image Sequence Animation, Tailwind CSS Utility-First Styling with Flowbite, Guide: Building Scrollytelling Pages, Lookup: Scroll Animation Image Generation Prompts, Web Design Patterns Navigation, Web UI Context Navigation (+2 more)
 
 ### Community 46 - "Community 46"
-Cohesion: 0.32
-Nodes (8): OpenCode Events: Skills Plugin Implementation, OpenCode Plugin Events, OpenCode Plugins Overview, Plugin Best Practices and Limitations, session.created Event, session.idle Event, tool.execute.after Event, tool.execute.before Event
+Cohesion: 0.20
+Nodes (10): Custom Agent Definition, Custom Agents in OpenCode, Plugin Best Practices and Limitations, Message Injection Workarounds, Plugin Security Practices, OpenCode Plugin Context Library, Plugin Lifecycle and Packaging, Plugin Manifest (plugin.json) (+2 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.25
-Nodes (8): Subagent Agent Map, Subagent Framework Maps Lookup, Subagent Invocation Guide, Subagent Parent Map, Subagent Path Map, Subagent Testing Commands Lookup, Testing Subagents with Approval Gates Guide, Testing Subagents Step-by-Step Guide
+Cohesion: 0.24
+Nodes (10): Claude Code Hook to OpenCode Event Mapping, Command Events, OpenCode Plugin Events, Session Events, tool.execute.after Hook, tool.execute.before Hook, Hook-Based Delivery Pattern, Skill Lookup Map O(1) Optimization (+2 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.29
-Nodes (7): Frontend Specialist Subagent, Subagent Delegation, Context Bundle Artifact, OpenAgents Blueprints Navigation, Context Bundle Template, When to Delegate to Frontend Specialist, Delegation Workflow Pattern
+Cohesion: 0.44
+Nodes (9): ContextScout Subagent, External Context Cache (.tmp/external-context/), ExternalScout Subagent, TaskManager Subagent, Delegation Context Template, External Context Integration Guide, External Context Management, External Libraries FAQ (+1 more)
 
-### Community 49 - "Animation System"
-Cohesion: 0.33
-Nodes (6): Component Animation Patterns, Button Interactions, Card Interactions, Dropdown/Menu Animations, Modal/Dialog Animations, Sidebar/Drawer Animations
+### Community 49 - "Community 49"
+Cohesion: 0.42
+Nodes (9): Query Evaluation Contract: AST-based record matching semantics, Query Grammar v1: field-operator-value structured grammar, Query Evaluation Contract v1, Query Grammar v1 Behavior, Session: Query Evaluation Contract v1, Session: Query Evaluation Semantics v1, Session: Query Evaluator Baseline v1, Session: Query Stale Doc Cleanup v1 (+1 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.47
-Nodes (6): Boolean Pair Diagnostics, Dataclass Assertion Pattern, FR-021 Parser Diagnostics Hardening, Grouped Expression Diagnostics, Narrow Parser Slicing, NOT Expression Diagnostics
+Cohesion: 0.61
+Nodes (8): FR-024: Face Clustering, FR-028: Person Data and Embedding Deletion, Photo Library Acceptance Test Matrix, Photo Library Execution Checklist, Photo Fixture and Dataset Test Plan, Photo Library Requirements, Photo Library Test Plan, RapidCull README
 
-### Community 51 - "Media Ingest Pipeline"
+### Community 51 - "Community 51"
+Cohesion: 0.62
+Nodes (7): Animation Micro-Syntax Notation, Advanced Animation Patterns, Animation Basics, Chat UI Animation Patterns, Component Animation Patterns, Form Animation Patterns, Loading State Animations
+
+### Community 52 - "Community 52"
 Cohesion: 0.33
-Nodes (6): build_ingest_run_summary(), execute_proxy_generation(), FailedIngestItem, GeneratedProxy, IngestRunSummary, ProxyGenerationResult
+Nodes (7): task-cli.ts CLI Script, JSON-Driven Task Management Schema, Guide: Managing Task Lifecycle, Guide: Splitting Features into Tasks, Task CLI Commands Lookup, Task Management Navigation, Task JSON Schema Standard
 
-### Community 52 - "Query System"
-Cohesion: 0.33
-Nodes (6): Query Evaluation Contract v1, Query Grammar v1 Behavior, Query Boolean: AND, Query Field: date, Query Field: person, Query Operator: = (equals)
+### Community 53 - "Community 53"
+Cohesion: 0.29
+Nodes (7): Subagent Agent Map, Subagent Framework Maps, Subagent Parent Map, Subagent Path Map, Delegation Mode Testing, Standalone Mode Testing, Subagent Testing Commands Quick Reference
 
-### Community 53 - "Query System"
-Cohesion: 0.33
-Nodes (6): Missing Field Semantics, Multi-Value Field Matching, Query Evaluation Semantics v1, Ruff Linter, Single-Value Field Matching, Text Comparison Semantics
+### Community 54 - "Community 54"
+Cohesion: 0.62
+Nodes (6): detect_and_store_faces(), _faces_already_stored(), _generate_face_id(), _lookup_image_id(), _store_faces(), Path
 
-### Community 55 - "Animation System"
-Cohesion: 0.40
-Nodes (5): Web Animation Best Practices, Chat UI Complete Animation System, Micro-interactions Patterns, Page Transition Animations, Advanced Web Animation Patterns
+### Community 55 - "Community 55"
+Cohesion: 0.53
+Nodes (6): Deterministic Orchestration via Injected Success Adapters, ImageMagick Adapter _run_command Subprocess Seam, ImageMagick HEIC Failure Reason Taxonomy, FR-006/007/008 Slice 3d Lessons Learned: ImageMagick Subprocess Seam Checkpoint, FR-006/007/008 Slice 3e Lessons Learned: HEIC Subprocess Path + Taxonomy Hardening, FR-007 Slice 3f Lessons Learned: HEIC Adapter Failure Subclasses
 
-### Community 56 - "Animation System"
-Cohesion: 0.40
-Nodes (5): Loading State Animations, Progress Bars, Skeleton Screens, Spinners, Status Indicators
-
-### Community 57 - "Security & Auth"
+### Community 56 - "Community 56"
 Cohesion: 0.60
-Nodes (4): AuthMiddleware, configure_app(), Settings, test_security_auth
+Nodes (6): FR-021 Parser Diagnostics Hardening Series, FR-021 Grouped Expression Diagnostics Hardening Lessons Learned, FR-021 NOT Diagnostic Hardening Lessons Learned, FR-021 Grouped-Start Boolean Diagnostics Lessons Learned, FR-021 Open-Group EOF Diagnostics Lessons Learned, FR-021 Malformed Boolean-Pair Diagnostics Lessons Learned
 
-### Community 58 - "Community 58"
-Cohesion: 0.40
-Nodes (5): auto-detect-components.sh Script, /check-context-deps Command, Component Dependency Types, Registry Dependency Validation, validate-registry.sh Script
+### Community 57 - "Community 57"
+Cohesion: 0.33
+Nodes (6): OpenAgents Quality Navigation, check-context-deps Command, CI/CD Integration for Registry Validation, Component Dependency Types, Registry Dependency Validation, Registry Validation Workflow
 
 ### Community 59 - "Community 59"
-Cohesion: 0.40
-Nodes (5): Building CLIs Compact Guide, OpenCode Skill, Skill CLI Implementation, Skill Directory Structure, Task Management Skill Example
+Cohesion: 0.50
+Nodes (5): Check Context Dependencies Command, Context Dependency Validation, Registry Integrity Validation, Validate Repository Command, registry.json Component Registry
 
-### Community 60 - "Testing & Validation"
-Cohesion: 0.60
-Nodes (5): Delegation Testing Mode, Standalone Testing Mode, Subagent Testing Modes, OpenAgents Concepts Navigation, Subagent Testing Modes
+### Community 60 - "Community 60"
+Cohesion: 0.40
+Nodes (5): Approval-First Commit Gate, Commit Command, Conventional Commit Message Format, Approval-First PR Gate, PR Command
 
 ### Community 61 - "Community 61"
-Cohesion: 0.40
-Nodes (5): Context Bundle Template, OpenAgents Agent System, OpenAgents Evaluation Framework, OpenAgents Control Quick Start, OpenAgents Registry System
+Cohesion: 0.70
+Nodes (5): Context7 API: Live Library Documentation Fetching, Context7 External Library Registry, Context7 Skill Navigation, Context7 Skill README, Context7 Skill Definition
 
-### Community 62 - "Testing & Validation"
-Cohesion: 0.40
-Nodes (5): Feature Branch Discipline, Requirement-Mapped Testing (RED-First), Slice Lifecycle Pattern, Stop-On-Failure Protocol, TDD Incremental Loop
+### Community 62 - "Community 62"
+Cohesion: 0.60
+Nodes (5): FR-021 Query Grammar Parser Diagnostics (Grouped Expressions, Boolean Pairs), Session Context: FR-021 Grouped Expression Diagnostics Hardening, Session Context: FR-021 Grouped-Start Boolean Diagnostics, Session Context: FR-021 Malformed Boolean-Pair Diagnostics, Session Context: Query Grammar v1 Parser Foundation
 
 ### Community 63 - "Community 63"
 Cohesion: 0.50
-Nodes (5): NPM Publishing Guide, OpenAgents Control Repository Navigation, Registry JSON, Testing Agent Guide, Updating Registry Guide
+Nodes (4): ExifTool Persistent Process Protocol (-stay_open), FR-006/007/008 Real-Tool Proxy Adapters (ImageMagick, RawTherapee), ExifTool Persistent Batch Mode Python, Session Context: FR-006/007/008 Slice 1 Real-Tool Proxy Adapters
 
 ### Community 64 - "Community 64"
-Cohesion: 0.40
-Nodes (5): Advanced Profile, Business Profile, Developer Profile, Full Profile, Profile Validation Guide
+Cohesion: 0.83
+Nodes (4): Pyenv Python 3.11 Project-Local Venv Setup, Pyenv Linux User-Space Noninteractive Python 3.11 Venv, Pytest Venv Invocation Remediation, Python Packaging requires-python Editable Install 3.10 vs 3.11
 
-### Community 65 - "Animation System"
+### Community 65 - "Community 65"
 Cohesion: 0.50
-Nodes (4): Form Animation Patterns, Input Focus States, Scroll Animations (Form), Validation States Animation
-
-### Community 66 - "API & Routing"
-Cohesion: 0.50
-Nodes (4): Bootstrap Python Version Issue, RapidCull Living Notes, Python Version Drift Technical Debt, RapidCull Lessons Learned
+Nodes (4): Backend Development Navigation (top-level), Backend Development Navigation (inner), Data Layer Navigation, Frontend Development Navigation
 
 ### Community 67 - "Community 67"
+Cohesion: 0.67
+Nodes (3): @opencode-ai/plugin dependency, dependencies, @opencode-ai/plugin
+
+### Community 68 - "Community 68"
 Cohesion: 0.50
-Nodes (4): Context Index System, Context Path Resolution, Context System Guide, Lazy Loading (Context)
+Nodes (4): Middleware Pattern for Plugins, OpenCode Plugins Overview, Plugin Context Object, Plugin Registration Locations
 
 ### Community 69 - "Community 69"
 Cohesion: 0.50
-Nodes (4): Central Registry Pattern, Component Separation, Modular Mastra Building, Shared Services Pattern
+Nodes (4): Scroll-Linked Animation Technique, Scrollytelling Headphone Next.js Implementation, Concept: Scroll-Linked Animations, Example: Scrollytelling Headphone Animation
 
 ### Community 70 - "Community 70"
 Cohesion: 0.50
-Nodes (4): pyenv exec deterministic execution pattern, pyenv init --path, Pyenv Linux User-Space Setup, PYENV_ROOT environment variable
+Nodes (4): Context Bundle Best Practices, Context Bundle Sections, Context Bundle Template, OpenAgents Templates Navigation
 
 ### Community 71 - "Community 71"
-Cohesion: 0.50
-Nodes (4): Terminal UI Context Navigation, Terminal UI Patterns, UI Context Navigation, Web UI Patterns
+Cohesion: 1.00
+Nodes (3): Mypy Src Layout Configuration (py.typed, mypy_path), Mypy Missing py.typed Marker Src Layout Remediation, Mypy Python 3.11 Pyproject Best Practices
 
-### Community 72 - "Testing & Validation"
+### Community 72 - "Community 72"
 Cohesion: 0.67
-Nodes (3): AAA Test Pattern, Dependency Injection, Test Coverage Standards
+Nodes (3): TDD red-green-refactor workflow, Lessons Learned: FR-004..005 Image ID and Failure Summary, Lessons Learned: Photo Library PR Plan (FR-001..003)
 
-### Community 73 - "Animation System"
+### Community 73 - "Community 73"
 Cohesion: 0.67
-Nodes (3): Animation Basics, Animation Micro-Syntax, Easing Functions
-
-### Community 74 - "Animation System"
-Cohesion: 0.67
-Nodes (3): Chat UI Animation Patterns, Message Entrance Animation, Typing Indicator Animation
+Nodes (3): Design Theme: Modern Dark Mode Style, Design Theme: Neo-Brutalism Style, Design Systems
 
 ### Community 75 - "Community 75"
 Cohesion: 0.67
-Nodes (3): /context Command, Context Harvest Operation, Context System Operations
-
-### Community 76 - "API & Routing"
-Cohesion: 0.67
-Nodes (3): Gemini Nano Banana AI, Image Specialist Subagent, Visual Development Context
-
-### Community 78 - "Community 78"
-Cohesion: 0.67
-Nodes (3): Mastra Error Handling, RateLimitError, StructuredOutputError
-
-### Community 80 - "Community 80"
-Cohesion: 0.67
-Nodes (3): Guide: Organizing Context by Concern, Pattern A: Function-Based Organization, Pattern B: Concern-Based Organization
-
-### Community 81 - "Testing & Validation"
-Cohesion: 0.67
-Nodes (3): Photo Library Acceptance Test Matrix, Photo Fixture and Dataset Test Plan, Photo Library Test Plan
-
-### Community 82 - "Query System"
-Cohesion: 0.67
-Nodes (3): rapidcull.query_evaluator, test_query_evaluation_contract_v1, test_query_evaluator_baseline_v1
-
-### Community 83 - "Query System"
-Cohesion: 0.67
-Nodes (3): rapidcull.query_grammar, test_fr_017_021_query_grammar_validation, test_fr_022_query_behavior_docs
-
-### Community 84 - "Community 84"
-Cohesion: 0.67
-Nodes (3): Read-Only Subagent Configuration, Optimized Subagent Prompt Structure, Tool Permission Error
-
-### Community 85 - "Community 85"
-Cohesion: 0.67
-Nodes (3): Session Directory Structure, Session Management, Session Manifest
-
-### Community 306 - "Community 306"
-Cohesion: 0.24
-Nodes (29): test_fr_017_parses_valid_grammar_query_into_typed_expression_tree(), test_fr_018_rejects_unknown_field_with_actionable_suggestion(), test_fr_019_rejects_non_integer_iso_value_with_expected_format_message(), test_fr_019_rejects_non_numeric_fnumber_value_with_expected_format_message(), test_fr_019_rejects_operator_not_supported_for_field_type(), test_fr_020_honors_boolean_parentheses_and_not_precedence(), test_fr_021_rejects_and_followed_by_or_with_actionable_error(), test_fr_021_rejects_bad_date_with_expected_format_message() (+21 more)
-
-### Community 307 - "Community 307"
-Cohesion: 0.18
-Nodes (9): client(), _query_url(), Tests for the standard response envelope (FR-039).  Verifies that every /api/v1/, meta may be null but the key must be present in the envelope., TestNotFoundEnvelope, TestParseErrorEnvelope, TestSuccessEnvelope, TestValidationErrorEnvelope (+1 more)
-
-### Community 308 - "Community 308"
-Cohesion: 0.43
-Nodes (4): _invalid_boolean_pair_error(), _missing_expression_after_boolean_error(), _Parser, QueryExpression
-
-### Community 309 - "Community 309"
-Cohesion: 0.16
-Nodes (16): datetime, JobProgressEntry, CreateJobRequest, Job, JobNotCancellable, JobProgressEntry, JobState, In-memory job store with guarded state transitions for RapidCull job orchestrati (+8 more)
-
-### Community 310 - "Community 310"
-Cohesion: 0.24
-Nodes (8): client(), _query_url(), Populate the in-memory registry before each test and clean up after., setup_and_teardown_registry(), TestCollectionNotFound, TestParseError, TestValidQuery, TestClient
-
-### Community 311 - "Community 311"
-Cohesion: 0.27
-Nodes (10): _double_operator_error(), _is_integer_value(), _is_number_value(), QueryComparison, _read_atom(), _read_operator(), _Token, _tokenize() (+2 more)
-
-### Community 313 - "Community 313"
-Cohesion: 0.24
-Nodes (9): Any, BaseModel, FastAPI, create_app(), query_collection(), QueryRequest, Query a collection by parse expression; returns matching image IDs., Create a FastAPI application instance with optional DB path for face endpoints. (+1 more)
-
-### Community 314 - "Community 314"
-Cohesion: 0.29
-Nodes (7): Collection, QueryResult, Apply query expression to collection, return matching image IDs., Create collection from metadata dict., QueryExpression, QueryRecord, QueryRecord
+Nodes (3): Building Custom Tools, Shell-Based Tools via Bun API, Custom Tool Zod Schema Definition
 
 ## Knowledge Gaps
-- **21 isolated node(s):** `Any`, `Path`, `CollectionQueryResult`, `PersonDeleteResult`, `@opencode-ai/plugin` (+16 more)
+- **201 isolated node(s):** `fs`, `path`, `PROJECT_ROOT`, `TASKS_DIR`, `COMPLETED_DIR` (+196 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **220 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `datetime` connect `Community 309` to `Media Ingest Pipeline`, `API & Routing`, `API & Routing`, `Gallery Management`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
-- **Why does `FailedIngestItem` connect `Tool Adapters` to `Proxy Generation & Caching`, `API & Routing`, `Gallery Management`, `Media Ingest Pipeline`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Why does `ApiError` connect `API & Routing` to `Community 313`, `Community 309`, `API & Routing`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `datetime` connect `Community 26` to `Face Detection Schema`, `Person CRUD Operations`, `Job Store Cancel Logic`, `Community 54`, `Community 28`?**
+  _High betweenness centrality (0.089) - this node is a cross-community bridge._
+- **Why does `FailedIngestItem` connect `ImageMagick Proxy Adapters` to `CLI Processing Pipeline`, `Face Detection Schema`, `Gallery Hard-Link Creation`, `CLI Entry Point`, `Community 20`, `Community 54`?**
+  _High betweenness centrality (0.037) - this node is a cross-community bridge._
+- **Why does `ApiError` connect `Community 26` to `Community 28`, `Community 21`?**
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Are the 38 inferred relationships involving `FailedIngestItem` (e.g. with `TestProcessNewEmptyDir` and `TestProcessNewHappyPath`) actually correct?**
   _`FailedIngestItem` has 38 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `Path` (e.g. with `ImageMagickProxyOutcome` and `FailedIngestItem`) actually correct?**
   _`Path` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Any`, `Path`, `Query a collection by parse expression; returns matching image IDs.` to the rest of the system?**
-  _165 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Proxy Generation & Caching` be split into smaller, more focused modules?**
-  _Cohesion score 0.057782754759238525 - nodes in this community are weakly interconnected._
+- **What connects `fs`, `path`, `PROJECT_ROOT` to the rest of the system?**
+  _387 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `CLI Processing Pipeline` be split into smaller, more focused modules?**
+  _Cohesion score 0.05942571785268414 - nodes in this community are weakly interconnected._
