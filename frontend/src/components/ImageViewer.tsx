@@ -4,6 +4,8 @@ import { api } from '../api/client'
 import type { GalleryImage } from '../api/client'
 import { useKeyboard } from '../hooks/useKeyboard'
 import StatusDot from './StatusDot'
+import MetadataSidebar from './MetadataSidebar'
+import FaceOverlay from './FaceOverlay'
 
 interface ImageViewerProps {
   imageId: string
@@ -16,10 +18,21 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
   const queryClient = useQueryClient()
   const [zoomMode, setZoomMode] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
+  const [metaSidebarOpen, setMetaSidebarOpen] = useState(false)
+  const [faceOverlayVisible, setFaceOverlayVisible] = useState(false)
+
+  // Image natural dimensions (from onLoad)
+  const [naturalWidth, setNaturalWidth] = useState(0)
+  const [naturalHeight, setNaturalHeight] = useState(0)
+  // Displayed dimensions (from getBoundingClientRect on load)
+  const [displayWidth, setDisplayWidth] = useState(0)
+  const [displayHeight, setDisplayHeight] = useState(0)
+
   const dragStart = useRef<{ x: number; y: number; scrollLeft: number; scrollTop: number } | null>(
     null,
   )
   const scrollRef = useRef<HTMLDivElement>(null)
+  const imgRef = useRef<HTMLImageElement>(null)
 
   const imageQuery = useQuery({
     queryKey: ['image', imageId],
@@ -29,6 +42,11 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
   const decisionQuery = useQuery({
     queryKey: ['decision', imageId],
     queryFn: () => api.getDecision(imageId),
+  })
+
+  const personsQuery = useQuery({
+    queryKey: ['persons'],
+    queryFn: () => api.getPersons(),
   })
 
   const invalidateDecision = useCallback(() => {
@@ -83,6 +101,10 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
       q: () => onClose(),
       Q: () => onClose(),
       Escape: () => onClose(),
+      m: () => setMetaSidebarOpen((prev) => !prev),
+      M: () => setMetaSidebarOpen((prev) => !prev),
+      o: () => setFaceOverlayVisible((prev) => !prev),
+      O: () => setFaceOverlayVisible((prev) => !prev),
       ' ': (e: KeyboardEvent) => {
         e.preventDefault()
         setZoomMode((prev) => !prev)
@@ -134,6 +156,17 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
     setIsDragging(false)
     dragStart.current = null
   }
+
+  const handleImageLoad = () => {
+    if (!imgRef.current) return
+    setNaturalWidth(imgRef.current.naturalWidth)
+    setNaturalHeight(imgRef.current.naturalHeight)
+    const rect = imgRef.current.getBoundingClientRect()
+    setDisplayWidth(rect.width)
+    setDisplayHeight(rect.height)
+  }
+
+  const persons = personsQuery.data?.persons ?? []
 
   const btnStyle: React.CSSProperties = {
     background: '#2a2a2a',
@@ -220,141 +253,176 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
         >
           {zoomMode ? 'Zoom' : 'Fit'}
         </button>
+
+        <button
+          onClick={() => setFaceOverlayVisible((prev) => !prev)}
+          style={{ ...btnStyle, color: faceOverlayVisible ? '#f80' : '#ccc' }}
+          title="Toggle face overlay (O)"
+        >
+          Faces
+        </button>
+
+        <button
+          onClick={() => setMetaSidebarOpen((prev) => !prev)}
+          style={{ ...btnStyle, color: metaSidebarOpen ? '#adf' : '#ccc' }}
+          title="Toggle metadata sidebar (M)"
+        >
+          {metaSidebarOpen ? 'Info ▶' : 'Info ◀'}
+        </button>
       </div>
 
-      {/* Image area */}
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex' }}>
-        {/* Scrollable container for zoom mode */}
-        <div
-          ref={scrollRef}
-          style={{
-            flex: 1,
-            overflow: zoomMode ? 'auto' : 'hidden',
-            display: 'flex',
-            alignItems: zoomMode ? 'flex-start' : 'center',
-            justifyContent: zoomMode ? 'flex-start' : 'center',
-            cursor: zoomMode ? (isDragging ? 'grabbing' : 'grab') : 'default',
-            userSelect: 'none',
-          }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          {/* Image container with decision border */}
+      {/* Image area + metadata sidebar */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
+        {/* Image panel */}
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', display: 'flex' }}>
+          {/* Scrollable container for zoom mode */}
           <div
+            ref={scrollRef}
             style={{
-              position: 'relative',
-              border: containerBorderStyle,
-              borderRadius: 2,
-              display: 'inline-flex',
-              flexShrink: 0,
-              maxWidth: zoomMode ? 'none' : '100%',
-              maxHeight: zoomMode ? 'none' : '100%',
+              flex: 1,
+              overflow: zoomMode ? 'auto' : 'hidden',
+              display: 'flex',
+              alignItems: zoomMode ? 'flex-start' : 'center',
+              justifyContent: zoomMode ? 'flex-start' : 'center',
+              cursor: zoomMode ? (isDragging ? 'grabbing' : 'grab') : 'default',
+              userSelect: 'none',
             }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
           >
-            {/* Reject overlay */}
-            {decision === 'reject' && (
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'rgba(255,68,68,0.3)',
-                  pointerEvents: 'none',
-                  zIndex: 1,
-                }}
-              />
-            )}
+            {/* Image container with decision border */}
+            <div
+              style={{
+                position: 'relative',
+                border: containerBorderStyle,
+                borderRadius: 2,
+                display: 'inline-flex',
+                flexShrink: 0,
+                maxWidth: zoomMode ? 'none' : '100%',
+                maxHeight: zoomMode ? 'none' : '100%',
+              }}
+            >
+              {/* Reject overlay */}
+              {decision === 'reject' && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(255,68,68,0.3)',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                  }}
+                />
+              )}
 
-            {imageQuery.isLoading ? (
-              <div
-                style={{
-                  width: 400,
-                  height: 300,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#555',
-                  fontSize: 14,
-                }}
-              >
-                Loading...
-              </div>
-            ) : (
-              <img
-                src={imageSrc}
-                alt={filename}
-                draggable={false}
-                onError={(e) => {
-                  // Fallback to original path if proxy doesn't exist
-                  if (imageData?.path) {
-                    const target = e.currentTarget
-                    if (target.src !== imageData.path) {
-                      target.src = imageData.path
-                    }
-                  }
-                }}
-                style={{
-                  display: 'block',
-                  maxWidth: zoomMode ? 'none' : '100%',
-                  maxHeight: zoomMode ? 'none' : 'calc(100vh - 100px)',
-                  objectFit: zoomMode ? 'none' : 'contain',
-                  imageRendering: zoomMode ? 'pixelated' : 'auto',
-                  userSelect: 'none',
-                  pointerEvents: 'none',
-                }}
-              />
-            )}
+              {imageQuery.isLoading ? (
+                <div
+                  style={{
+                    width: 400,
+                    height: 300,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#555',
+                    fontSize: 14,
+                  }}
+                >
+                  Loading...
+                </div>
+              ) : (
+                <>
+                  <img
+                    ref={imgRef}
+                    src={imageSrc}
+                    alt={filename}
+                    draggable={false}
+                    onLoad={handleImageLoad}
+                    onError={(e) => {
+                      // Fallback to original path if proxy doesn't exist
+                      if (imageData?.path) {
+                        const target = e.currentTarget
+                        if (target.src !== imageData.path) {
+                          target.src = imageData.path
+                        }
+                      }
+                    }}
+                    style={{
+                      display: 'block',
+                      maxWidth: zoomMode ? 'none' : '100%',
+                      maxHeight: zoomMode ? 'none' : 'calc(100vh - 100px)',
+                      objectFit: zoomMode ? 'none' : 'contain',
+                      imageRendering: zoomMode ? 'pixelated' : 'auto',
+                      userSelect: 'none',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                  <FaceOverlay
+                    imageId={imageId}
+                    imageNaturalWidth={naturalWidth}
+                    imageNaturalHeight={naturalHeight}
+                    displayWidth={displayWidth}
+                    displayHeight={displayHeight}
+                    isVisible={faceOverlayVisible}
+                    persons={persons}
+                  />
+                </>
+              )}
+            </div>
           </div>
+
+          {/* Prev arrow */}
+          {prevImage && (
+            <button
+              onClick={() => onNavigate(prevImage.image_id)}
+              title="Previous image (←)"
+              style={{
+                position: 'absolute',
+                left: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(0,0,0,0.5)',
+                border: '1px solid #444',
+                color: '#ccc',
+                borderRadius: 4,
+                padding: '10px 14px',
+                cursor: 'pointer',
+                fontSize: 18,
+                zIndex: 10,
+              }}
+            >
+              ◄
+            </button>
+          )}
+
+          {/* Next arrow */}
+          {nextImage && (
+            <button
+              onClick={() => onNavigate(nextImage.image_id)}
+              title="Next image (→)"
+              style={{
+                position: 'absolute',
+                right: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(0,0,0,0.5)',
+                border: '1px solid #444',
+                color: '#ccc',
+                borderRadius: 4,
+                padding: '10px 14px',
+                cursor: 'pointer',
+                fontSize: 18,
+                zIndex: 10,
+              }}
+            >
+              ►
+            </button>
+          )}
         </div>
 
-        {/* Prev arrow */}
-        {prevImage && (
-          <button
-            onClick={() => onNavigate(prevImage.image_id)}
-            title="Previous image (←)"
-            style={{
-              position: 'absolute',
-              left: 12,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'rgba(0,0,0,0.5)',
-              border: '1px solid #444',
-              color: '#ccc',
-              borderRadius: 4,
-              padding: '10px 14px',
-              cursor: 'pointer',
-              fontSize: 18,
-              zIndex: 10,
-            }}
-          >
-            ◄
-          </button>
-        )}
-
-        {/* Next arrow */}
-        {nextImage && (
-          <button
-            onClick={() => onNavigate(nextImage.image_id)}
-            title="Next image (→)"
-            style={{
-              position: 'absolute',
-              right: 12,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'rgba(0,0,0,0.5)',
-              border: '1px solid #444',
-              color: '#ccc',
-              borderRadius: 4,
-              padding: '10px 14px',
-              cursor: 'pointer',
-              fontSize: 18,
-              zIndex: 10,
-            }}
-          >
-            ►
-          </button>
-        )}
+        {/* Metadata sidebar */}
+        <MetadataSidebar imageData={imageData} isOpen={metaSidebarOpen} />
       </div>
 
       {/* Status bar */}
@@ -374,7 +442,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
           {currentIndex + 1} / {images.length}
         </span>
         <span>{zoomMode ? 'Zoom mode' : 'Fit mode'} — Space to toggle</span>
-        <span>P: pick · X: reject · ←→: navigate · Q/Esc: close</span>
+        <span>P: pick · X: reject · ←→: navigate · M: metadata · O: faces · Q/Esc: close</span>
       </div>
     </div>
   )

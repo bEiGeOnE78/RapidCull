@@ -45,6 +45,7 @@ export const api = {
       `/persons/${personId}`,
       { method: 'DELETE' },
     ),
+  getFaces: (imageId: string) => request<FacesData>(`/images/${imageId}/faces`),
   getTrash: () => request<TrashData>('/trash'),
   restoreTrash: (imageId: string) =>
     request<{ image_id: string; success: boolean }>(`/trash/${imageId}/restore`, { method: 'POST' }),
@@ -98,6 +99,21 @@ export interface Person {
 
 export interface PersonsData {
   persons: Person[]
+}
+
+export interface FaceBox {
+  face_id: string
+  image_id: string
+  person_id: string | null
+  bbox_x: number
+  bbox_y: number
+  bbox_w: number
+  bbox_h: number
+  detection_score: number
+}
+
+export interface FacesData {
+  faces: FaceBox[]
 }
 
 export interface TrashItem {
