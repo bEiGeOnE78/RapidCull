@@ -6,6 +6,8 @@ import ThumbnailGrid from './components/ThumbnailGrid'
 import ImageViewer from './components/ImageViewer'
 import CommandPalette from './components/CommandPalette'
 import JobProgressPanel from './components/JobProgressPanel'
+import PersonPanel from './components/PersonPanel'
+import TrashPanel from './components/TrashPanel'
 import { useKeyboard } from './hooks/useKeyboard'
 
 const PAGE_SIZE = 50
@@ -18,6 +20,8 @@ export default function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [activeJobId, setActiveJobId] = useState<string | null>(null)
   const [activeJobLabel, setActiveJobLabel] = useState('')
+  const [personPanelOpen, setPersonPanelOpen] = useState(false)
+  const [trashPanelOpen, setTrashPanelOpen] = useState(false)
 
   // Fetch galleries
   const galleriesQuery = useQuery({
@@ -78,6 +82,8 @@ export default function App() {
         onClose={() => setCommandPaletteOpen(false)}
         onJobStarted={handleJobStarted}
       />
+      <PersonPanel isOpen={personPanelOpen} onClose={() => setPersonPanelOpen(false)} />
+      <TrashPanel isOpen={trashPanelOpen} onClose={() => setTrashPanelOpen(false)} />
       {activeJobId !== null && (
         <JobProgressPanel
           jobId={activeJobId}
@@ -133,14 +139,44 @@ export default function App() {
               ? galleries.find((g) => g.gallery_id === activeGalleryId)?.name ?? activeGalleryId
               : 'No gallery selected'}
           </span>
-          {galleriesQuery.isLoading && (
-            <span style={{ color: '#555', fontSize: 12, marginLeft: 'auto' }}>Loading galleries...</span>
-          )}
-          {galleriesQuery.isError && (
-            <span style={{ color: '#f44', fontSize: 12, marginLeft: 'auto' }}>
-              Failed to load galleries
-            </span>
-          )}
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+            {galleriesQuery.isLoading && (
+              <span style={{ color: '#555', fontSize: 12 }}>Loading galleries...</span>
+            )}
+            {galleriesQuery.isError && (
+              <span style={{ color: '#f44', fontSize: 12 }}>Failed to load galleries</span>
+            )}
+            <button
+              onClick={() => setPersonPanelOpen(true)}
+              title="People"
+              style={{
+                background: 'transparent',
+                border: '1px solid #444',
+                color: '#aaa',
+                borderRadius: 4,
+                padding: '4px 10px',
+                cursor: 'pointer',
+                fontSize: 12,
+              }}
+            >
+              People
+            </button>
+            <button
+              onClick={() => setTrashPanelOpen(true)}
+              title="Trash"
+              style={{
+                background: 'transparent',
+                border: '1px solid #444',
+                color: '#aaa',
+                borderRadius: 4,
+                padding: '4px 10px',
+                cursor: 'pointer',
+                fontSize: 12,
+              }}
+            >
+              Trash
+            </button>
+          </div>
         </div>
 
         {/* Main content */}
