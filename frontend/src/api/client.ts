@@ -49,6 +49,10 @@ export const api = {
   getTrash: () => request<TrashData>('/trash'),
   restoreTrash: (imageId: string) =>
     request<{ image_id: string; success: boolean }>(`/trash/${imageId}/restore`, { method: 'POST' }),
+  createJob: (op: string, params?: Record<string, unknown>) =>
+    request<JobCreated>('/jobs', { method: 'POST', body: JSON.stringify({ op, params: params ?? {} }) }),
+  getJobProgress: (jobId: string) =>
+    request<JobProgress>(`/jobs/${jobId}/progress`),
 }
 
 export interface Gallery {
@@ -125,4 +129,18 @@ export interface TrashItem {
 export interface TrashData {
   items: TrashItem[]
   count: number
+}
+
+export interface JobEntry {
+  timestamp: string
+  message: string
+}
+
+export interface JobProgress {
+  entries: JobEntry[]
+  status: 'running' | 'done' | 'failed'
+}
+
+export interface JobCreated {
+  job_id: string
 }

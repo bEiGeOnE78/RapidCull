@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from './api/client'
 import GallerySelector from './components/GallerySelector'
 import ThumbnailGrid from './components/ThumbnailGrid'
 import ImageViewer from './components/ImageViewer'
+import CommandPalette from './components/CommandPalette'
+import JobProgressPanel from './components/JobProgressPanel'
+import { useKeyboard } from './hooks/useKeyboard'
 
 const PAGE_SIZE = 50
 
@@ -12,6 +15,9 @@ export default function App() {
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null)
   const [gallerySidebarOpen, setGallerySidebarOpen] = useState(true)
   const [page, setPage] = useState(1)
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+  const [activeJobId, setActiveJobId] = useState<string | null>(null)
+  const [activeJobLabel, setActiveJobLabel] = useState('')
 
   // Fetch galleries
   const galleriesQuery = useQuery({
@@ -39,21 +45,18 @@ export default function App() {
     enabled: activeGalleryId !== null,
   })
 
-  // Toggle gallery sidebar with G key
-  useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      const target = e.target as HTMLElement
-      // Don't intercept key events in inputs/textareas
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
-
-      if (e.key === 'g' || e.key === 'G') {
-        setGallerySidebarOpen((prev) => !prev)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+  const handleJobStarted = useCallback((jobId: string, label: string) => {
+    setActiveJobId(jobId)
+    setActiveJobLabel(label)
+    setCommandPaletteOpen(false)
   }, [])
+
+  // Global keyboard shortcuts (skipped when focus is in input/textarea/select)
+  useKeyboard({
+    g: () => setGallerySidebarOpen((prev) => !prev),
+    G: () => setGallerySidebarOpen((prev) => !prev),
+    '/': () => setCommandPaletteOpen(true),
+  })
 
   const galleries = galleriesQuery.data?.galleries ?? []
   const images = imagesQuery.data?.images ?? []
@@ -70,6 +73,18 @@ export default function App() {
         overflow: 'hidden',
       }}
     >
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onJobStarted={handleJobStarted}
+      />
+      {activeJobId !== null && (
+        <JobProgressPanel
+          jobId={activeJobId}
+          label={activeJobLabel}
+          onClose={() => setActiveJobId(null)}
+        />
+      )}
       {selectedImageId && (
         <ImageViewer
           imageId={selectedImageId}
