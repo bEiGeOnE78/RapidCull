@@ -7,7 +7,7 @@ Endpoints are mounted under /api/v1/jobs via app.include_router() in api.py.
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -16,7 +16,22 @@ from pydantic import BaseModel
 from rapidcull.api_envelope import ApiError, ok
 from rapidcull.jobs import Job, JobNotCancellable, JobProgressEntry, JobState, get_job_store
 
+if TYPE_CHECKING:
+    from rapidcull.job_executor import JobExecutor
+
 router = APIRouter()
+
+_executor: JobExecutor | None = None
+
+
+def configure_executor(executor: JobExecutor) -> None:
+    global _executor
+    _executor = executor
+
+
+def get_executor() -> JobExecutor | None:
+    return _executor
+
 
 # ---------------------------------------------------------------------------
 # Serialisation helpers
@@ -69,6 +84,9 @@ def create_job(request: CreateJobRequest) -> JSONResponse:
     """Create a new job in QUEUED state."""
     store = get_job_store()
     job = store.create(kind=request.kind, params=request.params)
+    executor = get_executor()
+    if executor is not None:
+        executor.submit(job.job_id, job.kind, store)
     return JSONResponse(status_code=201, content=ok(_job_to_dict(job)))
 
 

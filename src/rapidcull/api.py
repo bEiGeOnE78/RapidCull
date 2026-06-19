@@ -61,7 +61,7 @@ def query_collection(collection_id: str, request: QueryRequest) -> dict[str, Any
     )
 
 
-def create_app(db_path: Path | None = None) -> FastAPI:
+def create_app(db_path: Path | None = None, library_root: Path | None = None) -> FastAPI:
     """Create a FastAPI application instance with optional DB path for face endpoints."""
     from rapidcull import api_galleries, api_images, api_persons, api_trash  # noqa: PLC0415
     from rapidcull.api_envelope import register_handlers  # noqa: PLC0415
@@ -86,6 +86,12 @@ def create_app(db_path: Path | None = None) -> FastAPI:
         _app.include_router(api_galleries.router)
         _app.include_router(api_persons.router)
         _app.include_router(api_trash.router)
+
+        from rapidcull.api_jobs import configure_executor  # noqa: PLC0415
+        from rapidcull.job_executor import JobExecutor  # noqa: PLC0415
+
+        _executor = JobExecutor(db_path=_db_path, library_root=library_root)
+        configure_executor(_executor)
 
         # Mount proxy/thumbnail static files.
         proxies_dir = _db_path.parent / "proxies"
