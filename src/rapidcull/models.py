@@ -267,3 +267,62 @@ class HardDeleteResult:
     deleted_count: int
     failed_count: int
     audit: list[HardDeleteAuditEntry]
+
+
+@dataclass(frozen=True)
+class BackupResult:
+    backup_path: str
+    files_backed_up: int
+    total_bytes: int
+    created_at: str
+
+
+@dataclass(frozen=True)
+class RestoreResult:
+    success: bool
+    files_restored: int
+    reason: str = ""
+
+
+@dataclass(frozen=True)
+class ConsistencyIssue:
+    kind: Literal["missing_from_fs", "missing_from_db", "trash_orphan"]
+    item_id: str
+    detail: str
+
+
+@dataclass(frozen=True)
+class ConsistencyReport:
+    issues: list[ConsistencyIssue]
+    checked_at: str
+
+
+@dataclass(frozen=True)
+class RepairItem:
+    item_id: str
+    action: str
+    outcome: Literal["fixed", "skipped", "failed"]
+    reason: str = ""
+
+
+@dataclass(frozen=True)
+class RepairResult:
+    fixed_count: int
+    skipped_count: int
+    failed_count: int
+    audit: list[RepairItem]
+
+
+@dataclass(frozen=True)
+class MigrationStep:
+    from_version: int
+    to_version: int
+    description: str
+
+
+@dataclass(frozen=True)
+class SchemaStatus:
+    current_version: int
+    latest_version: int
+    migration_path: list[MigrationStep]
+    needs_migration: bool

@@ -3,7 +3,14 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
+from rapidcull.models import MigrationStep
+
 CURRENT_SCHEMA_VERSION = 3
+
+MIGRATION_PATH = [
+    MigrationStep(from_version=1, to_version=2, description="Add faces and persons tables"),
+    MigrationStep(from_version=2, to_version=3, description="Add cull_decisions and trash tables"),
+]
 
 
 class SchemaVersionMismatchError(RuntimeError):
@@ -53,6 +60,18 @@ def _apply_v3_tables(cursor: sqlite3.Cursor) -> None:
 def _migrate_v2_to_v3(cursor: sqlite3.Cursor) -> None:
     _apply_v3_tables(cursor)
     cursor.execute("UPDATE schema_version SET version = 3")
+
+
+def get_schema_version(db_path: Path) -> int | None:
+    """Return current schema version from DB, or None if DB doesn't exist/has no version table."""
+    if not db_path.exists():
+        return None
+    with sqlite3.connect(db_path) as conn:
+        try:
+            row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
+            return int(row[0]) if row else None
+        except sqlite3.OperationalError:
+            return None
 
 
 def create_or_validate_schema(db_path: Path) -> None:
