@@ -1,0 +1,4 @@
+# Exclude non-source directories from graphify scanning
+.claude/
+.tmp/
+.opencode/
