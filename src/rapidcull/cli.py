@@ -10,6 +10,9 @@ from pathlib import Path
 
 import click
 
+from rapidcull.backup import backup as run_backup
+from rapidcull.backup import restore as run_restore
+from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.exiftool_adapter import RealExifToolBatchExtractor
 from rapidcull.ingest import (
     discover_supported_media,
@@ -212,6 +215,125 @@ def process_new(source_dir: str, raw_pipeline: bool) -> None:
     skipped = summary.skipped_count
     failed = summary.failed_count
     click.echo(f"Processed: {processed} | Skipped: {skipped} | Failed: {failed}")
+
+
+@cli.command(name="backup")
+@click.option(
+    "--db",
+    required=True,
+    type=click.Path(exists=True, dir_okay=False),
+    help="Path to rapidcull.db",
+)
+@click.option(
+    "--galleries-root",
+    type=click.Path(file_okay=False),
+    default=None,
+    help="Path to galleries root directory",
+)
+@click.option(
+    "--backup-root",
+    required=True,
+    type=click.Path(),
+    help="Directory to store backups",
+)
+def backup_cmd(db: str, galleries_root: str | None, backup_root: str) -> None:
+    """Backup DB and gallery JSON state to a timestamped directory."""
+    result = run_backup(
+        db_path=Path(db),
+        galleries_root=Path(galleries_root) if galleries_root else None,
+        backup_root=Path(backup_root),
+    )
+    click.echo(
+        f"Backed up {result.files_backed_up} file(s) ({result.total_bytes} bytes)"
+        f" -> {result.backup_path}"
+    )
+
+
+@cli.command(name="restore")
+@click.option(
+    "--backup-path",
+    required=True,
+    type=click.Path(exists=True, file_okay=False),
+    help="Path to backup directory",
+)
+@click.option(
+    "--db",
+    required=True,
+    type=click.Path(dir_okay=False),
+    help="Path to restore DB to",
+)
+@click.option(
+    "--galleries-root",
+    type=click.Path(file_okay=False),
+    default=None,
+    help="Path to galleries root directory",
+)
+@click.option(
+    "--confirmed",
+    is_flag=True,
+    default=False,
+    help="Required to confirm restore (overwrites existing data)",
+)
+def restore_cmd(backup_path: str, db: str, galleries_root: str | None, confirmed: bool) -> None:
+    """Restore DB and gallery JSON from a backup directory."""
+    if not confirmed:
+        click.echo("Error: --confirmed flag required to overwrite existing data", err=True)
+        raise SystemExit(1)
+    result = run_restore(
+        backup_path=Path(backup_path),
+        db_path=Path(db),
+        galleries_root=Path(galleries_root) if galleries_root else None,
+        confirmed=confirmed,
+    )
+    if result.success:
+        click.echo(f"Restored {result.files_restored} file(s) from {backup_path}")
+    else:
+        click.echo(f"Error: {result.reason}", err=True)
+        raise SystemExit(1)
+
+
+@cli.command(name="check")
+@click.option(
+    "--db",
+    required=True,
+    type=click.Path(exists=True, dir_okay=False),
+    help="Path to rapidcull.db",
+)
+@click.option(
+    "--trash-dir",
+    type=click.Path(file_okay=False),
+    default=None,
+    help="Path to trash directory",
+)
+@click.option("--repair", is_flag=True, default=False, help="Repair detected issues")
+@click.option(
+    "--confirmed",
+    is_flag=True,
+    default=False,
+    help="Required when --repair is set",
+)
+def check_cmd(db: str, trash_dir: str | None, repair: bool, confirmed: bool) -> None:
+    """Check DB/FS consistency and optionally repair drift."""
+    report = check_consistency(
+        db_path=Path(db),
+        trash_dir=Path(trash_dir) if trash_dir else None,
+    )
+    click.echo(f"Checked at: {report.checked_at}")
+    click.echo(f"Issues found: {len(report.issues)}")
+    for issue in report.issues:
+        click.echo(f"  [{issue.kind}] {issue.item_id}: {issue.detail}")
+
+    if repair:
+        if not confirmed:
+            click.echo("Error: --confirmed required with --repair", err=True)
+            raise SystemExit(1)
+        result = repair_consistency(
+            db_path=Path(db),
+            report=report,
+            trash_dir=Path(trash_dir) if trash_dir else None,
+            confirmed=confirmed,
+        )
+        click.echo(f"Repaired: {result.fixed_count} fixed, {result.failed_count} failed")
 
 
 def main() -> None:
