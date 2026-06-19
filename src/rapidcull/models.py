@@ -3,7 +3,7 @@ from __future__ import annotations
 import enum
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TypeAlias
+from typing import Literal, TypeAlias
 
 MetadataValue: TypeAlias = str | int | float | bool | None
 ToolReasonCounts: TypeAlias = dict[str, int]
@@ -209,3 +209,61 @@ class PersonDeleteResult:
     deleted_person_id: str
     deleted_face_count: int
     unlinked_face_count: int
+
+
+@dataclass(frozen=True)
+class CullDecision:
+    image_id: str
+    decision: Literal["pick", "reject"]
+    decided_at: str
+
+
+@dataclass(frozen=True)
+class CullResult:
+    image_id: str
+    success: bool
+    reason: str = ""
+
+
+@dataclass(frozen=True)
+class TrashEntry:
+    image_id: str
+    original_path: str
+    trashed_at: str
+
+
+@dataclass(frozen=True)
+class TrashPreview:
+    items: list[TrashEntry]
+    total_size_bytes: int
+
+
+@dataclass(frozen=True)
+class TrashFailedItem:
+    image_id: str
+    original_path: str
+    reason: str
+
+
+@dataclass(frozen=True)
+class TrashResult:
+    moved_count: int
+    failed_count: int
+    failed_items: list[TrashFailedItem]
+
+
+@dataclass(frozen=True)
+class HardDeleteAuditEntry:
+    image_id: str
+    original_path: str
+    deleted_at: str
+    size_bytes: int
+    outcome: Literal["deleted", "failed"]
+    reason: str = ""
+
+
+@dataclass(frozen=True)
+class HardDeleteResult:
+    deleted_count: int
+    failed_count: int
+    audit: list[HardDeleteAuditEntry]

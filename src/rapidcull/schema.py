@@ -3,7 +3,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-CURRENT_SCHEMA_VERSION = 2
+CURRENT_SCHEMA_VERSION = 3
 
 
 class SchemaVersionMismatchError(RuntimeError):
@@ -33,6 +33,28 @@ def _apply_v2_tables(cursor: sqlite3.Cursor) -> None:
     """)
 
 
+def _apply_v3_tables(cursor: sqlite3.Cursor) -> None:
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS cull_decisions (
+          image_id TEXT PRIMARY KEY REFERENCES images(image_id),
+          decision TEXT NOT NULL CHECK(decision IN ('pick', 'reject')),
+          decided_at TEXT NOT NULL
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS trash (
+          image_id TEXT PRIMARY KEY REFERENCES images(image_id),
+          original_path TEXT NOT NULL,
+          trashed_at TEXT NOT NULL
+        )
+    """)
+
+
+def _migrate_v2_to_v3(cursor: sqlite3.Cursor) -> None:
+    _apply_v3_tables(cursor)
+    cursor.execute("UPDATE schema_version SET version = 3")
+
+
 def create_or_validate_schema(db_path: Path) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -58,10 +80,16 @@ def create_or_validate_schema(db_path: Path) -> None:
                 )
                 """)
             _apply_v2_tables(cursor)
+            _apply_v3_tables(cursor)
             connection.commit()
             return
 
         existing_version = int(row[0])
+
+        if existing_version == 2:
+            _migrate_v2_to_v3(cursor)
+            connection.commit()
+            existing_version = 3
 
         if existing_version != CURRENT_SCHEMA_VERSION:
             raise SchemaVersionMismatchError(
@@ -76,4 +104,5 @@ def create_or_validate_schema(db_path: Path) -> None:
             )
             """)
         _apply_v2_tables(cursor)
+        _apply_v3_tables(cursor)
         connection.commit()
