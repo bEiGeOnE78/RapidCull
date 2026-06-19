@@ -10,6 +10,8 @@ from typing import Literal
 from rapidcull.models import (
     CullDecision,
     CullResult,
+    HardDeleteAuditEntry,
+    HardDeleteResult,
     TrashEntry,
     TrashFailedItem,
     TrashPreview,
@@ -174,3 +176,70 @@ def restore_from_trash(db_path: Path, image_id: str, trash_dir: Path) -> CullRes
         except OSError as exc:
             return CullResult(image_id=image_id, success=False, reason=str(exc))
     return CullResult(image_id=image_id, success=True)
+
+
+def hard_delete(
+    db_path: Path,
+    image_ids: list[str],
+    trash_dir: Path,
+    *,
+    confirmed: bool,
+) -> HardDeleteResult:
+    """Permanently delete files from trash_dir. confirmed=True required (NFR-015)."""
+    if not confirmed:
+        raise RuntimeError("hard_delete requires confirmed=True")
+
+    deleted = 0
+    failed = 0
+    audit: list[HardDeleteAuditEntry] = []
+    deleted_at = datetime.now(UTC).isoformat()
+
+    with sqlite3.connect(db_path) as conn:
+        for image_id in image_ids:
+            row = conn.execute(
+                "SELECT original_path FROM trash WHERE image_id = ?", (image_id,)
+            ).fetchone()
+            if row is None:
+                audit.append(
+                    HardDeleteAuditEntry(
+                        image_id=image_id,
+                        original_path="",
+                        deleted_at=deleted_at,
+                        size_bytes=0,
+                        outcome="failed",
+                        reason="image_id not found in trash",
+                    )
+                )
+                failed += 1
+                continue
+            original_path = row[0]
+            dest = trash_dir / image_id
+            size = dest.stat().st_size if dest.exists() else 0
+            try:
+                if dest.exists():
+                    dest.unlink()
+                conn.execute("DELETE FROM trash WHERE image_id = ?", (image_id,))
+                audit.append(
+                    HardDeleteAuditEntry(
+                        image_id=image_id,
+                        original_path=original_path,
+                        deleted_at=deleted_at,
+                        size_bytes=size,
+                        outcome="deleted",
+                    )
+                )
+                deleted += 1
+            except OSError as exc:
+                audit.append(
+                    HardDeleteAuditEntry(
+                        image_id=image_id,
+                        original_path=original_path,
+                        deleted_at=deleted_at,
+                        size_bytes=size,
+                        outcome="failed",
+                        reason=str(exc),
+                    )
+                )
+                failed += 1
+
+    return HardDeleteResult(deleted_count=deleted, failed_count=failed, audit=audit)
