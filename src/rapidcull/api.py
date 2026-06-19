@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from rapidcull.api_envelope import ApiError, ok, register_handlers
@@ -63,6 +64,7 @@ def query_collection(collection_id: str, request: QueryRequest) -> dict[str, Any
 
 def create_app(db_path: Path | None = None) -> FastAPI:
     """Create a FastAPI application instance with optional DB path for face endpoints."""
+    from rapidcull import api_galleries, api_images, api_persons, api_trash  # noqa: PLC0415
     from rapidcull.api_envelope import ApiError, ok, register_handlers  # noqa: PLC0415
     from rapidcull.api_jobs import router as jobs_router_  # noqa: PLC0415
     from rapidcull.security import configure_app as configure_app_  # noqa: PLC0415
@@ -74,6 +76,35 @@ def create_app(db_path: Path | None = None) -> FastAPI:
 
     if db_path is not None:
         _db_path = db_path
+
+        # Configure and mount the new domain routers.
+        api_images.configure_router(_db_path)
+        api_galleries.configure_router(_db_path)
+        api_persons.configure_router(_db_path)
+        api_trash.configure_router(_db_path)
+
+        _app.include_router(api_images.router)
+        _app.include_router(api_galleries.router)
+        _app.include_router(api_persons.router)
+        _app.include_router(api_trash.router)
+
+        # Mount proxy/thumbnail static files.
+        proxies_dir = _db_path.parent / "proxies"
+        proxies_dir.mkdir(parents=True, exist_ok=True)
+        _app.mount(
+            "/proxies",
+            StaticFiles(directory=str(proxies_dir), html=False),
+            name="proxies",
+        )
+
+        # Mount frontend build output only if it exists.
+        frontend_dist = Path(__file__).parent.parent.parent / "frontend" / "dist"
+        if frontend_dist.exists():
+            _app.mount(
+                "/",
+                StaticFiles(directory=str(frontend_dist), html=True),
+                name="frontend",
+            )
 
         @_app.get("/api/v1/images/{image_id}/faces")
         def get_image_faces(image_id: str) -> dict[str, Any]:
