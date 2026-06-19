@@ -1,16 +1,16 @@
 # Graph Report - RapidCull  (2026-06-19)
 
 ## Corpus Check
-- 123 files · ~48,388 words
+- 131 files · ~50,839 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2483 nodes · 3916 edges · 394 communities (175 shown, 219 thin omitted)
-- Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 646 edges (avg confidence: 0.51)
+- 2578 nodes · 4145 edges · 398 communities (179 shown, 219 thin omitted)
+- Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 674 edges (avg confidence: 0.51)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f385ed8b`
+- Built from commit: `b5819b78`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -93,6 +93,7 @@
 - [[_COMMUNITY_API & Routing|API & Routing]]
 - [[_COMMUNITY_API & Routing|API & Routing]]
 - [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
 - [[_COMMUNITY_Community 80|Community 80]]
 - [[_COMMUNITY_Testing & Validation|Testing & Validation]]
 - [[_COMMUNITY_Query System|Query System]]
@@ -315,31 +316,34 @@
 - [[_COMMUNITY_Community 303|Community 303]]
 - [[_COMMUNITY_Community 304|Community 304]]
 - [[_COMMUNITY_Community 305|Community 305]]
+- [[_COMMUNITY_Community 307|Community 307]]
+- [[_COMMUNITY_Community 308|Community 308]]
+- [[_COMMUNITY_Community 309|Community 309]]
+- [[_COMMUNITY_Community 310|Community 310]]
+- [[_COMMUNITY_Community 311|Community 311]]
 - [[_COMMUNITY_Community 312|Community 312]]
+- [[_COMMUNITY_Community 313|Community 313]]
+- [[_COMMUNITY_Community 314|Community 314]]
+- [[_COMMUNITY_Community 315|Community 315]]
+- [[_COMMUNITY_Community 316|Community 316]]
+- [[_COMMUNITY_Community 317|Community 317]]
+- [[_COMMUNITY_Community 318|Community 318]]
 - [[_COMMUNITY_Community 319|Community 319]]
+- [[_COMMUNITY_Community 320|Community 320]]
 - [[_COMMUNITY_Community 321|Community 321]]
-- [[_COMMUNITY_Community 322|Community 322]]
 - [[_COMMUNITY_Community 327|Community 327]]
-- [[_COMMUNITY_Community 331|Community 331]]
 - [[_COMMUNITY_Community 336|Community 336]]
 - [[_COMMUNITY_Community 337|Community 337]]
 - [[_COMMUNITY_Community 341|Community 341]]
 - [[_COMMUNITY_Community 342|Community 342]]
-- [[_COMMUNITY_Community 345|Community 345]]
 - [[_COMMUNITY_Community 357|Community 357]]
-- [[_COMMUNITY_Community 362|Community 362]]
 - [[_COMMUNITY_Community 370|Community 370]]
 - [[_COMMUNITY_Community 371|Community 371]]
-- [[_COMMUNITY_Community 372|Community 372]]
 - [[_COMMUNITY_Community 377|Community 377]]
-- [[_COMMUNITY_Community 381|Community 381]]
 - [[_COMMUNITY_Community 398|Community 398]]
-- [[_COMMUNITY_Community 401|Community 401]]
 - [[_COMMUNITY_Community 415|Community 415]]
 - [[_COMMUNITY_Community 441|Community 441]]
 - [[_COMMUNITY_Community 442|Community 442]]
-- [[_COMMUNITY_Community 446|Community 446]]
-- [[_COMMUNITY_Community 454|Community 454]]
 - [[_COMMUNITY_Community 462|Community 462]]
 - [[_COMMUNITY_Community 463|Community 463]]
 - [[_COMMUNITY_Community 464|Community 464]]
@@ -388,7 +392,6 @@
 - [[_COMMUNITY_Community 527|Community 527]]
 - [[_COMMUNITY_Community 528|Community 528]]
 - [[_COMMUNITY_Community 529|Community 529]]
-- [[_COMMUNITY_Community 535|Community 535]]
 - [[_COMMUNITY_Community 548|Community 548]]
 - [[_COMMUNITY_Community 549|Community 549]]
 - [[_COMMUNITY_Community 550|Community 550]]
@@ -403,28 +406,28 @@
 - [[_COMMUNITY_Community 627|Community 627]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `FailedIngestItem` - 55 edges
-2. `parse_query()` - 46 edges
-3. `create_or_validate_schema()` - 44 edges
+1. `create_or_validate_schema()` - 57 edges
+2. `FailedIngestItem` - 56 edges
+3. `parse_query()` - 46 edges
 4. `QueryValidationError` - 34 edges
 5. `Photo Library Test Plan (Linux-Only)` - 34 edges
-6. `execute_proxy_generation()` - 30 edges
+6. `execute_proxy_generation()` - 32 edges
 7. `QueryParseResult` - 28 edges
 8. `TestClient` - 26 edges
 9. `Job` - 25 edges
-10. `FaceDetectionSuccess` - 24 edges
+10. `IngestPlan` - 24 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `DetectedFace` --uses--> `DetectedFace`  [INFERRED]
-  tests/integration/faces/test_fr_024_027_clustering.py → src/rapidcull/adapters/insightface_adapter.py
-- `FaceDetectionFailure` --uses--> `DetectedFace`  [INFERRED]
-  tests/integration/faces/test_fr_023_detection_orchestration.py → src/rapidcull/adapters/insightface_adapter.py
-- `_StubDetector` --uses--> `DetectedFace`  [INFERRED]
-  tests/integration/faces/test_fr_023_detection_orchestration.py → src/rapidcull/adapters/insightface_adapter.py
-- `_ConstDetector` --uses--> `DetectedFace`  [INFERRED]
-  tests/integration/faces/test_fr_024_027_clustering.py → src/rapidcull/adapters/insightface_adapter.py
-- `_ConstDetector` --uses--> `DetectedFace`  [INFERRED]
-  tests/integration/faces/test_fr_025_person_crud.py → src/rapidcull/adapters/insightface_adapter.py
+- `Path` --uses--> `FailedIngestItem`  [INFERRED]
+  tests/integration/ingest/test_fr_001_005_ingest_identity_summary.py → src/rapidcull/models.py
+- `Path` --uses--> `FailedIngestItem`  [INFERRED]
+  tests/integration/ingest/test_fr_002_exiftool_metadata_batch_mode.py → src/rapidcull/models.py
+- `Path` --uses--> `IngestRunSummary`  [INFERRED]
+  tests/integration/ingest/test_fr_001_005_ingest_identity_summary.py → src/rapidcull/models.py
+- `Path` --uses--> `GalleryCreationResult`  [INFERRED]
+  tests/integration/galleries/test_fr_012_gallery_hardlink_creation.py → src/rapidcull/models.py
+- `_StubDetector` --uses--> `FaceRecord`  [INFERRED]
+  tests/integration/faces/test_fr_023_detection_orchestration.py → src/rapidcull/models.py
 
 ## Import Cycles
 - 1-file cycle: `src/rapidcull/api.py -> src/rapidcull/api.py`
@@ -555,15 +558,15 @@
 - **** — evaluate-query-function, query-ast, normalized-record-mapping, ordered-comparison-helper [INFERRED]
 - **** — query-evaluator-baseline-v1, contract-contradiction-resolution, approval-first-execution-pattern, red-green-gates-flow [INFERRED]
 
-## Communities (394 total, 219 thin omitted)
+## Communities (398 total, 219 thin omitted)
 
 ### Community 0 - "Proxy Generation & Caching"
-Cohesion: 0.14
-Nodes (27): _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped., process-new output follows 'Processed: N | Skipped: N | Failed: N' format., process-new sums failures from both extraction and proxy generation stages., process-new reports only extraction failures when proxy generation succeeds., Build an IngestMetadataExtractionResult with one metadata entry per path., process-new reports only proxy failures when metadata extraction fully succeeds. (+19 more)
+Cohesion: 0.15
+Nodes (24): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-024, FR-027: Face clustering and re-cluster modes., Two faces with identical embeddings land in same cluster → 1 person., Two faces with maximally different embeddings land in separate clusters → 2 pers, Isolated face (no neighbours) with min_samples=2 becomes noise (person_id=NULL)., NEW_ONLY mode leaves already-assigned faces untouched. (+16 more)
 
 ### Community 1 - "Tool Adapters"
-Cohesion: 0.19
-Nodes (29): ImageMagickProxyOutcome, ImageMagickAdapter, MonkeyPatch, test_fr_006_builds_thumbnails_for_supported_still_images(), test_fr_006a_generates_still_thumbnail_proxy_via_proxy_execution(), test_fr_006a_imagemagick_adapter_invokes_subprocess_for_still_thumbnail(), test_fr_006a_normalizes_imagemagick_still_failure_reason(), test_fr_007_plans_heic_display_proxies_for_heic_inputs() (+21 more)
+Cohesion: 0.06
+Nodes (85): detect_heif_support(), ImageMagickAdapter, ImageMagickProxyOutcome, RawTherapeeAdapter, RawTherapeeProxyOutcome, _make_extraction_result(), _make_proxy_result(), Report correct counts for 3 files with 1 skipped. (+77 more)
 
 ### Community 2 - "Query System"
 Cohesion: 0.06
@@ -582,8 +585,8 @@ Cohesion: 0.06
 Nodes (39): lan_client(), localhost_client(), _make_app(), Integration tests for authentication middleware (FR-043, FR-044)., Build a minimal test app with given settings applied., FR-043: In localhost mode, auth is disabled by default., FR-044: In LAN mode, mutating endpoints require Bearer token., Read-only endpoints never require auth, even in LAN mode. (+31 more)
 
 ### Community 6 - "Gallery Management"
-Cohesion: 0.10
-Nodes (70): CullDecision, CullResult, test_fr_012_creates_gallery_hardlinks_without_modifying_masters(), test_fr_013_creates_gallery_from_query_picks_and_face_sample_modes(), test_fr_013_returns_valid_empty_gallery_with_message_when_mode_matches_no_assets(), test_fr_014_rebuilds_metadata_for_all_galleries(), test_fr_014_rebuilds_single_gallery_metadata_json(), test_fr_014_returns_explicit_error_for_missing_gallery_path() (+62 more)
+Cohesion: 0.08
+Nodes (76): CullDecision, CullResult, test_fr_012_creates_gallery_hardlinks_without_modifying_masters(), test_fr_013_creates_gallery_from_query_picks_and_face_sample_modes(), test_fr_013_returns_valid_empty_gallery_with_message_when_mode_matches_no_assets(), test_fr_014_rebuilds_metadata_for_all_galleries(), test_fr_014_rebuilds_single_gallery_metadata_json(), test_fr_014_returns_explicit_error_for_missing_gallery_path() (+68 more)
 
 ### Community 7 - "API & Routing"
 Cohesion: 0.05
@@ -594,16 +597,16 @@ Cohesion: 0.06
 Nodes (39): CodeReviewer, CoderAgent, ContextScout, Context7 API, Context7 Skill, Core Workflows Navigation, Delegation Context Template, Design Evolution Tracking (+31 more)
 
 ### Community 9 - "API & Routing"
-Cohesion: 0.07
-Nodes (32): Context, test_fr_002b_002c_real_exiftool_batch_mode_extracts_known_metadata(), test_fr_002c_real_exiftool_batch_mode_maps_multiple_assets_deterministically(), _write_exif(), _write_tiny_jpeg(), cli(), main(), _port_in_use() (+24 more)
+Cohesion: 0.20
+Nodes (8): normalize_path(), Path normalization and validation utilities (FR-046).  All file/path inputs must, Resolve and normalize a path. Raise ValueError if it escapes base_dir.      Args, Path, Path, Unit tests for path normalization utility (FR-046)., TestNormalizePathBasic, TestNormalizePathWithBaseDir
 
 ### Community 10 - "API & Routing"
 Cohesion: 0.09
 Nodes (11): client(), FR-041: HTTP integration tests for /api/v1/jobs endpoints.  Uses FastAPI TestCli, List returns jobs in creation order on repeated calls., Clear the in-memory JobStore before each test., reset_job_store(), TestCancelJob, TestCreateJob, TestGetJob (+3 more)
 
 ### Community 11 - "API & Routing"
-Cohesion: 0.10
-Nodes (20): _drive_path(), _drive_to(), _make_job(), FR-040: Pure unit tests for Job state machine transitions.  Covers all 25 state-, Directly setting job.state must raise FrozenInstanceError., Directly setting job.result must raise FrozenInstanceError., Directly setting job.error must raise FrozenInstanceError., The transition() method must still succeed via object.__setattr__. (+12 more)
+Cohesion: 0.18
+Nodes (18): BaseModel, datetime, JobProgressEntry, ApiError, Structured API error that maps to the standard error envelope., CreateJobRequest, query_collection(), QueryRequest (+10 more)
 
 ### Community 12 - "API & Routing"
 Cohesion: 0.19
@@ -626,20 +629,20 @@ Cohesion: 0.09
 Nodes (27): GraphQL API Pattern, REST API Pattern, Clean Code, GraphQL, MAStra AI Framework, REST API, Workflow Step, AI Navigation Guide (+19 more)
 
 ### Community 17 - "Media Ingest Pipeline"
-Cohesion: 0.31
-Nodes (9): test_fr_001_initializes_schema_on_first_run(), test_fr_001_reports_actionable_error_on_schema_mismatch(), test_fr_002_discovers_only_supported_media_files(), test_fr_005_builds_run_summary_with_failed_items_and_reason(), IngestRunSummary, IngestRunSummary, build_ingest_run_summary(), FailedIngestItem (+1 more)
+Cohesion: 0.10
+Nodes (20): _drive_path(), _drive_to(), _make_job(), FR-040: Pure unit tests for Job state machine transitions.  Covers all 25 state-, Directly setting job.state must raise FrozenInstanceError., Directly setting job.result must raise FrozenInstanceError., Directly setting job.error must raise FrozenInstanceError., The transition() method must still succeed via object.__setattr__. (+12 more)
 
 ### Community 18 - "API & Routing"
-Cohesion: 0.26
-Nodes (21): OrphanCleanupReport, test_fr_010_supports_selected_and_bulk_regeneration_with_invalid_id_reporting(), ProxyGenerationPlan, ProxyToolSummary, GeneratedProxy, OrphanCleanupReport, ProxyGenerationPlan, ProxyGenerationResult (+13 more)
+Cohesion: 0.21
+Nodes (21): _make_db(), _make_json(), Integration tests: FR-047 backup and restore of DB + JSON state., test_backup_copies_db_file(), test_backup_creates_timestamped_directory(), test_backup_includes_gallery_json(), test_backup_result_has_timestamp(), test_restore_nonexistent_backup_fails() (+13 more)
 
 ### Community 19 - "API & Routing"
 Cohesion: 0.11
 Nodes (16): TestJobStoreCancelTerminal, Job, JobStore, Create a new job in QUEUED state and return it., Return the job with the given id, or None if not found., Return all jobs sorted by (created_at, job_id), optionally filtered by state., Transition a job to RUNNING. Raises InvalidJobTransition if not allowed., Transition a job to SUCCEEDED and optionally set result. (+8 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.54
-Nodes (7): ImageRecord, test_fr_004_image_id_is_stable_across_reprocessing(), create_image_record(), fetch_image_record(), _generate_image_id(), ImageRecord, Path
+Cohesion: 0.42
+Nodes (9): _make_db(), Integration tests: CLI backup, restore, and check commands., test_cli_backup_creates_backup_dir(), test_cli_backup_exits_zero(), test_cli_check_clean_db(), test_cli_check_reports_missing_files(), test_cli_restore_requires_confirmed_flag(), test_cli_restore_with_confirmed_succeeds() (+1 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.11
@@ -826,8 +829,8 @@ Cohesion: 0.50
 Nodes (4): Context Index System, Context Path Resolution, Context System Guide, Lazy Loading (Context)
 
 ### Community 68 - "API & Routing"
-Cohesion: 0.62
-Nodes (6): detect_and_store_faces(), _faces_already_stored(), _generate_face_id(), _lookup_image_id(), _store_faces(), Path
+Cohesion: 0.13
+Nodes (24): Context, backup_cmd(), check_cmd(), cli(), main(), _port_in_use(), _process_alive(), Stop the RapidCull API server. (+16 more)
 
 ### Community 69 - "Community 69"
 Cohesion: 0.50
@@ -865,6 +868,10 @@ Nodes (3): Gemini Nano Banana AI, Image Specialist Subagent, Visual Development 
 Cohesion: 0.67
 Nodes (3): Mastra Error Handling, RateLimitError, StructuredOutputError
 
+### Community 79 - "Community 79"
+Cohesion: 0.20
+Nodes (24): _add_image(), _add_trash(), Integration tests: FR-048 consistency check and repair., test_check_clean_db_has_no_issues(), test_check_detects_missing_from_fs(), test_check_detects_trash_orphan(), test_check_no_trash_orphan_when_file_exists(), test_repair_empty_report_does_nothing() (+16 more)
+
 ### Community 80 - "Community 80"
 Cohesion: 0.67
 Nodes (3): Guide: Organizing Context by Concern, Pattern A: Function-Based Organization, Pattern B: Concern-Based Organization
@@ -889,57 +896,89 @@ Nodes (3): Read-Only Subagent Configuration, Optimized Subagent Prompt Structure
 Cohesion: 0.67
 Nodes (3): Session Directory Structure, Session Management, Session Manifest
 
+### Community 307 - "Community 307"
+Cohesion: 0.14
+Nodes (19): FailedIngestItem, IngestRunSummary, Integration tests: FR-050 and FR-050a run summaries with elapsed time and per-to, IngestRunSummary must carry elapsed_ms., elapsed_ms defaults to 0 for backward compat., IngestRunSummary must carry tool_summary (per-tool counts)., tool_summary defaults to empty dict., ProxyGenerationResult.elapsed_ms must reflect actual wall time (not hardcoded 0) (+11 more)
+
+### Community 308 - "Community 308"
+Cohesion: 0.12
+Nodes (18): Integration tests for FR-023: Schema v2 with faces and persons tables., PersonRecord is a frozen dataclass with expected fields., FaceDetectionResult has processed/skipped/failed accounting., Schema version must be >= 2 to include faces and persons tables., Schema init creates persons table with expected columns., Schema init creates faces table with expected columns., Opening a v1 DB with v2 schema code raises SchemaVersionMismatchError., Calling create_or_validate_schema twice on same DB does not raise. (+10 more)
+
+### Community 309 - "Community 309"
+Cohesion: 0.24
+Nodes (12): client(), db_path(), _make_embedding(), Integration tests for FR-026: Face boxes API endpoint., GET /api/v1/images/{image_id}/faces returns empty list when no faces stored., GET /api/v1/images/{image_id}/faces returns bbox and person_id for stored faces., GET /api/v1/images/{image_id}/faces returns 404 for unknown image_id., test_fr_026_face_boxes_empty() (+4 more)
+
+### Community 310 - "Community 310"
+Cohesion: 0.20
+Nodes (12): If restart() raises an exception, the item is still recorded as failed.      FR-, test_fr_002a_002c_extracts_metadata_for_multiple_assets_with_deterministic_mapping(), test_fr_002d_continues_on_error_and_reports_per_item_failure_reasons(), test_fr_002d_records_failure_when_retry_exhausted_after_transport_failure(), test_fr_002d_reports_malformed_batch_response_as_parse_error(), test_fr_002d_restart_exception_does_not_break_continue_on_error(), test_fr_002d_restarts_after_transport_failure_and_recovers_next_request(), MetadataValue (+4 more)
+
+### Community 311 - "Community 311"
+Cohesion: 0.31
+Nodes (10): IngestPlan, Protocol, ExifToolExtractionFailure, ExifToolExtractionSuccess, ExifMetadataExtractor, normalize_exif_metadata(), _pick_string_value(), ExifToolExtractionOutcome (+2 more)
+
 ### Community 312 - "Community 312"
 Cohesion: 0.09
 Nodes (29): DetectedFace, _insightface_available(), InsightFaceAdapter, _make_embedding(), Integration tests for FR-023: Face detection adapter seam., FaceDetectionSuccess holds a list of DetectedFace., FaceDetectionFailure carries a canonical reason string., pipeline_available returns True iff insightface is importable. (+21 more)
+
+### Community 313 - "Community 313"
+Cohesion: 0.26
+Nodes (17): _add_image(), Integration tests: FR-029 pick/reject persistence, FR-030 cross-session restore., FR-030: decisions restore across sessions (new DB connection)., test_fr_029_set_decision_persists_pick(), test_fr_030_decision_survives_reconnect(), test_list_decisions_filter_pick(), test_list_decisions_filter_reject(), test_set_decision_unknown_image_raises() (+9 more)
+
+### Community 314 - "Community 314"
+Cohesion: 0.29
+Nodes (12): Integration tests: FR-029 schema v3 — cull_decisions and trash tables., v2→v3 migration must not lose existing images rows., test_migration_v2_to_v3_preserves_existing_data(), test_schema_creates_cull_decisions_table(), test_schema_creates_trash_table(), test_schema_version_is_3(), Cursor, _apply_v2_tables() (+4 more)
+
+### Community 315 - "Community 315"
+Cohesion: 0.35
+Nodes (13): _add_image(), _make_file(), Integration tests: FR-032 hard delete with audit trail., _setup_trashed(), test_hard_delete_audit_entry_has_path_and_size(), test_hard_delete_confirmed_false_no_file_mutation(), test_hard_delete_confirmed_false_raises(), test_hard_delete_continue_on_error_missing_trash_file() (+5 more)
+
+### Community 316 - "Community 316"
+Cohesion: 0.24
+Nodes (13): test_fr_001_initializes_schema_on_first_run(), test_fr_001_reports_actionable_error_on_schema_mismatch(), test_fr_002_discovers_only_supported_media_files(), test_fr_003_supports_incremental_processing_and_force_mode(), test_fr_004_image_id_is_stable_across_reprocessing(), test_fr_005_builds_run_summary_with_failed_items_and_reason(), process_new(), Process new media from source directory. (+5 more)
+
+### Community 317 - "Community 317"
+Cohesion: 0.29
+Nodes (6): test_fr_002b_002c_real_exiftool_batch_mode_extracts_known_metadata(), test_fr_002c_real_exiftool_batch_mode_maps_multiple_assets_deterministically(), _write_exif(), _write_tiny_jpeg(), RealExifToolBatchExtractor, Path
+
+### Community 318 - "Community 318"
+Cohesion: 0.17
+Nodes (12): Integration tests: FR-049 schema migration path with explicit versions., test_get_schema_version_returns_current_after_create(), test_get_schema_version_returns_none_for_missing_db(), test_get_schema_version_returns_version_for_old_db(), MigrationStep, get_schema_version(), Raised when the on-disk schema version doesn't match expected version., Return current schema version from DB, or None if DB doesn't exist/has no versio (+4 more)
 
 ### Community 319 - "Community 319"
 Cohesion: 0.13
 Nodes (31): _add_face_for_person(), _add_image(), _add_person(), _ConstDetector, db_path(), _make_embedding(), Integration tests for FR-025, FR-028: Person identity CRUD and deletion., merge_persons: all faces of source reassigned to target; source deleted. (+23 more)
 
+### Community 320 - "Community 320"
+Cohesion: 0.62
+Nodes (6): ImageRecord, create_image_record(), fetch_image_record(), _generate_image_id(), ImageRecord, Path
+
 ### Community 321 - "Community 321"
 Cohesion: 0.06
 Nodes (34): 10) Reporting and Evidence, 11) Risks and Mitigations, 12) Framework Decision (Answer), 1) Objective, 2.1 Primary Framework, 2.2 UI Framework, 2.3 Supporting Utilities, 2.4 Why this stack (+26 more)
 
-### Community 322 - "Community 322"
-Cohesion: 0.13
-Nodes (30): test_fr_003_supports_incremental_processing_and_force_mode(), If restart() raises an exception, the item is still recorded as failed.      FR-, test_fr_002a_002c_extracts_metadata_for_multiple_assets_with_deterministic_mapping(), test_fr_002d_continues_on_error_and_reports_per_item_failure_reasons(), test_fr_002d_records_failure_when_retry_exhausted_after_transport_failure(), test_fr_002d_reports_malformed_batch_response_as_parse_error(), test_fr_002d_restart_exception_does_not_break_continue_on_error(), test_fr_002d_restarts_after_transport_failure_and_recovers_next_request() (+22 more)
-
 ### Community 327 - "Community 327"
-Cohesion: 0.20
-Nodes (16): Integration tests: FR-029 schema v3 — cull_decisions and trash tables., v2→v3 migration must not lose existing images rows., test_migration_v2_to_v3_preserves_existing_data(), test_schema_creates_cull_decisions_table(), test_schema_creates_trash_table(), test_schema_version_is_3(), Cursor, _apply_v2_tables() (+8 more)
-
-### Community 331 - "Community 331"
-Cohesion: 0.22
-Nodes (17): _add_image(), Integration tests: FR-029 pick/reject persistence, FR-030 cross-session restore., FR-030: decisions restore across sessions (new DB connection)., test_fr_029_set_decision_persists_pick(), test_fr_030_decision_survives_reconnect(), test_list_decisions_filter_pick(), test_list_decisions_filter_reject(), test_set_decision_unknown_image_raises() (+9 more)
+Cohesion: 0.35
+Nodes (14): _add_image(), _make_file(), Integration tests: FR-031 trash-first soft delete., preview_trash must not move or delete any files., test_list_trash_shows_trashed_items(), test_move_to_trash_continue_on_error_missing_file(), test_move_to_trash_moves_file_and_removes_from_images(), test_move_to_trash_unknown_image_id_fails() (+6 more)
 
 ### Community 336 - "Community 336"
 Cohesion: 0.25
 Nodes (28): test_fr_017_parses_valid_grammar_query_into_typed_expression_tree(), test_fr_018_rejects_unknown_field_with_actionable_suggestion(), test_fr_019_rejects_non_integer_iso_value_with_expected_format_message(), test_fr_019_rejects_non_numeric_fnumber_value_with_expected_format_message(), test_fr_019_rejects_operator_not_supported_for_field_type(), test_fr_021_rejects_and_followed_by_or_with_actionable_error(), test_fr_021_rejects_bad_date_with_expected_format_message(), test_fr_021_rejects_double_equals_operator_with_expected_guidance() (+20 more)
 
 ### Community 337 - "Community 337"
-Cohesion: 0.27
-Nodes (18): FaceDetectionFailure, FaceDetectionSuccess, FaceDetector, ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionFailure, FaceDetectionResult (+10 more)
+Cohesion: 0.25
+Nodes (20): FaceDetectionFailure, FaceDetectionSuccess, FaceDetector, ClusterMode, DetectedFace, FaceClusterResult, FaceDetectionFailure, FaceDetectionResult (+12 more)
 
 ### Community 341 - "Community 341"
 Cohesion: 0.08
 Nodes (25): 1) Purpose, 2) Product Decisions Captured, 3.10 Backup, Recovery, and Data Consistency, 3.1 Ingestion, Metadata, and Indexing, 3.2 Proxy and Derivative Generation, 3.3 Gallery Lifecycle, 3.4 Query Language (Explicit Grammar), 3.5 Face Recognition and Person Management (+17 more)
 
 ### Community 342 - "Community 342"
-Cohesion: 0.18
-Nodes (21): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-023: Face detection orchestration and DB storage., Running detection twice on same image skips on second run., Image not in DB (no image_id) skipped with canonical reason., Adapter failure for one image does not abort remaining images., Embedding stored as bytes and retrieved identically. (+13 more)
-
-### Community 345 - "Community 345"
-Cohesion: 0.15
-Nodes (24): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-024, FR-027: Face clustering and re-cluster modes., Two faces with identical embeddings land in same cluster → 1 person., Two faces with maximally different embeddings land in separate clusters → 2 pers, Isolated face (no neighbours) with min_samples=2 becomes noise (person_id=NULL)., NEW_ONLY mode leaves already-assigned faces untouched. (+16 more)
+Cohesion: 0.16
+Nodes (25): db_path(), _image_id_for(), _make_embedding(), Integration tests for FR-023: Face detection orchestration and DB storage., Running detection twice on same image skips on second run., Image not in DB (no image_id) skipped with canonical reason., Adapter failure for one image does not abort remaining images., Embedding stored as bytes and retrieved identically. (+17 more)
 
 ### Community 357 - "Community 357"
 Cohesion: 0.10
 Nodes (20): 1) Objective, 2.1 Tier 0 — Deterministic Unit Fixtures (In-Repo), 2.2 Tier 1 — Integration Dataset (Downloaded + Cached), 2.3 Tier 2 — Performance Benchmark Dataset (Not in Repo), 2) Three-Tier Dataset Strategy, 3.1 General Ingestion/Metadata, 3.2 Face Detection/Clustering Coverage, 3.3 RAW/HEIC/Video Edge Coverage (+12 more)
-
-### Community 362 - "Community 362"
-Cohesion: 0.24
-Nodes (12): client(), db_path(), _make_embedding(), Integration tests for FR-026: Face boxes API endpoint., GET /api/v1/images/{image_id}/faces returns empty list when no faces stored., GET /api/v1/images/{image_id}/faces returns bbox and person_id for stored faces., GET /api/v1/images/{image_id}/faces returns 404 for unknown image_id., test_fr_026_face_boxes_empty() (+4 more)
 
 ### Community 370 - "Community 370"
 Cohesion: 0.11
@@ -949,25 +988,13 @@ Nodes (19): 4) Non-Functional Acceptance Tests, NFR-001 (Gallery open p95 < 1.5s
 Cohesion: 0.11
 Nodes (18): 10) Final Sign-Off Block, 1) Purpose, 2) Run Metadata (Fill Before Start), 3.1 Environment, 3.2 Services and Ports, 3.3 Dataset Readiness, 3) Preflight Checklist (Go/No-Go), 4) TDD Cycle Checklist (Per Requirement Slice) (+10 more)
 
-### Community 372 - "Community 372"
-Cohesion: 0.12
-Nodes (18): Integration tests for FR-023: Schema v2 with faces and persons tables., PersonRecord is a frozen dataclass with expected fields., FaceDetectionResult has processed/skipped/failed accounting., Schema version must be >= 2 to include faces and persons tables., Schema init creates persons table with expected columns., Schema init creates faces table with expected columns., Opening a v1 DB with v2 schema code raises SchemaVersionMismatchError., Calling create_or_validate_schema twice on same DB does not raise. (+10 more)
-
 ### Community 377 - "Community 377"
 Cohesion: 0.11
 Nodes (17): 1.1 Required, 1.2 Required Media/Metadata Toolchain, 1.3 Important Build Capability Requirements, 1) Runtime Platform Dependencies (Linux), 2.1 Core Application Libraries (Required), 2.2 Common Supporting Libraries (Likely required by implementation), 2) Python Application Dependencies, 3) Test and Validation Dependencies (+9 more)
 
-### Community 381 - "Community 381"
-Cohesion: 0.25
-Nodes (19): _add_image(), _make_file(), Integration tests: FR-031 trash-first soft delete., preview_trash must not move or delete any files., test_list_trash_shows_trashed_items(), test_move_to_trash_continue_on_error_missing_file(), test_move_to_trash_moves_file_and_removes_from_images(), test_move_to_trash_unknown_image_id_fails() (+11 more)
-
 ### Community 398 - "Community 398"
 Cohesion: 0.36
 Nodes (5): _invalid_boolean_pair_error(), _missing_expression_after_boolean_error(), _Parser, _Token, QueryExpression
-
-### Community 401 - "Community 401"
-Cohesion: 0.35
-Nodes (13): _add_image(), _make_file(), Integration tests: FR-032 hard delete with audit trail., _setup_trashed(), test_hard_delete_audit_entry_has_path_and_size(), test_hard_delete_confirmed_false_no_file_mutation(), test_hard_delete_confirmed_false_raises(), test_hard_delete_continue_on_error_missing_trash_file() (+5 more)
 
 ### Community 415 - "Community 415"
 Cohesion: 0.15
@@ -980,14 +1007,6 @@ Nodes (10): QueryRecordValue, _as_int(), _as_number(), _compare_ordered_number()
 ### Community 442 - "Community 442"
 Cohesion: 0.18
 Nodes (9): test_fr_022_documented_query_examples_match_current_parser_contract(), _double_operator_error(), _is_integer_value(), _is_number_value(), _read_atom(), _read_operator(), _tokenize(), _validate_comparison() (+1 more)
-
-### Community 446 - "Community 446"
-Cohesion: 0.18
-Nodes (18): BaseModel, datetime, JobProgressEntry, ApiError, Structured API error that maps to the standard error envelope., CreateJobRequest, query_collection(), QueryRequest (+10 more)
-
-### Community 454 - "Community 454"
-Cohesion: 0.33
-Nodes (4): detect_heif_support(), ImageMagickAdapter, test_fr_007a_detect_heif_support_is_true_in_current_environment(), Path
 
 ### Community 462 - "Community 462"
 Cohesion: 0.22
@@ -1181,10 +1200,6 @@ Nodes (7): 3.4 Query Language, FR-017, FR-018, FR-019, FR-020, FR-021, FR-022
 Cohesion: 0.29
 Nodes (7): 3.5 Face Recognition and Person Management, FR-023, FR-024, FR-025, FR-026, FR-027, FR-028
 
-### Community 535 - "Community 535"
-Cohesion: 0.47
-Nodes (3): RawTherapeeAdapter, RawTherapeeProxyOutcome, Path
-
 ### Community 548 - "Community 548"
 Cohesion: 0.33
 Nodes (6): 3.1 Ingestion, Metadata, and Indexing, FR-001, FR-002, FR-003, FR-004, FR-005
@@ -1226,24 +1241,24 @@ Cohesion: 0.40
 Nodes (4): Project docs, RapidCull, Repository scaffold, Status
 
 ## Knowledge Gaps
-- **504 isolated node(s):** `headroom-ai`, `bootstrap.sh script`, `Any`, `Path`, `MetadataValue` (+499 more)
+- **504 isolated node(s):** `CollectionQueryResult`, `PersonDeleteResult`, `SchemaStatus`, `headroom-ai`, `bootstrap.sh script` (+499 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **219 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `datetime` connect `Community 446` to `API & Routing`, `Community 362`, `API & Routing`, `API & Routing`, `Community 381`, `Community 319`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
-- **Why does `FailedIngestItem` connect `Community 322` to `Proxy Generation & Caching`, `Tool Adapters`, `API & Routing`, `Gallery Management`, `API & Routing`, `Community 337`, `Media Ingest Pipeline`, `API & Routing`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
-- **Why does `ApiError` connect `Community 446` to `API & Routing`, `API & Routing`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **Are the 38 inferred relationships involving `FailedIngestItem` (e.g. with `TestProcessNewEmptyDir` and `TestProcessNewHappyPath`) actually correct?**
-  _`FailedIngestItem` has 38 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `headroom-ai`, `bootstrap.sh script`, `RapidCull core package.` to the rest of the system?**
-  _692 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Proxy Generation & Caching` be split into smaller, more focused modules?**
-  _Cohesion score 0.13513513513513514 - nodes in this community are weakly interconnected._
+- **Why does `datetime` connect `API & Routing` to `Gallery Management`, `API & Routing`, `Community 79`, `API & Routing`, `API & Routing`, `Community 309`, `Community 342`, `Community 319`?**
+  _High betweenness centrality (0.055) - this node is a cross-community bridge._
+- **Why does `ApiError` connect `API & Routing` to `API & Routing`, `API & Routing`?**
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
+- **Why does `create_or_validate_schema()` connect `Community 314` to `Proxy Generation & Caching`, `Community 320`, `Community 327`, `Community 79`, `API & Routing`, `Community 20`, `Community 308`, `Community 342`, `Community 309`, `Community 313`, `Community 315`, `Community 316`, `Community 318`, `Community 319`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Are the 39 inferred relationships involving `FailedIngestItem` (e.g. with `TestProcessNewEmptyDir` and `TestProcessNewHappyPath`) actually correct?**
+  _`FailedIngestItem` has 39 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `CollectionQueryResult`, `PersonDeleteResult`, `SchemaStatus` to the rest of the system?**
+  _713 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Tool Adapters` be split into smaller, more focused modules?**
+  _Cohesion score 0.061275831087151844 - nodes in this community are weakly interconnected._
 - **Should `Query System` be split into smaller, more focused modules?**
   _Cohesion score 0.06321334503950835 - nodes in this community are weakly interconnected._

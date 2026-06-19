@@ -75,9 +75,9 @@
     "semantic_hash": "d9e7188b6fc26270ba71b2ce016b3641"
   },
   "src/rapidcull/cli.py": {
-    "mtime": 1779765789.4215088,
-    "ast_hash": "289379670d3254a5534a85a689ef9da2",
-    "semantic_hash": "289379670d3254a5534a85a689ef9da2"
+    "mtime": 1781896208.0051384,
+    "ast_hash": "e4d1f336fbafe11547adf7524ffdad12",
+    "semantic_hash": ""
   },
   "src/rapidcull/collections.py": {
     "mtime": 1779745232.1996431,
@@ -110,8 +110,8 @@
     "semantic_hash": "d7dd1993df27a286a911e604965b45e0"
   },
   "src/rapidcull/models.py": {
-    "mtime": 1781876007.2084093,
-    "ast_hash": "b1189d8d39190c7763058b587328fca4",
+    "mtime": 1781896208.0051384,
+    "ast_hash": "3f47c2ad2b33d12641c9875a54d48cb0",
     "semantic_hash": ""
   },
   "src/rapidcull/path_utils.py": {
@@ -135,8 +135,8 @@
     "semantic_hash": "ecc7e64c96eb77afc3a8f794aca55631"
   },
   "src/rapidcull/schema.py": {
-    "mtime": 1781876007.2084093,
-    "ast_hash": "99fcbf8042e27a56dcab57c8c9b3cf8f",
+    "mtime": 1781896208.0051384,
+    "ast_hash": "e0db0ba777104c2e09b697f5a70673fb",
     "semantic_hash": ""
   },
   "src/rapidcull/security.py": {
@@ -1762,6 +1762,41 @@
   "CLAUDE.md": {
     "mtime": 1781491497.9380765,
     "ast_hash": "82efb97a359f5c7290bf2513d14686be",
+    "semantic_hash": ""
+  },
+  "tests/integration/backup/__init__.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "tests/integration/backup/test_fr_049_schema_migration.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "5e719a99737f452dc2e9a4171ee113a2",
+    "semantic_hash": ""
+  },
+  "src/rapidcull/backup.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "14407f76b84907aa247c1ac8f3c4583b",
+    "semantic_hash": ""
+  },
+  "tests/integration/backup/test_fr_047_backup_restore.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "1b431d265b0ea2369fa35be325c54661",
+    "semantic_hash": ""
+  },
+  "src/rapidcull/consistency.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "7033e379ae4bfab637461bb81e1af6b9",
+    "semantic_hash": ""
+  },
+  "tests/integration/backup/test_fr_048_consistency.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "5004c9952a7930be6ddd0a2a83ce1f1f",
+    "semantic_hash": ""
+  },
+  "tests/integration/cli/test_cli_backup.py": {
+    "mtime": 1781896208.0051384,
+    "ast_hash": "ed15bf4d84f7e92adb9704f05dc7ceaf",
     "semantic_hash": ""
   }
 }
