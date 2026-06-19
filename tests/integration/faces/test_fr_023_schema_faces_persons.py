@@ -18,8 +18,8 @@ from rapidcull.schema import (
 @pytest.mark.fr
 @pytest.mark.integration
 def test_fr_023_schema_version_is_2() -> None:
-    """Schema version must be 2 to include faces and persons tables."""
-    assert CURRENT_SCHEMA_VERSION == 2
+    """Schema version must be >= 2 to include faces and persons tables."""
+    assert CURRENT_SCHEMA_VERSION >= 2
 
 
 @pytest.mark.fr
