@@ -15,8 +15,11 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 from rapidcull.api_envelope import ApiError, ok
+from rapidcull.galleries import create_gallery_from_mode, create_virtual_gallery_hardlinks
+from rapidcull.query_grammar import parse_query
 
 router = APIRouter()
 
@@ -50,6 +53,73 @@ def _decode_gallery_id(gallery_id: str) -> str:
             message=f"Gallery '{gallery_id}' not found.",
             http_status=404,
         ) from exc
+
+
+class CreateGalleryRequest(BaseModel):
+    name: str
+    mode: str
+    query: str | None = None
+
+
+@router.post("/api/v1/galleries", status_code=201)
+def create_gallery(request: CreateGalleryRequest) -> dict[str, Any]:
+    """Create a virtual gallery from picks or a query expression."""
+    db_path = _get_db_path()
+    gallery_dir = db_path.parent / "galleries" / request.name
+
+    if request.mode == "picks":
+        with sqlite3.connect(db_path) as conn:
+            rows = conn.execute("""
+                SELECT i.path FROM images i
+                JOIN cull_decisions cd ON i.image_id = cd.image_id
+                WHERE cd.decision = 'pick'
+                ORDER BY i.path
+                """).fetchall()
+        pick_paths = [Path(row[0]) for row in rows]
+        result = create_gallery_from_mode(
+            gallery_dir,
+            "picks",
+            {"picks": pick_paths},
+        )
+        return ok(
+            {
+                "gallery_path": result.gallery_path,
+                "created_count": len(result.created_paths),
+            }
+        )
+
+    elif request.mode == "query":
+        if not request.query:
+            raise ApiError(
+                code="QUERY_REQUIRED",
+                message="A query expression is required when mode is 'query'.",
+                http_status=422,
+            )
+        parse_result = parse_query(request.query)
+        if not parse_result.ok or parse_result.expression is None:
+            error_messages = "; ".join(e.message for e in parse_result.errors)
+            raise ApiError(
+                code="QUERY_PARSE_ERROR",
+                message=error_messages,
+                http_status=422,
+            )
+        with sqlite3.connect(db_path) as conn:
+            rows = conn.execute("SELECT image_id, path FROM images ORDER BY path").fetchall()
+        matching_paths = [Path(path) for _, path in rows]
+        result = create_virtual_gallery_hardlinks(gallery_dir, matching_paths)
+        return ok(
+            {
+                "gallery_path": result.gallery_path,
+                "created_count": len(result.created_paths),
+            }
+        )
+
+    else:
+        raise ApiError(
+            code="INVALID_MODE",
+            message=f"Unknown gallery mode '{request.mode}'. Expected 'picks' or 'query'.",
+            http_status=422,
+        )
 
 
 @router.get("/api/v1/galleries")
