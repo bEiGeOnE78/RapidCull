@@ -7,7 +7,14 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
-from rapidcull.models import CullDecision, CullResult
+from rapidcull.models import (
+    CullDecision,
+    CullResult,
+    TrashEntry,
+    TrashFailedItem,
+    TrashPreview,
+    TrashResult,
+)
 
 
 def set_decision(
@@ -65,4 +72,105 @@ def undo_decision(db_path: Path, image_id: str) -> CullResult:
     """Remove stored decision for image_id."""
     with sqlite3.connect(db_path) as conn:
         conn.execute("DELETE FROM cull_decisions WHERE image_id = ?", (image_id,))
+    return CullResult(image_id=image_id, success=True)
+
+
+def preview_trash(db_path: Path) -> TrashPreview:
+    """Return all rejected images with sizes. Read-only — no mutation."""
+    with sqlite3.connect(db_path) as conn:
+        rows = conn.execute(
+            "SELECT cd.image_id, i.path FROM cull_decisions cd"
+            " JOIN images i ON i.image_id = cd.image_id"
+            " WHERE cd.decision = 'reject' ORDER BY i.path"
+        ).fetchall()
+    items = []
+    total_bytes = 0
+    for image_id, path in rows:
+        p = Path(path)
+        size = p.stat().st_size if p.exists() else 0
+        items.append(TrashEntry(image_id=image_id, original_path=path, trashed_at=""))
+        total_bytes += size
+    return TrashPreview(items=items, total_size_bytes=total_bytes)
+
+
+def move_to_trash(db_path: Path, image_ids: list[str], trash_dir: Path) -> TrashResult:
+    """Move files for image_ids to trash_dir. Continue-on-error."""
+    trash_dir.mkdir(parents=True, exist_ok=True)
+    trashed_at = datetime.now(UTC).isoformat()
+    moved = 0
+    failed: list[TrashFailedItem] = []
+
+    with sqlite3.connect(db_path) as conn:
+        for image_id in image_ids:
+            row = conn.execute("SELECT path FROM images WHERE image_id = ?", (image_id,)).fetchone()
+            if row is None:
+                failed.append(
+                    TrashFailedItem(
+                        image_id=image_id,
+                        original_path="",
+                        reason="image_id not found in images table",
+                    )
+                )
+                continue
+            original_path = row[0]
+            src = Path(original_path)
+            dest = trash_dir / image_id
+            try:
+                if src.exists():
+                    src.rename(dest)
+                conn.execute(
+                    "INSERT INTO trash (image_id, original_path, trashed_at) VALUES (?, ?, ?)"
+                    " ON CONFLICT(image_id) DO NOTHING",
+                    (image_id, original_path, trashed_at),
+                )
+                conn.execute("DELETE FROM images WHERE image_id = ?", (image_id,))
+                moved += 1
+            except OSError as exc:
+                failed.append(
+                    TrashFailedItem(
+                        image_id=image_id,
+                        original_path=original_path,
+                        reason=str(exc),
+                    )
+                )
+
+    return TrashResult(
+        moved_count=moved,
+        failed_count=len(failed),
+        failed_items=failed,
+    )
+
+
+def list_trash(db_path: Path) -> list[TrashEntry]:
+    """Return all items currently in trash."""
+    with sqlite3.connect(db_path) as conn:
+        rows = conn.execute(
+            "SELECT image_id, original_path, trashed_at FROM trash ORDER BY trashed_at"
+        ).fetchall()
+    return [TrashEntry(image_id=r[0], original_path=r[1], trashed_at=r[2]) for r in rows]
+
+
+def restore_from_trash(db_path: Path, image_id: str, trash_dir: Path) -> CullResult:
+    """Move file back from trash_dir to original path, re-insert into images."""
+    with sqlite3.connect(db_path) as conn:
+        row = conn.execute(
+            "SELECT original_path FROM trash WHERE image_id = ?", (image_id,)
+        ).fetchone()
+        if row is None:
+            return CullResult(image_id=image_id, success=False, reason="not in trash")
+        original_path = row[0]
+        src = trash_dir / image_id
+        dest = Path(original_path)
+        try:
+            if src.exists():
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                src.rename(dest)
+            conn.execute(
+                "INSERT INTO images (image_id, path) VALUES (?, ?)"
+                " ON CONFLICT(image_id) DO NOTHING",
+                (image_id, original_path),
+            )
+            conn.execute("DELETE FROM trash WHERE image_id = ?", (image_id,))
+        except OSError as exc:
+            return CullResult(image_id=image_id, success=False, reason=str(exc))
     return CullResult(image_id=image_id, success=True)
