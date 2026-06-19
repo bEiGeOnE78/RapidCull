@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from pathlib import Path
 
 from .adapters import ImageMagickAdapter, RawTherapeeAdapter
@@ -48,6 +49,7 @@ def execute_proxy_generation(
     imagemagick_adapter: ImageMagickAdapter | None = None,
     rawtherapee_adapter: RawTherapeeAdapter | None = None,
 ) -> ProxyGenerationResult:
+    start = time.perf_counter()
     imagemagick = imagemagick_adapter or ImageMagickAdapter()
     rawtherapee = rawtherapee_adapter or RawTherapeeAdapter()
 
@@ -139,7 +141,7 @@ def execute_proxy_generation(
         processed_count=len(paths),
         skipped_count=0,
         failed_count=len(failed),
-        elapsed_ms=0,
+        elapsed_ms=int((time.perf_counter() - start) * 1000),
         tool_summary=tool_summary,
     )
 

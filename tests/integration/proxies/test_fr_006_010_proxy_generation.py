@@ -10,7 +10,6 @@ from rapidcull.models import (
     FailedIngestItem,
     GeneratedProxy,
     OrphanCleanupReport,
-    ProxyGenerationResult,
     RegenerationSelectionResult,
 )
 from rapidcull.proxies import (
@@ -64,39 +63,37 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
         raw_pipeline_available=False,
     )
 
-    assert failed_result == ProxyGenerationResult(
-        generated=[],
-        failed=[
-            FailedIngestItem(
-                path=str(raw_image.resolve()),
-                reason="rawtherapee_pipeline_unavailable",
-            )
-        ],
-        processed_count=1,
-        skipped_count=0,
-        failed_count=1,
-        elapsed_ms=0,
-        tool_summary={
-            "imagemagick": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "rawtherapee": {
-                "processed": 1,
-                "generated": 0,
-                "failed": 1,
-                "reasons": {"rawtherapee_pipeline_unavailable": 1},
-            },
-            "orchestrator": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
+    assert failed_result.generated == []
+    assert failed_result.failed == [
+        FailedIngestItem(
+            path=str(raw_image.resolve()),
+            reason="rawtherapee_pipeline_unavailable",
+        )
+    ]
+    assert failed_result.processed_count == 1
+    assert failed_result.skipped_count == 0
+    assert failed_result.failed_count == 1
+    assert failed_result.elapsed_ms >= 0
+    assert failed_result.tool_summary == {
+        "imagemagick": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
         },
-    )
+        "rawtherapee": {
+            "processed": 1,
+            "generated": 0,
+            "failed": 1,
+            "reasons": {"rawtherapee_pipeline_unavailable": 1},
+        },
+        "orchestrator": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+    }
 
     successful_result = execute_proxy_generation(
         [raw_image],
@@ -104,39 +101,37 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
         rawtherapee_adapter=SuccessfulRawAdapter(),
     )
 
-    assert successful_result == ProxyGenerationResult(
-        generated=[
-            GeneratedProxy(
-                source_path=str(raw_image.resolve()),
-                proxy_kind="raw_jpg",
-            )
-        ],
-        failed=[],
-        processed_count=1,
-        skipped_count=0,
-        failed_count=0,
-        elapsed_ms=0,
-        tool_summary={
-            "imagemagick": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "rawtherapee": {
-                "processed": 1,
-                "generated": 1,
-                "failed": 0,
-                "reasons": {},
-            },
-            "orchestrator": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
+    assert successful_result.generated == [
+        GeneratedProxy(
+            source_path=str(raw_image.resolve()),
+            proxy_kind="raw_jpg",
+        )
+    ]
+    assert successful_result.failed == []
+    assert successful_result.processed_count == 1
+    assert successful_result.skipped_count == 0
+    assert successful_result.failed_count == 0
+    assert successful_result.elapsed_ms >= 0
+    assert successful_result.tool_summary == {
+        "imagemagick": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
         },
-    )
+        "rawtherapee": {
+            "processed": 1,
+            "generated": 1,
+            "failed": 0,
+            "reasons": {},
+        },
+        "orchestrator": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+    }
 
 
 @pytest.mark.fr
@@ -156,39 +151,37 @@ def test_fr_006a_generates_still_thumbnail_proxy_via_proxy_execution(tmp_path: P
         imagemagick_adapter=SuccessfulStillAdapter(heif_supported=True),
     )
 
-    assert result == ProxyGenerationResult(
-        generated=[
-            GeneratedProxy(
-                source_path=str(still_image.resolve()),
-                proxy_kind="thumbnail_still",
-            )
-        ],
-        failed=[],
-        processed_count=1,
-        skipped_count=0,
-        failed_count=0,
-        elapsed_ms=0,
-        tool_summary={
-            "imagemagick": {
-                "processed": 1,
-                "generated": 1,
-                "failed": 0,
-                "reasons": {},
-            },
-            "rawtherapee": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "orchestrator": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
+    assert result.generated == [
+        GeneratedProxy(
+            source_path=str(still_image.resolve()),
+            proxy_kind="thumbnail_still",
+        )
+    ]
+    assert result.failed == []
+    assert result.processed_count == 1
+    assert result.skipped_count == 0
+    assert result.failed_count == 0
+    assert result.elapsed_ms >= 0
+    assert result.tool_summary == {
+        "imagemagick": {
+            "processed": 1,
+            "generated": 1,
+            "failed": 0,
+            "reasons": {},
         },
-    )
+        "rawtherapee": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+        "orchestrator": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+    }
 
 
 @pytest.mark.fr
@@ -289,39 +282,37 @@ def test_fr_007a_generates_heic_proxy_when_heif_capability_is_available(tmp_path
         imagemagick_adapter=SuccessfulHeicAdapter(heif_supported=True),
     )
 
-    assert result == ProxyGenerationResult(
-        generated=[
-            GeneratedProxy(
-                source_path=str(heic_image.resolve()),
-                proxy_kind="heic_display_proxy",
-            )
-        ],
-        failed=[],
-        processed_count=1,
-        skipped_count=0,
-        failed_count=0,
-        elapsed_ms=0,
-        tool_summary={
-            "imagemagick": {
-                "processed": 1,
-                "generated": 1,
-                "failed": 0,
-                "reasons": {},
-            },
-            "rawtherapee": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "orchestrator": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
+    assert result.generated == [
+        GeneratedProxy(
+            source_path=str(heic_image.resolve()),
+            proxy_kind="heic_display_proxy",
+        )
+    ]
+    assert result.failed == []
+    assert result.processed_count == 1
+    assert result.skipped_count == 0
+    assert result.failed_count == 0
+    assert result.elapsed_ms >= 0
+    assert result.tool_summary == {
+        "imagemagick": {
+            "processed": 1,
+            "generated": 1,
+            "failed": 0,
+            "reasons": {},
         },
-    )
+        "rawtherapee": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+        "orchestrator": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+    }
 
 
 @pytest.mark.fr
@@ -752,39 +743,37 @@ def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path)
         raw_pipeline_available=True,
     )
 
-    assert result == ProxyGenerationResult(
-        generated=[
-            GeneratedProxy(
-                source_path=str(video.resolve()),
-                proxy_kind="video_mp4_h264",
-            )
-        ],
-        failed=[],
-        processed_count=1,
-        skipped_count=0,
-        failed_count=0,
-        elapsed_ms=0,
-        tool_summary={
-            "imagemagick": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "rawtherapee": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
-            "orchestrator": {
-                "processed": 0,
-                "generated": 0,
-                "failed": 0,
-                "reasons": {},
-            },
+    assert result.generated == [
+        GeneratedProxy(
+            source_path=str(video.resolve()),
+            proxy_kind="video_mp4_h264",
+        )
+    ]
+    assert result.failed == []
+    assert result.processed_count == 1
+    assert result.skipped_count == 0
+    assert result.failed_count == 0
+    assert result.elapsed_ms >= 0
+    assert result.tool_summary == {
+        "imagemagick": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
         },
-    )
+        "rawtherapee": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+        "orchestrator": {
+            "processed": 0,
+            "generated": 0,
+            "failed": 0,
+            "reasons": {},
+        },
+    }
 
 
 @pytest.mark.fr

@@ -35,6 +35,8 @@ class IngestRunSummary:
     skipped_count: int
     failed_count: int
     failed_items: list[FailedIngestItem]
+    elapsed_ms: int = 0
+    tool_summary: ProxyToolSummary = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
