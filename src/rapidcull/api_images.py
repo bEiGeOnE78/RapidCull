@@ -114,3 +114,35 @@ def delete_image_decision(image_id: str) -> dict[str, Any]:
     db_path = _get_db_path()
     cull_result = undo_decision(db_path, image_id)
     return ok({"image_id": cull_result.image_id, "success": True})
+
+
+@router.get("/api/v1/images/{image_id}/faces")
+def get_image_faces(image_id: str) -> dict[str, Any]:
+    """Return face boxes and person assignments for a given image."""
+    db_path = _get_db_path()
+    _require_image(db_path, image_id)
+
+    with sqlite3.connect(db_path) as conn:
+        rows = conn.execute(
+            """
+            SELECT f.face_id, f.person_id, p.name,
+                   f.bbox_x, f.bbox_y, f.bbox_w, f.bbox_h, f.detection_score
+            FROM faces f
+            LEFT JOIN persons p ON f.person_id = p.person_id
+            WHERE f.image_id = ?
+            ORDER BY f.face_id
+            """,
+            (image_id,),
+        ).fetchall()
+
+    faces = [
+        {
+            "face_id": row[0],
+            "person_id": row[1],
+            "person_name": row[2],
+            "bbox": {"x": row[3], "y": row[4], "w": row[5], "h": row[6]},
+            "score": row[7],
+        }
+        for row in rows
+    ]
+    return ok({"image_id": image_id, "faces": faces})

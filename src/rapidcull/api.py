@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import sqlite3
 from pathlib import Path
 from typing import Any
 
@@ -65,7 +64,7 @@ def query_collection(collection_id: str, request: QueryRequest) -> dict[str, Any
 def create_app(db_path: Path | None = None) -> FastAPI:
     """Create a FastAPI application instance with optional DB path for face endpoints."""
     from rapidcull import api_galleries, api_images, api_persons, api_trash  # noqa: PLC0415
-    from rapidcull.api_envelope import ApiError, ok, register_handlers  # noqa: PLC0415
+    from rapidcull.api_envelope import register_handlers  # noqa: PLC0415
     from rapidcull.api_jobs import router as jobs_router_  # noqa: PLC0415
     from rapidcull.security import configure_app as configure_app_  # noqa: PLC0415
 
@@ -105,44 +104,5 @@ def create_app(db_path: Path | None = None) -> FastAPI:
                 StaticFiles(directory=str(frontend_dist), html=True),
                 name="frontend",
             )
-
-        @_app.get("/api/v1/images/{image_id}/faces")
-        def get_image_faces(image_id: str) -> dict[str, Any]:
-            # Verify image exists
-            with sqlite3.connect(_db_path) as conn:
-                img_row = conn.execute(
-                    "SELECT image_id FROM images WHERE image_id = ?", (image_id,)
-                ).fetchone()
-            if img_row is None:
-                raise ApiError(
-                    code="IMAGE_NOT_FOUND",
-                    message=f"Image '{image_id}' not found.",
-                    http_status=404,
-                )
-
-            with sqlite3.connect(_db_path) as conn:
-                rows = conn.execute(
-                    """
-                    SELECT f.face_id, f.person_id, p.name,
-                           f.bbox_x, f.bbox_y, f.bbox_w, f.bbox_h, f.detection_score
-                    FROM faces f
-                    LEFT JOIN persons p ON f.person_id = p.person_id
-                    WHERE f.image_id = ?
-                    ORDER BY f.face_id
-                    """,
-                    (image_id,),
-                ).fetchall()
-
-            faces = [
-                {
-                    "face_id": row[0],
-                    "person_id": row[1],
-                    "person_name": row[2],
-                    "bbox": {"x": row[3], "y": row[4], "w": row[5], "h": row[6]},
-                    "score": row[7],
-                }
-                for row in rows
-            ]
-            return ok({"image_id": image_id, "faces": faces})
 
     return _app

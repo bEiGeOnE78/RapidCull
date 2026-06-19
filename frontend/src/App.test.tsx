@@ -10,6 +10,6 @@ function wrapper({ children }: { children: React.ReactNode }) {
 describe('App', () => {
   it('renders without crashing', () => {
     render(<App />, { wrapper })
-    expect(screen.getByText(/RapidCull/i)).toBeInTheDocument()
+    expect(screen.getByText('People')).toBeInTheDocument()
   })
 })
