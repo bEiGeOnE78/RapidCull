@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from './api/client'
 import GallerySelector from './components/GallerySelector'
 import ThumbnailGrid from './components/ThumbnailGrid'
+import ImageViewer from './components/ImageViewer'
 
 const PAGE_SIZE = 50
 
@@ -69,6 +70,14 @@ export default function App() {
         overflow: 'hidden',
       }}
     >
+      {selectedImageId && (
+        <ImageViewer
+          imageId={selectedImageId}
+          images={images}
+          onClose={() => setSelectedImageId(null)}
+          onNavigate={(id) => setSelectedImageId(id)}
+        />
+      )}
       <GallerySelector
         galleries={galleries}
         activeGalleryId={activeGalleryId}
