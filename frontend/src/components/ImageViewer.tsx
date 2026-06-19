@@ -3,9 +3,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../api/client'
 import type { GalleryImage } from '../api/client'
 import { useKeyboard } from '../hooks/useKeyboard'
+import { useSwipe } from '../hooks/useSwipe'
 import StatusDot from './StatusDot'
 import MetadataSidebar from './MetadataSidebar'
 import FaceOverlay from './FaceOverlay'
+import TouchToolbar from './TouchToolbar'
 
 interface ImageViewerProps {
   imageId: string
@@ -68,6 +70,18 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
   const prevImage = currentIndex > 0 ? images[currentIndex - 1] : null
   const nextImage = currentIndex < images.length - 1 ? images[currentIndex + 1] : null
 
+  const goNext = useCallback(() => {
+    if (nextImage) onNavigate(nextImage.image_id)
+  }, [nextImage, onNavigate])
+
+  const goPrev = useCallback(() => {
+    if (prevImage) onNavigate(prevImage.image_id)
+  }, [prevImage, onNavigate])
+
+  const swipeHandlers = useSwipe(goNext, goPrev)
+
+  const isTouchDevice = typeof window !== 'undefined' && window.innerWidth < 768
+
   const decision = decisionQuery.data?.decision ?? imageQuery.data?.decision ?? null
 
   const handlePick = useCallback(() => {
@@ -92,8 +106,8 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
 
   const keyMap = useCallback(
     () => ({
-      ArrowLeft: () => prevImage && onNavigate(prevImage.image_id),
-      ArrowRight: () => nextImage && onNavigate(nextImage.image_id),
+      ArrowLeft: () => goPrev(),
+      ArrowRight: () => goNext(),
       p: () => handlePick(),
       P: () => handlePick(),
       x: () => handleReject(),
@@ -110,7 +124,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
         setZoomMode((prev) => !prev)
       },
     }),
-    [prevImage, nextImage, onNavigate, handlePick, handleReject, onClose],
+    [goPrev, goNext, handlePick, handleReject, onClose],
   )
 
   useKeyboard(keyMap(), true)
@@ -291,6 +305,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
+            {...swipeHandlers}
           >
             {/* Image container with decision border */}
             <div
@@ -424,6 +439,17 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
         {/* Metadata sidebar */}
         <MetadataSidebar imageData={imageData} isOpen={metaSidebarOpen} />
       </div>
+
+      {/* Touch toolbar — visible on narrow/touch viewports */}
+      {isTouchDevice && (
+        <TouchToolbar
+          decision={decision}
+          onPick={handlePick}
+          onReject={handleReject}
+          onUndo={handleUndo}
+          onInfo={() => setMetaSidebarOpen((prev) => !prev)}
+        />
+      )}
 
       {/* Status bar */}
       <div

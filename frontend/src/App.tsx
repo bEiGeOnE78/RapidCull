@@ -9,6 +9,7 @@ import JobProgressPanel from './components/JobProgressPanel'
 import PersonPanel from './components/PersonPanel'
 import TrashPanel from './components/TrashPanel'
 import { useKeyboard } from './hooks/useKeyboard'
+import type { SortOrder } from './components/SortControl'
 
 const PAGE_SIZE = 50
 
@@ -22,6 +23,7 @@ export default function App() {
   const [activeJobLabel, setActiveJobLabel] = useState('')
   const [personPanelOpen, setPersonPanelOpen] = useState(false)
   const [trashPanelOpen, setTrashPanelOpen] = useState(false)
+  const [sortOrder, setSortOrder] = useState<SortOrder>('filename')
 
   // Fetch galleries
   const galleriesQuery = useQuery({
@@ -190,6 +192,8 @@ export default function App() {
             page={page}
             pageSize={PAGE_SIZE}
             onPageChange={(p) => setPage(p)}
+            sortOrder={sortOrder}
+            onSortChange={setSortOrder}
           />
         ) : (
           <div

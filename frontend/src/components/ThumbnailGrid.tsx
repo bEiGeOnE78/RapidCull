@@ -1,5 +1,6 @@
 import type { GalleryImage } from '../api/client'
 import ThumbnailCell from './ThumbnailCell'
+import SortControl, { type SortOrder } from './SortControl'
 
 interface ThumbnailGridProps {
   images: GalleryImage[]
@@ -10,6 +11,49 @@ interface ThumbnailGridProps {
   page: number
   pageSize: number
   onPageChange: (page: number) => void
+  sortOrder: SortOrder
+  onSortChange: (order: SortOrder) => void
+}
+
+function decisionRank(decision: string | null | undefined, mode: SortOrder): number {
+  if (mode === 'picks_first') {
+    if (decision === 'pick') return 0
+    if (!decision) return 1
+    return 2
+  }
+  if (mode === 'rejects_first') {
+    if (decision === 'reject') return 0
+    if (!decision) return 1
+    return 2
+  }
+  // undecided_first
+  if (!decision) return 0
+  if (decision === 'pick') return 1
+  return 2
+}
+
+function sortImages(images: GalleryImage[], order: SortOrder): GalleryImage[] {
+  const sorted = [...images]
+  switch (order) {
+    case 'date_asc':
+      return sorted.sort((a, b) => a.path.localeCompare(b.path))
+    case 'date_desc':
+      return sorted.sort((a, b) => b.path.localeCompare(a.path))
+    case 'filename':
+      return sorted.sort((a, b) => {
+        const fa = a.path.split('/').pop() ?? a.path
+        const fb = b.path.split('/').pop() ?? b.path
+        return fa.localeCompare(fb)
+      })
+    case 'picks_first':
+    case 'rejects_first':
+    case 'undecided_first':
+      return sorted.sort(
+        (a, b) => decisionRank(a.decision, order) - decisionRank(b.decision, order),
+      )
+    default:
+      return sorted
+  }
 }
 
 export default function ThumbnailGrid({
@@ -21,6 +65,8 @@ export default function ThumbnailGrid({
   page,
   pageSize,
   onPageChange,
+  sortOrder,
+  onSortChange,
 }: ThumbnailGridProps) {
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize))
   const startItem = totalCount === 0 ? 0 : (page - 1) * pageSize + 1
@@ -60,6 +106,8 @@ export default function ThumbnailGrid({
     )
   }
 
+  const sortedImages = sortImages(images, sortOrder)
+
   return (
     <div
       style={{
@@ -70,6 +118,22 @@ export default function ThumbnailGrid({
         background: '#181818',
       }}
     >
+      {/* Sort header */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '6px 8px',
+          borderBottom: '1px solid #2a2a2a',
+          background: '#1a1a1a',
+          flexShrink: 0,
+        }}
+      >
+        <span style={{ fontSize: 11, color: '#666' }}>Sort:</span>
+        <SortControl value={sortOrder} onChange={onSortChange} />
+      </div>
+
       {/* Scrollable grid area */}
       <div style={{ flex: 1, overflowY: 'auto', padding: 4 }}>
         <div
@@ -79,7 +143,7 @@ export default function ThumbnailGrid({
             gap: 4,
           }}
         >
-          {images.map((image) => (
+          {sortedImages.map((image) => (
             <ThumbnailCell
               key={image.image_id}
               image={image}
