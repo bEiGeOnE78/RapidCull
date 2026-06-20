@@ -50,18 +50,18 @@
     "semantic_hash": ""
   },
   "src/rapidcull/adapters/imagemagick.py": {
-    "mtime": 1779765789.4215088,
-    "ast_hash": "005b372e9f1f84aaa3bf24ff559f8436",
-    "semantic_hash": "005b372e9f1f84aaa3bf24ff559f8436"
+    "mtime": 1781926187.6925278,
+    "ast_hash": "3c9c637f45545e39ceeb2f3d8217d090",
+    "semantic_hash": ""
   },
   "src/rapidcull/adapters/rawtherapee.py": {
-    "mtime": 1779765789.4215088,
-    "ast_hash": "0a8e7e9bc77da1af2c08be548f9a58f0",
-    "semantic_hash": "0a8e7e9bc77da1af2c08be548f9a58f0"
+    "mtime": 1781926195.8654706,
+    "ast_hash": "ef3ae7f89ca43968054f5aabce246dbc",
+    "semantic_hash": ""
   },
   "src/rapidcull/api.py": {
-    "mtime": 1781907880.5556881,
-    "ast_hash": "7f646460714d3994888e7c20b4883769",
+    "mtime": 1781918452.343504,
+    "ast_hash": "7dfc597924697b7c363f9627be0619f0",
     "semantic_hash": ""
   },
   "src/rapidcull/api_envelope.py": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "src/rapidcull/cli.py": {
-    "mtime": 1781896208.0051384,
-    "ast_hash": "e4d1f336fbafe11547adf7524ffdad12",
+    "mtime": 1781960383.44707,
+    "ast_hash": "660904557182848a6ce40d05bacd6553",
     "semantic_hash": ""
   },
   "src/rapidcull/collections.py": {
@@ -100,9 +100,9 @@
     "semantic_hash": "c748a37d0c79e518b4f21a99b0e20f9f"
   },
   "src/rapidcull/ingest.py": {
-    "mtime": 1779765789.4215088,
-    "ast_hash": "5abb469d35679acbcd84e7b6a45988d7",
-    "semantic_hash": "5abb469d35679acbcd84e7b6a45988d7"
+    "mtime": 1781927867.3563619,
+    "ast_hash": "0fbc107ccd412d65617b008c82a5de61",
+    "semantic_hash": ""
   },
   "src/rapidcull/jobs.py": {
     "mtime": 1779766905.9898362,
@@ -120,8 +120,8 @@
     "semantic_hash": "f424afa4aecdbd83f044b5e56a244870"
   },
   "src/rapidcull/proxies.py": {
-    "mtime": 1781896892.128891,
-    "ast_hash": "977d9eefa5cb65d8ba8092b8f2c257ea",
+    "mtime": 1781927768.8609247,
+    "ast_hash": "6061edc8867c2db95e7f22d68e6e8c87",
     "semantic_hash": ""
   },
   "src/rapidcull/query_evaluator.py": {
@@ -250,8 +250,8 @@
     "semantic_hash": "bea69fc6beb69d6b5705f45248a743d8"
   },
   "tests/integration/proxies/test_fr_006_010_proxy_generation.py": {
-    "mtime": 1781896892.128891,
-    "ast_hash": "d49e64a32426bd8d25aa5c216c743863",
+    "mtime": 1781926293.8807979,
+    "ast_hash": "6dd80e1bf699e5c481c592d98a89206f",
     "semantic_hash": ""
   },
   "tests/integration/query/test_fr_017_021_query_grammar_validation.py": {
@@ -1405,9 +1405,9 @@
     "semantic_hash": "854f2017b50aeeb12bbe5bfc4a99e054"
   },
   "README.md": {
-    "mtime": 1772898980.0,
-    "ast_hash": "96dbe4e14f719e9c5ac5bfbf6f68fbe0",
-    "semantic_hash": "96dbe4e14f719e9c5ac5bfbf6f68fbe0"
+    "mtime": 1781919821.9886239,
+    "ast_hash": "a3a9ea000bb22ec371659b4f1b5a513f",
+    "semantic_hash": ""
   },
   "docs/20260307T080227--photo-library-acceptance-tests__projects.md": {
     "mtime": 1773492458.0,
@@ -1980,8 +1980,8 @@
     "semantic_hash": ""
   },
   "src/rapidcull/job_executor.py": {
-    "mtime": 1781907880.5556881,
-    "ast_hash": "05392a14d302c4185fcdcb03540b1769",
+    "mtime": 1781927754.9310043,
+    "ast_hash": "953186bec526b709fee0db9896fe957e",
     "semantic_hash": ""
   },
   "tests/integration/api/test_api_job_executor.py": {
@@ -1997,6 +1997,31 @@
   "docs/query-grammar.md": {
     "mtime": 1781907880.5556881,
     "ast_hash": "031c8bf2124ca1903674af7c8a5286fb",
+    "semantic_hash": ""
+  },
+  "docs/api-reference.md": {
+    "mtime": 1781919791.9488165,
+    "ast_hash": "c7fef4dd0fe2b1b46ebcfe9d21ce4df9",
+    "semantic_hash": ""
+  },
+  "docs/cli-reference.md": {
+    "mtime": 1781919731.435205,
+    "ast_hash": "d21d94174038c5b058dffd9621f4ba59",
+    "semantic_hash": ""
+  },
+  "docs/ops-guide.md": {
+    "mtime": 1781919787.6218445,
+    "ast_hash": "5df3b7122d795f3eb30e6901466bb825",
+    "semantic_hash": ""
+  },
+  "docs/query-recipes.md": {
+    "mtime": 1781919728.2642252,
+    "ast_hash": "e7952982059473e9df0410ed1ec05c8a",
+    "semantic_hash": ""
+  },
+  "docs/user-guide.md": {
+    "mtime": 1781919668.1196115,
+    "ast_hash": "46b97326f8a1ee30fda2f1f2b5e9da42",
     "semantic_hash": ""
   }
 }
