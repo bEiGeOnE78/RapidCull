@@ -69,7 +69,13 @@ def cli() -> None:
 @click.option(
     "--pid-file", type=click.Path(), default=str(_DEFAULT_PID_FILE), help="Path to PID file"
 )
-def start(host: str, port: int, pid_file: str) -> None:
+@click.option(
+    "--db", type=click.Path(), default=None, help="Path to rapidcull.db (creates if missing)"
+)
+@click.option(
+    "--library-root", type=click.Path(), default=None, help="Root directory for photo library"
+)
+def start(host: str, port: int, pid_file: str, db: str | None, library_root: str | None) -> None:
     """Start the RapidCull API server."""
     pid_path = Path(pid_file)
 
@@ -87,13 +93,20 @@ def start(host: str, port: int, pid_file: str) -> None:
     # Create PID file directory
     pid_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Build environment with optional DB/library-root overrides.
+    env = os.environ.copy()
+    if db:
+        env["RAPIDCULL_DB_PATH"] = str(Path(db).expanduser().resolve())
+    if library_root:
+        env["RAPIDCULL_LIBRARY_ROOT"] = str(Path(library_root).expanduser().resolve())
+
     # Start the server
     proc = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "rapidcull.api:app", "--host", host, "--port", str(port)],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         start_new_session=True,
-        env=os.environ.copy(),
+        env=env,
     )
 
     # Write PID file
@@ -147,8 +160,21 @@ def stop(pid_file: str) -> None:
 @click.option(
     "--pid-file", type=click.Path(), default=str(_DEFAULT_PID_FILE), help="Path to PID file"
 )
+@click.option(
+    "--db", type=click.Path(), default=None, help="Path to rapidcull.db (creates if missing)"
+)
+@click.option(
+    "--library-root", type=click.Path(), default=None, help="Root directory for photo library"
+)
 @click.pass_context
-def restart(ctx: click.Context, host: str, port: int, pid_file: str) -> None:
+def restart(
+    ctx: click.Context,
+    host: str,
+    port: int,
+    pid_file: str,
+    db: str | None,
+    library_root: str | None,
+) -> None:
     """Restart the RapidCull API server."""
     pid_path = Path(pid_file)
 
@@ -160,7 +186,7 @@ def restart(ctx: click.Context, host: str, port: int, pid_file: str) -> None:
         pid_path.unlink(missing_ok=True)
 
     # Start
-    ctx.invoke(start, host=host, port=port, pid_file=pid_file)
+    ctx.invoke(start, host=host, port=port, pid_file=pid_file, db=db, library_root=library_root)
 
 
 @cli.command(name="process-new")
