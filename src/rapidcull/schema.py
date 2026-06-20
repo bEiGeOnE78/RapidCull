@@ -5,11 +5,12 @@ from pathlib import Path
 
 from rapidcull.models import MigrationStep
 
-CURRENT_SCHEMA_VERSION = 3
+CURRENT_SCHEMA_VERSION = 4
 
 MIGRATION_PATH = [
     MigrationStep(from_version=1, to_version=2, description="Add faces and persons tables"),
     MigrationStep(from_version=2, to_version=3, description="Add cull_decisions and trash tables"),
+    MigrationStep(from_version=3, to_version=4, description="Add thumbnail_path to images"),
 ]
 
 
@@ -62,6 +63,11 @@ def _migrate_v2_to_v3(cursor: sqlite3.Cursor) -> None:
     cursor.execute("UPDATE schema_version SET version = 3")
 
 
+def _migrate_v3_to_v4(cursor: sqlite3.Cursor) -> None:
+    cursor.execute("ALTER TABLE images ADD COLUMN thumbnail_path TEXT")
+    cursor.execute("UPDATE schema_version SET version = 4")
+
+
 def get_schema_version(db_path: Path) -> int | None:
     """Return current schema version from DB, or None if DB doesn't exist/has no version table."""
     if not db_path.exists():
@@ -95,7 +101,8 @@ def create_or_validate_schema(db_path: Path) -> None:
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS images (
                   image_id TEXT PRIMARY KEY,
-                  path TEXT NOT NULL UNIQUE
+                  path TEXT NOT NULL UNIQUE,
+                  thumbnail_path TEXT
                 )
                 """)
             _apply_v2_tables(cursor)
@@ -110,6 +117,11 @@ def create_or_validate_schema(db_path: Path) -> None:
             connection.commit()
             existing_version = 3
 
+        if existing_version == 3:
+            _migrate_v3_to_v4(cursor)
+            connection.commit()
+            existing_version = 4
+
         if existing_version != CURRENT_SCHEMA_VERSION:
             raise SchemaVersionMismatchError(
                 "Schema version mismatch detected. Please run migration tooling. "
@@ -119,7 +131,8 @@ def create_or_validate_schema(db_path: Path) -> None:
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS images (
               image_id TEXT PRIMARY KEY,
-              path TEXT NOT NULL UNIQUE
+              path TEXT NOT NULL UNIQUE,
+              thumbnail_path TEXT
             )
             """)
         _apply_v2_tables(cursor)

@@ -42,6 +42,16 @@ def fetch_image_record(db_path: Path, file_path: Path) -> ImageRecord | None:
         return ImageRecord(image_id=str(row[0]), path=str(row[1]))
 
 
+def update_thumbnail_path(db_path: Path, file_path: Path, thumbnail_path: Path) -> None:
+    normalized_path = str(file_path.resolve())
+    with sqlite3.connect(db_path) as connection:
+        connection.execute(
+            "UPDATE images SET thumbnail_path = ? WHERE path = ?",
+            (str(thumbnail_path.resolve()), normalized_path),
+        )
+        connection.commit()
+
+
 def _generate_image_id(path: str) -> str:
     stable_hash = hashlib.sha1(path.encode("utf-8")).hexdigest()[:16]
     namespace = uuid.UUID("12345678-1234-5678-1234-567812345678")

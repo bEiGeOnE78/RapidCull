@@ -103,12 +103,10 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
         rawtherapee_adapter=SuccessfulRawAdapter(),
     )
 
-    assert successful_result.generated == [
-        GeneratedProxy(
-            source_path=str(raw_image.resolve()),
-            proxy_kind="raw_jpg",
-        )
-    ]
+    assert len(successful_result.generated) == 1
+    assert successful_result.generated[0].source_path == str(raw_image.resolve())
+    assert successful_result.generated[0].proxy_kind == "raw_jpg"
+    assert successful_result.generated[0].thumbnail_path is not None
     assert successful_result.failed == []
     assert successful_result.processed_count == 1
     assert successful_result.skipped_count == 0
@@ -154,12 +152,10 @@ def test_fr_006a_generates_still_thumbnail_proxy_via_proxy_execution(tmp_path: P
         imagemagick_adapter=SuccessfulStillAdapter(heif_supported=True),
     )
 
-    assert result.generated == [
-        GeneratedProxy(
-            source_path=str(still_image.resolve()),
-            proxy_kind="thumbnail_still",
-        )
-    ]
+    assert len(result.generated) == 1
+    assert result.generated[0].source_path == str(still_image.resolve())
+    assert result.generated[0].proxy_kind == "thumbnail_still"
+    assert result.generated[0].thumbnail_path is not None
     assert result.failed == []
     assert result.processed_count == 1
     assert result.skipped_count == 0
@@ -287,12 +283,10 @@ def test_fr_007a_generates_heic_proxy_when_heif_capability_is_available(tmp_path
         imagemagick_adapter=SuccessfulHeicAdapter(heif_supported=True),
     )
 
-    assert result.generated == [
-        GeneratedProxy(
-            source_path=str(heic_image.resolve()),
-            proxy_kind="heic_display_proxy",
-        )
-    ]
+    assert len(result.generated) == 1
+    assert result.generated[0].source_path == str(heic_image.resolve())
+    assert result.generated[0].proxy_kind == "heic_display_proxy"
+    assert result.generated[0].thumbnail_path is not None
     assert result.failed == []
     assert result.processed_count == 1
     assert result.skipped_count == 0
@@ -560,9 +554,10 @@ def test_fr_008a_uses_subprocess_capable_rawtherapee_adapter_contract(tmp_path: 
     )
 
     assert adapter.invocations == [(raw.resolve(), True)]
-    assert result.generated == [
-        GeneratedProxy(source_path=str(raw.resolve()), proxy_kind="raw_jpg"),
-    ]
+    assert len(result.generated) == 1
+    assert result.generated[0].source_path == str(raw.resolve())
+    assert result.generated[0].proxy_kind == "raw_jpg"
+    assert result.generated[0].thumbnail_path is not None
 
 
 @pytest.mark.fr
@@ -764,12 +759,10 @@ def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path)
         raw_pipeline_available=True,
     )
 
-    assert result.generated == [
-        GeneratedProxy(
-            source_path=str(video.resolve()),
-            proxy_kind="video_mp4_h264",
-        )
-    ]
+    assert len(result.generated) == 1
+    assert result.generated[0].source_path == str(video.resolve())
+    assert result.generated[0].proxy_kind == "video_mp4_h264"
+    assert result.generated[0].thumbnail_path is None  # video proxies don't have thumbnail_path
     assert result.failed == []
     assert result.processed_count == 1
     assert result.skipped_count == 0

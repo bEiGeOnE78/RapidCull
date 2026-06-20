@@ -17,7 +17,7 @@ from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.culling import hard_delete, list_decisions, list_trash, move_to_trash
 from rapidcull.faces import cluster_faces, detect_and_store_faces
 from rapidcull.galleries import create_gallery_from_mode, rebuild_galleries_index
-from rapidcull.identity import create_image_record
+from rapidcull.identity import create_image_record, update_thumbnail_path
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -113,6 +113,9 @@ class JobExecutor:
                 library_root=self._library_root if self._library_root is not None else self._proxy_dir,
             )
             failed_items.extend(proxy_result.failed)
+            for gp in proxy_result.generated:
+                if gp.thumbnail_path:
+                    update_thumbnail_path(self._db_path, Path(gp.source_path), Path(gp.thumbnail_path))
             log(f"Proxies: {proxy_result.processed_count} generated")
         log(
             f"Ingest complete: {processed} processed, "

@@ -18,7 +18,7 @@ from rapidcull.schema import (
 def test_schema_version_is_3(tmp_path: Path) -> None:
     db_path = tmp_path / "test.db"
     create_or_validate_schema(db_path)
-    assert CURRENT_SCHEMA_VERSION == 3
+    assert CURRENT_SCHEMA_VERSION == 4
 
 
 @pytest.mark.fr
@@ -74,4 +74,4 @@ def test_migration_v2_to_v3_preserves_existing_data(tmp_path: Path) -> None:
     version = conn.execute("SELECT version FROM schema_version").fetchone()[0]
     conn.close()
     assert rows == [("img1",)]
-    assert version == 3
+    assert version == 4

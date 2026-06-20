@@ -97,7 +97,7 @@ def execute_proxy_generation(
             still_outcome = imagemagick.generate_still_thumbnail(path, output_path=still_out)
             if still_outcome.ok:
                 generated.append(
-                    GeneratedProxy(source_path=resolved_path, proxy_kind="thumbnail_still")
+                    GeneratedProxy(source_path=resolved_path, proxy_kind="thumbnail_still", thumbnail_path=str(still_out.resolve()))
                 )
                 increment_tool_counter(tool_summary, tool="imagemagick", counter="generated")
             else:
@@ -120,7 +120,7 @@ def execute_proxy_generation(
             heic_outcome = imagemagick.generate_heic_proxy(path, output_path=heic_out)
             if heic_outcome.ok:
                 generated.append(
-                    GeneratedProxy(source_path=resolved_path, proxy_kind="heic_display_proxy")
+                    GeneratedProxy(source_path=resolved_path, proxy_kind="heic_display_proxy", thumbnail_path=str(heic_out.resolve()))
                 )
                 increment_tool_counter(tool_summary, tool="imagemagick", counter="generated")
             else:
@@ -150,7 +150,7 @@ def execute_proxy_generation(
             path=path, pipeline_available=raw_pipeline_available, output_path=raw_out
         )
         if raw_outcome.ok:
-            generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="raw_jpg"))
+            generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="raw_jpg", thumbnail_path=str(raw_out.resolve())))
             increment_tool_counter(tool_summary, tool="rawtherapee", counter="generated")
         else:
             reason = normalize_rawtherapee_reason(raw_outcome.reason)

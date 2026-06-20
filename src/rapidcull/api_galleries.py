@@ -55,6 +55,18 @@ def _decode_gallery_id(gallery_id: str) -> str:
         ) from exc
 
 
+def _thumbnail_url(thumbnail_path: str | None, db_path: Path) -> str | None:
+    """Convert absolute thumbnail path to /proxies/ URL, or None if unavailable."""
+    if not thumbnail_path:
+        return None
+    proxy_root = db_path.parent / "proxies"
+    try:
+        rel = Path(thumbnail_path).relative_to(proxy_root)
+        return "/proxies/" + str(rel)
+    except ValueError:
+        return None
+
+
 class CreateGalleryRequest(BaseModel):
     name: str
     mode: str
@@ -189,12 +201,12 @@ def get_gallery_images(
     if not page_paths:
         return ok({"images": [], "total": total, "page": page, "page_size": page_size})
 
-    # Fetch image_ids and decisions for the page
+    # Fetch image_ids, thumbnail_paths, and decisions for the page
     placeholders = ",".join("?" for _ in page_paths)
     with sqlite3.connect(db_path) as conn:
         rows = conn.execute(
             f"""
-            SELECT i.image_id, i.path, cd.decision
+            SELECT i.image_id, i.path, i.thumbnail_path, cd.decision
             FROM images i
             LEFT JOIN cull_decisions cd ON i.image_id = cd.image_id
             WHERE i.path IN ({placeholders})
@@ -207,8 +219,8 @@ def get_gallery_images(
         {
             "image_id": row[0],
             "path": row[1],
-            "thumbnail_path": None,
-            "decision": row[2],
+            "thumbnail_path": _thumbnail_url(row[2], db_path),
+            "decision": row[3],
         }
         for row in rows
     ]

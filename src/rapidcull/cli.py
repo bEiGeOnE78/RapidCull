@@ -14,7 +14,7 @@ from rapidcull.backup import backup as run_backup
 from rapidcull.backup import restore as run_restore
 from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.exiftool_adapter import RealExifToolBatchExtractor
-from rapidcull.identity import create_image_record
+from rapidcull.identity import create_image_record, update_thumbnail_path
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -264,6 +264,9 @@ def process_new(
             library_root=_library_root,
         )
         all_failed.extend(proxy_result.failed)
+        for gp in proxy_result.generated:
+            if gp.thumbnail_path:
+                update_thumbnail_path(_db_path, Path(gp.source_path), Path(gp.thumbnail_path))
 
     # Build summary
     summary = build_ingest_run_summary(

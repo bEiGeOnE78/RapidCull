@@ -56,6 +56,7 @@ class ProxyGenerationPlan:
 class GeneratedProxy:
     source_path: str
     proxy_kind: str
+    thumbnail_path: str | None = None
 
 
 @dataclass(frozen=True)

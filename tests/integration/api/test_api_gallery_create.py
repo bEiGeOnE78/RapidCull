@@ -28,7 +28,7 @@ def client_and_db(tmp_path: Path):
 
 def _add_image(db_path: Path, image_id: str, path: str) -> None:
     with sqlite3.connect(db_path) as conn:
-        conn.execute("INSERT INTO images VALUES (?, ?)", (image_id, path))
+        conn.execute("INSERT INTO images VALUES (?, ?, ?)", (image_id, path, None))
 
 
 def _add_decision(db_path: Path, image_id: str, decision: str) -> None:
