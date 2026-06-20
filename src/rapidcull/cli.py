@@ -14,9 +14,11 @@ from rapidcull.backup import backup as run_backup
 from rapidcull.backup import restore as run_restore
 from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.exiftool_adapter import RealExifToolBatchExtractor
+from rapidcull.identity import create_image_record
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
+    load_known_fingerprints,
     plan_ingest_actions,
 )
 from rapidcull.models import FailedIngestItem
@@ -197,11 +199,36 @@ def restart(
     help="Source directory to ingest",
 )
 @click.option(
+    "--db", type=click.Path(), default=None, help="Path to rapidcull.db (creates if missing)"
+)
+@click.option(
     "--raw-pipeline/--no-raw-pipeline", default=True, help="Enable RAW processing pipeline"
 )
-def process_new(source_dir: str, raw_pipeline: bool) -> None:
+@click.option(
+    "--proxy-dir",
+    type=click.Path(),
+    default=None,
+    help="Directory for proxies (default: <source-dir>/.proxies)",
+)
+@click.option(
+    "--library-root",
+    type=click.Path(),
+    default=None,
+    help="Library root for mirror-tree proxy paths (default: <source-dir>)",
+)
+def process_new(
+    source_dir: str, db: str | None, raw_pipeline: bool, proxy_dir: str | None, library_root: str | None
+) -> None:
     """Process new media from source directory."""
     source_path = normalize_path(source_dir)
+    _src = Path(source_dir).expanduser().resolve()
+    _library_root = Path(library_root).expanduser().resolve() if library_root else _src
+    _proxy_dir = (
+        Path(proxy_dir).expanduser().resolve()
+        if proxy_dir
+        else _library_root / "proxies"
+    )
+    _db_path = Path(db).expanduser().resolve() if db else (_library_root / "rapidcull.db")
 
     # Discover supported media
     discovered = discover_supported_media([source_path])
@@ -211,7 +238,8 @@ def process_new(source_dir: str, raw_pipeline: bool) -> None:
         return
 
     # Plan ingest actions
-    plan = plan_ingest_actions(discovered, {}, force_reprocess=False)
+    known_fps = load_known_fingerprints(_db_path) if _db_path.exists() else {}
+    plan = plan_ingest_actions(discovered, known_fps, force_reprocess=False)
 
     # Collect all failed items
     all_failed: list[FailedIngestItem] = []
@@ -224,9 +252,16 @@ def process_new(source_dir: str, raw_pipeline: bool) -> None:
             all_failed.extend(extraction_result.failed_items)
             processed_count = len(extraction_result.metadata_by_path)
 
+        # Persist image records to DB for fingerprint-based skip on re-runs
+        for path in extraction_result.metadata_by_path:
+            create_image_record(_db_path, path)
+
         # Generate proxies
         proxy_result = execute_proxy_generation(
-            plan.to_process, raw_pipeline_available=raw_pipeline
+            plan.to_process,
+            raw_pipeline_available=raw_pipeline,
+            proxy_dir=_proxy_dir,
+            library_root=_library_root,
         )
         all_failed.extend(proxy_result.failed)
 
@@ -241,6 +276,10 @@ def process_new(source_dir: str, raw_pipeline: bool) -> None:
     skipped = summary.skipped_count
     failed = summary.failed_count
     click.echo(f"Processed: {processed} | Skipped: {skipped} | Failed: {failed}")
+    if summary.failed_items:
+        click.echo("\nFailed items:")
+        for item in summary.failed_items:
+            click.echo(f"  {item.path}  [{item.reason}]")
 
 
 @cli.command(name="backup")

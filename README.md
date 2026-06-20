@@ -33,6 +33,15 @@ Opens the web UI at http://127.0.0.1:8000
 rapidcull stop
 ```
 
+## Documentation
+
+- [User Guide](docs/user-guide.md) — Full workflow walkthrough, UI reference, keyboard shortcuts
+- [CLI Reference](docs/cli-reference.md) — All commands with full option details and examples
+- [API Reference](docs/api-reference.md) — REST endpoints with request/response schemas and error codes
+- [Query Language](docs/query-grammar.md) — Filter expression reference for galleries and collections
+- [Query Recipes](docs/query-recipes.md) — 20+ ready-to-use query patterns
+- [Operations Guide](docs/ops-guide.md) — Backup, restore, troubleshooting, environment variables
+
 ## CLI Reference
 
 | Command | Description |

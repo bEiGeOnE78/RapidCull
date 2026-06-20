@@ -21,6 +21,7 @@ from rapidcull.identity import create_image_record
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
+    load_known_fingerprints,
     plan_ingest_actions,
 )
 from rapidcull.jobs import JobStore
@@ -90,7 +91,8 @@ class JobExecutor:
         log(f"Discovering media in {self._library_root} ...")
         discovered = discover_supported_media([self._library_root])
         log(f"Found {len(discovered)} files")
-        plan = plan_ingest_actions(discovered, {}, force_reprocess=False)
+        known_fps = load_known_fingerprints(self._db_path) if self._db_path.exists() else {}
+        plan = plan_ingest_actions(discovered, known_fps, force_reprocess=False)
         log(f"To process: {len(plan.to_process)}, skipped: {len(plan.skipped)}")
         processed = 0
         failed_items = []
@@ -104,7 +106,12 @@ class JobExecutor:
             failed_items.extend(extraction.failed_items)
             log(f"Stored {processed} image records")
             log("Generating proxies ...")
-            proxy_result = execute_proxy_generation(plan.to_process, raw_pipeline_available=True)
+            proxy_result = execute_proxy_generation(
+                plan.to_process,
+                raw_pipeline_available=True,
+                proxy_dir=self._proxy_dir,
+                library_root=self._library_root if self._library_root is not None else self._proxy_dir,
+            )
             failed_items.extend(proxy_result.failed)
             log(f"Proxies: {proxy_result.processed_count} generated")
         log(

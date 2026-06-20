@@ -82,7 +82,11 @@ def discover_supported_media(roots: list[Path]) -> list[Path]:
 
     for root in roots:
         for path in root.rglob("*"):
-            if path.is_file() and path.suffix.lower() in SUPPORTED_MEDIA_EXTENSIONS:
+            if (
+                path.is_file()
+                and path.suffix.lower() in SUPPORTED_MEDIA_EXTENSIONS
+                and not path.name.endswith(".proxy.jpg")
+            ):
                 discovered.append(path)
 
     return sorted(discovered)
@@ -91,6 +95,24 @@ def discover_supported_media(roots: list[Path]) -> list[Path]:
 def build_file_fingerprint(path: Path) -> str:
     stat = path.stat()
     return f"{path}:{stat.st_mtime_ns}:{stat.st_size}"
+
+
+def load_known_fingerprints(db_path: Path) -> dict[Path, str]:
+    """Load fingerprints for all known images by computing from current filesystem stat."""
+    import sqlite3
+    try:
+        with sqlite3.connect(db_path) as conn:
+            rows = conn.execute("SELECT path FROM images").fetchall()
+    except sqlite3.OperationalError:
+        return {}
+    result: dict[Path, str] = {}
+    for (path_str,) in rows:
+        p = Path(path_str)
+        try:
+            result[p] = build_file_fingerprint(p)
+        except OSError:
+            pass
+    return result
 
 
 def plan_ingest_actions(

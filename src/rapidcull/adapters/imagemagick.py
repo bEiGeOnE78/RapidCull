@@ -23,12 +23,15 @@ class ImageMagickAdapter:
         result = subprocess.run(command, check=False, capture_output=True, text=True)
         return result.returncode
 
-    def generate_still_thumbnail(self, path: Path) -> ImageMagickProxyOutcome:
-        output_path = path.with_name(path.stem + ".proxy.jpg")
+    def generate_still_thumbnail(
+        self, path: Path, output_path: Path | None = None
+    ) -> ImageMagickProxyOutcome:
+        resolved_output = output_path if output_path is not None else path.with_name(path.stem + ".proxy.jpg")
+        resolved_output.parent.mkdir(parents=True, exist_ok=True)
         command = [
             "magick",
             str(path.resolve()),
-            str(output_path.resolve()),
+            str(resolved_output.resolve()),
         ]
         try:
             exit_code = self._run_command(command)
@@ -39,15 +42,18 @@ class ImageMagickAdapter:
             return ImageMagickProxyOutcome(ok=True, reason=None)
         return ImageMagickProxyOutcome(ok=False, reason="imagemagick_still_failed")
 
-    def generate_heic_proxy(self, path: Path) -> ImageMagickProxyOutcome:
+    def generate_heic_proxy(
+        self, path: Path, output_path: Path | None = None
+    ) -> ImageMagickProxyOutcome:
         if not self._heif_supported:
             return ImageMagickProxyOutcome(ok=False, reason="imagemagick_heif_unsupported")
 
-        output_path = path.with_name(path.stem + ".proxy.jpg")
+        resolved_output = output_path if output_path is not None else path.with_name(path.stem + ".proxy.jpg")
+        resolved_output.parent.mkdir(parents=True, exist_ok=True)
         command = [
             "magick",
             str(path.resolve()),
-            str(output_path.resolve()),
+            str(resolved_output.resolve()),
         ]
         try:
             exit_code = self._run_command(command)

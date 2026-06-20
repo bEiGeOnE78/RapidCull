@@ -15,6 +15,14 @@ from .models import (
 )
 
 
+def _proxy_output_path(source: Path, proxy_dir: Path, library_root: Path) -> Path:
+    try:
+        rel = source.relative_to(library_root)
+    except ValueError:
+        return proxy_dir / (source.stem + ".proxy.jpg")
+    return proxy_dir / rel.parent / (source.stem + ".proxy.jpg")
+
+
 def build_proxy_generation_plan(paths: list[Path]) -> ProxyGenerationPlan:
     still_image_suffixes = {".jpg", ".jpeg", ".png", ".heic", ".cr2", ".nef", ".arw", ".dng"}
     heic_suffixes = {".heic"}
@@ -48,10 +56,16 @@ def execute_proxy_generation(
     raw_pipeline_available: bool,
     imagemagick_adapter: ImageMagickAdapter | None = None,
     rawtherapee_adapter: RawTherapeeAdapter | None = None,
+    proxy_dir: Path | None = None,
+    library_root: Path | None = None,
 ) -> ProxyGenerationResult:
     start = time.perf_counter()
     imagemagick = imagemagick_adapter or ImageMagickAdapter()
     rawtherapee = rawtherapee_adapter or RawTherapeeAdapter()
+
+    _proxy_dir = proxy_dir if proxy_dir is not None else (paths[0].parent if paths else Path("."))
+    _library_root = library_root if library_root is not None else _proxy_dir
+    _proxy_dir.mkdir(parents=True, exist_ok=True)
 
     still_suffixes = {".jpg", ".jpeg", ".png"}
     heic_suffixes = {".heic"}
@@ -65,6 +79,7 @@ def execute_proxy_generation(
         "orchestrator": _initial_tool_stats(),
     }
 
+    skipped_count = 0
     for path in sorted(paths):
         suffix = path.suffix.lower()
         resolved_path = str(path.resolve())
@@ -74,8 +89,12 @@ def execute_proxy_generation(
             continue
 
         if suffix in still_suffixes:
+            still_out = _proxy_output_path(path, _proxy_dir, _library_root)
+            if still_out.exists():
+                skipped_count += 1
+                continue
             increment_tool_counter(tool_summary, tool="imagemagick", counter="processed")
-            still_outcome = imagemagick.generate_still_thumbnail(path)
+            still_outcome = imagemagick.generate_still_thumbnail(path, output_path=still_out)
             if still_outcome.ok:
                 generated.append(
                     GeneratedProxy(source_path=resolved_path, proxy_kind="thumbnail_still")
@@ -93,8 +112,12 @@ def execute_proxy_generation(
             continue
 
         if suffix in heic_suffixes:
+            heic_out = _proxy_output_path(path, _proxy_dir, _library_root)
+            if heic_out.exists():
+                skipped_count += 1
+                continue
             increment_tool_counter(tool_summary, tool="imagemagick", counter="processed")
-            heic_outcome = imagemagick.generate_heic_proxy(path)
+            heic_outcome = imagemagick.generate_heic_proxy(path, output_path=heic_out)
             if heic_outcome.ok:
                 generated.append(
                     GeneratedProxy(source_path=resolved_path, proxy_kind="heic_display_proxy")
@@ -118,9 +141,13 @@ def execute_proxy_generation(
             record_failure(tool_summary, tool="orchestrator", reason=reason)
             continue
 
+        raw_out = _proxy_output_path(path, _proxy_dir, _library_root)
+        if raw_out.exists():
+            skipped_count += 1
+            continue
         increment_tool_counter(tool_summary, tool="rawtherapee", counter="processed")
         raw_outcome = rawtherapee.generate_raw_proxy(
-            path=path, pipeline_available=raw_pipeline_available
+            path=path, pipeline_available=raw_pipeline_available, output_path=raw_out
         )
         if raw_outcome.ok:
             generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="raw_jpg"))
@@ -138,8 +165,8 @@ def execute_proxy_generation(
     return ProxyGenerationResult(
         generated=generated,
         failed=failed,
-        processed_count=len(paths),
-        skipped_count=0,
+        processed_count=len(paths) - skipped_count,
+        skipped_count=skipped_count,
         failed_count=len(failed),
         elapsed_ms=int((time.perf_counter() - start) * 1000),
         tool_summary=tool_summary,
