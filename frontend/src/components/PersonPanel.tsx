@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../api/client'
+import type { Person } from '../api/client'
+import MergePersonPicker from './MergePersonPicker'
 
 interface PersonPanelProps {
   isOpen: boolean
@@ -11,6 +13,7 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
   const queryClient = useQueryClient()
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [renameValue, setRenameValue] = useState('')
+  const [mergeAnchor, setMergeAnchor] = useState<{ person: Person; rect: DOMRect } | null>(null)
 
   const personsQuery = useQuery({
     queryKey: ['persons'],
@@ -25,14 +28,6 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
       queryClient.invalidateQueries({ queryKey: ['persons'] })
       setRenamingId(null)
       setRenameValue('')
-    },
-  })
-
-  const mergeMutation = useMutation({
-    mutationFn: ({ personId, intoPersonId }: { personId: string; intoPersonId: string }) =>
-      api.mergePerson(personId, intoPersonId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['persons'] })
     },
   })
 
@@ -63,11 +58,8 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
     setRenameValue('')
   }
 
-  const handleMerge = (personId: string) => {
-    const input = window.prompt('Merge into person ID:')
-    if (input && input.trim()) {
-      mergeMutation.mutate({ personId, intoPersonId: input.trim() })
-    }
+  const handleMerge = (person: Person, event: React.MouseEvent<HTMLButtonElement>) => {
+    setMergeAnchor({ person, rect: event.currentTarget.getBoundingClientRect() })
   }
 
   const handleDelete = (personId: string) => {
@@ -96,6 +88,7 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
   }
 
   return (
+    <>
     <div
       style={{
         position: 'fixed',
@@ -224,8 +217,7 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
                   </button>
                   <button
                     style={btnStyle}
-                    onClick={() => handleMerge(person.person_id)}
-                    disabled={mergeMutation.isPending}
+                    onClick={(e) => handleMerge(person, e)}
                   >
                     Merge
                   </button>
@@ -243,5 +235,14 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
         </div>
       </div>
     </div>
+    {mergeAnchor && (
+      <MergePersonPicker
+        sourcePersonId={mergeAnchor.person.person_id}
+        sourcePersonName={mergeAnchor.person.name}
+        anchorRect={mergeAnchor.rect}
+        onClose={() => setMergeAnchor(null)}
+      />
+    )}
+    </>
   )
 }
