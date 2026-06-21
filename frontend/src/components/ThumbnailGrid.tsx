@@ -14,6 +14,12 @@ interface ThumbnailGridProps {
   onPageChange: (page: number) => void
   sortOrder: SortOrder
   onSortChange: (order: SortOrder) => void
+  // multi-select
+  selectionMode?: boolean
+  selectedIds?: Set<string>
+  onSelectionChange?: (ids: Set<string>) => void
+  onSaveAsNewGallery?: () => void
+  onAddToExisting?: () => void
 }
 
 function decisionRank(decision: string | null | undefined, mode: SortOrder): number {
@@ -68,9 +74,15 @@ export default function ThumbnailGrid({
   onPageChange,
   sortOrder,
   onSortChange,
+  selectionMode = false,
+  selectedIds,
+  onSelectionChange,
+  onSaveAsNewGallery,
+  onAddToExisting,
 }: ThumbnailGridProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const cellRefs = useRef<(HTMLDivElement | null)[]>([])
+  const anchorIdRef = useRef<string | null>(null)
 
   const getColumnsPerRow = useCallback(() => {
     if (!gridRef.current) return 7
@@ -134,6 +146,45 @@ export default function ThumbnailGrid({
 
   const sortedImages = sortImages(images, sortOrder)
 
+  const activeSelected = selectedIds ?? new Set<string>()
+
+  const handleTileClick = (imageId: string, e: React.MouseEvent) => {
+    if (!selectionMode) {
+      onSelect(imageId)
+      return
+    }
+    const next = new Set(activeSelected)
+    if (e.shiftKey && anchorIdRef.current) {
+      const anchorIdx = sortedImages.findIndex((img) => img.image_id === anchorIdRef.current)
+      const clickIdx = sortedImages.findIndex((img) => img.image_id === imageId)
+      if (anchorIdx !== -1 && clickIdx !== -1) {
+        const lo = Math.min(anchorIdx, clickIdx)
+        const hi = Math.max(anchorIdx, clickIdx)
+        for (let i = lo; i <= hi; i++) {
+          next.add(sortedImages[i].image_id)
+        }
+      }
+    } else {
+      if (next.has(imageId)) {
+        next.delete(imageId)
+      } else {
+        next.add(imageId)
+      }
+      anchorIdRef.current = imageId
+    }
+    onSelectionChange?.(next)
+  }
+
+  const handleSelectAllVisible = () => {
+    const next = new Set(activeSelected)
+    sortedImages.forEach((img) => next.add(img.image_id))
+    onSelectionChange?.(next)
+  }
+
+  const handleClearSelection = () => {
+    onSelectionChange?.(new Set())
+  }
+
   return (
     <div
       style={{
@@ -144,6 +195,49 @@ export default function ThumbnailGrid({
         background: '#181818',
       }}
     >
+      {/* Selection toolbar */}
+      {selectionMode && activeSelected.size > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            padding: '6px 12px',
+            borderBottom: '1px solid #2a2a2a',
+            background: '#1c2333',
+            flexShrink: 0,
+            flexWrap: 'wrap',
+            fontSize: 12,
+          }}
+        >
+          <span style={{ color: '#8ab4f8', fontWeight: 600 }}>{activeSelected.size} selected</span>
+          <button
+            onClick={handleSelectAllVisible}
+            style={{ background: 'transparent', border: '1px solid #445', color: '#aaa', borderRadius: 4, padding: '3px 10px', cursor: 'pointer', fontSize: 12 }}
+          >
+            Select all visible
+          </button>
+          <button
+            onClick={handleClearSelection}
+            style={{ background: 'transparent', border: '1px solid #445', color: '#aaa', borderRadius: 4, padding: '3px 10px', cursor: 'pointer', fontSize: 12 }}
+          >
+            Clear
+          </button>
+          <button
+            onClick={onSaveAsNewGallery}
+            style={{ background: '#2a4a2a', border: '1px solid #4a8a4a', color: '#8fc88f', borderRadius: 4, padding: '3px 10px', cursor: 'pointer', fontSize: 12 }}
+          >
+            Save as new gallery
+          </button>
+          <button
+            onClick={onAddToExisting}
+            style={{ background: '#2a3a4a', border: '1px solid #4a6a8a', color: '#8ab4cc', borderRadius: 4, padding: '3px 10px', cursor: 'pointer', fontSize: 12 }}
+          >
+            Add to existing
+          </button>
+        </div>
+      )}
+
       {/* Sort header */}
       <div
         style={{
@@ -170,15 +264,51 @@ export default function ThumbnailGrid({
             gap: 4,
           }}
         >
-          {sortedImages.map((image, idx) => (
-            <ThumbnailCell
-              key={image.image_id}
-              image={image}
-              isSelected={image.image_id === selectedImageId}
-              onClick={() => onSelect(image.image_id)}
-              cellRef={(el) => { cellRefs.current[idx] = el }}
-            />
-          ))}
+          {sortedImages.map((image, idx) => {
+            const isMultiSelected = selectionMode && activeSelected.has(image.image_id)
+            return (
+              <div
+                key={image.image_id}
+                style={{
+                  position: 'relative',
+                  outline: isMultiSelected ? '2px solid #4a9eff' : 'none',
+                  outlineOffset: -2,
+                  borderRadius: 2,
+                }}
+                onClick={(e) => handleTileClick(image.image_id, e)}
+              >
+                <ThumbnailCell
+                  image={image}
+                  isSelected={!selectionMode && image.image_id === selectedImageId}
+                  onClick={() => { if (!selectionMode) onSelect(image.image_id) }}
+                  cellRef={(el) => { cellRefs.current[idx] = el }}
+                />
+                {isMultiSelected && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 4,
+                      right: 4,
+                      width: 18,
+                      height: 18,
+                      background: '#4a9eff',
+                      borderRadius: 3,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 11,
+                      color: '#fff',
+                      fontWeight: 700,
+                      pointerEvents: 'none',
+                      zIndex: 2,
+                    }}
+                  >
+                    ✓
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
 

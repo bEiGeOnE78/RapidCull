@@ -7,6 +7,8 @@ interface GallerySelectorProps {
   activeGalleryId: string | null
   onSelect: (galleryId: string) => void
   isOpen: boolean
+  searchQuery?: string | null
+  searchCount?: number | null
 }
 
 const TYPE_ICON: Record<string, string> = {
@@ -20,6 +22,8 @@ export default function GallerySelector({
   activeGalleryId,
   onSelect,
   isOpen,
+  searchQuery,
+  searchCount,
 }: GallerySelectorProps) {
   const qc = useQueryClient()
 
@@ -63,6 +67,69 @@ export default function GallerySelector({
         Galleries
       </div>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, flex: 1 }}>
+        {searchQuery && searchQuery.length > 0 && (() => {
+          const searchGallery: Gallery = {
+            gallery_id: 'virtual:search',
+            name: 'Search',
+            type: 'virtual',
+            count: searchCount ?? 0,
+          }
+          const isActive = activeGalleryId === 'virtual:search'
+          return (
+            <li key="virtual:search">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button
+                  onClick={() => onSelect('virtual:search')}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flex: 1,
+                    padding: '10px 16px',
+                    background: isActive ? '#2a2a2a' : 'transparent',
+                    border: 'none',
+                    borderLeft: isActive ? '3px solid #4a9eff' : '3px solid transparent',
+                    color: isActive ? '#fff' : '#ccc',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    fontSize: 13,
+                    transition: 'background 0.1s',
+                    minWidth: 0,
+                  }}
+                >
+                  <span style={{ fontSize: 12, marginRight: 6, flexShrink: 0 }}>
+                    {TYPE_ICON[searchGallery.type] ?? '🔍'}
+                  </span>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      flex: 1,
+                      marginRight: 8,
+                    }}
+                    title={searchGallery.name}
+                  >
+                    {searchGallery.name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      background: '#333',
+                      color: '#aaa',
+                      borderRadius: 10,
+                      padding: '1px 7px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {searchGallery.count}
+                  </span>
+                </button>
+              </div>
+            </li>
+          )
+        })()}
         {galleries.map((gallery) => {
           const isActive = gallery.gallery_id === activeGalleryId
           return (

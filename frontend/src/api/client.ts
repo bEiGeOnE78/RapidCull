@@ -6,13 +6,33 @@ export interface ApiResponse<T> {
   meta: Record<string, unknown>
 }
 
+export interface ApiError extends Error {
+  status: number
+  apiMessage: string
+  suggestions?: string[]
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     headers: { 'Content-Type': 'application/json', ...init?.headers },
     ...init,
   })
   const body: ApiResponse<T> = await res.json()
-  if (!body.ok) throw new Error(String((body as unknown as { detail: unknown }).detail ?? 'API error'))
+  if (!body.ok) {
+    // Try to extract structured error shape: {ok: false, error: {code, message, details: {suggestions, token}}}
+    const errShape = body as unknown as {
+      error?: { message?: string; details?: { suggestions?: string[] } }
+      detail?: unknown
+    }
+    const apiMessage =
+      errShape.error?.message ?? String(errShape.detail ?? 'API error')
+    const suggestions = errShape.error?.details?.suggestions
+    const err = new Error(apiMessage) as ApiError
+    err.status = res.status
+    err.apiMessage = apiMessage
+    err.suggestions = suggestions
+    throw err
+  }
   return body.data
 }
 
@@ -22,6 +42,10 @@ export const api = {
     request<GalleryImagesData>(`/galleries/${encodeURIComponent(galleryId)}/images?page=${page}&page_size=${pageSize}`),
   createUserGallery: (name: string) =>
     request<Gallery>('/galleries', { method: 'POST', body: JSON.stringify({ name }) }),
+  createUserGalleryWithImages: (name: string, imageIds: string[]) =>
+    request<Gallery>('/galleries', { method: 'POST', body: JSON.stringify({ name, image_ids: imageIds }) }),
+  searchImages: (query: string, offset: number, limit: number) =>
+    request<SearchImagesData>(`/images/search?query=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`),
   deleteGallery: (galleryId: string) =>
     request<void>(`/galleries/${encodeURIComponent(galleryId)}`, { method: 'DELETE' }),
   addImagesToGallery: (galleryId: string, imageIds: string[]) =>
@@ -102,6 +126,12 @@ export interface GalleryImagesData {
   total: number
   page: number
   page_size: number
+}
+
+export interface SearchImagesData {
+  images: GalleryImage[]
+  total_count: number
+  query_echo: string
 }
 
 export interface ImageData {

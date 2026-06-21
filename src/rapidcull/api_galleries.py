@@ -99,13 +99,16 @@ def _is_user_gallery(db_path: Path, gallery_id: str) -> bool:
 
 class CreateGalleryRequest(BaseModel):
     name: str
+    image_ids: list[str] = []
 
 
 @router.post("/api/v1/galleries", status_code=201)
 def create_gallery(request: CreateGalleryRequest) -> dict[str, Any]:
-    """Create a named user gallery (manual, empty). Returns the new Gallery."""
+    """Create a named user gallery (manual, optionally pre-seeded). Returns the new Gallery."""
     db_path = _get_db_path()
-    gallery = create_user_gallery(db_path, name=request.name, source="manual", image_ids=[])
+    gallery = create_user_gallery(
+        db_path, name=request.name, source="manual", image_ids=request.image_ids or []
+    )
     return ok(
         {
             "gallery_id": gallery.gallery_id,

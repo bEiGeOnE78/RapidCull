@@ -102,7 +102,7 @@ def create_app(db_path: Path | None = None, library_root: Path | None = None) ->
                     _db_path,
                 )
 
-        from rapidcull import api_faces  # noqa: PLC0415
+        from rapidcull import api_faces, api_search  # noqa: PLC0415
 
         # Configure and mount the new domain routers.
         api_images.configure_router(_db_path)
@@ -110,7 +110,11 @@ def create_app(db_path: Path | None = None, library_root: Path | None = None) ->
         api_persons.configure_router(_db_path, library_root=library_root)
         api_trash.configure_router(_db_path)
         api_faces.configure_router(_db_path)
+        api_search.configure_router(_db_path)
 
+        # search must be included before api_images so /api/v1/images/search
+        # is not shadowed by the /api/v1/images/{image_id} path parameter route.
+        _app.include_router(api_search.router)
         _app.include_router(api_images.router)
         _app.include_router(api_galleries.router)
         _app.include_router(api_persons.router)
