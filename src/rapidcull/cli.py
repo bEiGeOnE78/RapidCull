@@ -14,7 +14,18 @@ from rapidcull.backup import backup as run_backup
 from rapidcull.backup import restore as run_restore
 from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.exiftool_adapter import RealExifToolBatchExtractor
-from rapidcull.identity import create_image_record, update_display_path, update_full_path, update_metadata, update_thumbnail_path
+from rapidcull.schema import (
+    CURRENT_SCHEMA_VERSION,
+    create_or_validate_schema,
+    get_schema_version,
+)
+from rapidcull.identity import (
+    create_image_record,
+    update_display_path,
+    update_full_path,
+    update_metadata,
+    update_thumbnail_path,
+)
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -217,17 +228,17 @@ def restart(
     help="Library root for mirror-tree proxy paths (default: <source-dir>)",
 )
 def process_new(
-    source_dir: str, db: str | None, raw_pipeline: bool, proxy_dir: str | None, library_root: str | None
+    source_dir: str,
+    db: str | None,
+    raw_pipeline: bool,
+    proxy_dir: str | None,
+    library_root: str | None,
 ) -> None:
     """Process new media from source directory."""
     source_path = normalize_path(source_dir)
     _src = Path(source_dir).expanduser().resolve()
     _library_root = Path(library_root).expanduser().resolve() if library_root else _src
-    _proxy_dir = (
-        Path(proxy_dir).expanduser().resolve()
-        if proxy_dir
-        else _library_root / "proxies"
-    )
+    _proxy_dir = Path(proxy_dir).expanduser().resolve() if proxy_dir else _library_root / "proxies"
     _db_path = Path(db).expanduser().resolve() if db else (_library_root / "rapidcull.db")
 
     # Discover supported media
@@ -408,6 +419,65 @@ def check_cmd(db: str, trash_dir: str | None, repair: bool, confirmed: bool) -> 
             confirmed=confirmed,
         )
         click.echo(f"Repaired: {result.fixed_count} fixed, {result.failed_count} failed")
+
+
+@cli.group(name="migrate")
+def migrate_group() -> None:
+    """Schema migration commands."""
+
+
+def _resolve_db_path(db_path: str | None) -> Path:
+    """Resolve DB path from argument or RAPIDCULL_DB_PATH env var."""
+    resolved = db_path or os.environ.get("RAPIDCULL_DB_PATH")
+    if not resolved:
+        click.echo(
+            "Error: --db-path required (or set RAPIDCULL_DB_PATH env var)", err=True
+        )
+        raise SystemExit(1)
+    return Path(resolved).expanduser().resolve()
+
+
+@migrate_group.command(name="status")
+@click.option(
+    "--db-path",
+    type=click.Path(),
+    default=None,
+    help="Path to rapidcull.db (or set RAPIDCULL_DB_PATH env var)",
+)
+def migrate_status(db_path: str | None) -> None:
+    """Show current and target schema versions."""
+    path = _resolve_db_path(db_path)
+    current = get_schema_version(path)
+    target = CURRENT_SCHEMA_VERSION
+    current_label = str(current) if current is not None else "none"
+    click.echo(f"current: {current_label}")
+    click.echo(f"target: {target}")
+    if current == target:
+        click.echo("up to date")
+    else:
+        click.echo(f"pending: {current_label}→{target}")
+
+
+@migrate_group.command(name="run")
+@click.option(
+    "--db-path",
+    type=click.Path(),
+    default=None,
+    help="Path to rapidcull.db (or set RAPIDCULL_DB_PATH env var)",
+)
+def migrate_run(db_path: str | None) -> None:
+    """Run pending schema migrations."""
+    path = _resolve_db_path(db_path)
+    before = get_schema_version(path)
+    before_label = str(before) if before is not None else "none"
+    create_or_validate_schema(path)
+    after = get_schema_version(path)
+    click.echo(f"before: {before_label}")
+    click.echo(f"after: {after}")
+    if before != after:
+        click.echo(f"migrated: {before_label}→{after}")
+    else:
+        click.echo("up to date (no migration needed)")
 
 
 def main() -> None:

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -10,6 +11,14 @@ from pydantic import BaseModel
 from rapidcull.api_envelope import ApiError, ok, register_handlers
 from rapidcull.collections import Collection
 from rapidcull.query_grammar import parse_query
+from rapidcull.schema import (
+    CURRENT_SCHEMA_VERSION,
+    SchemaVersionMismatchError,
+    create_or_validate_schema,
+    get_schema_version,
+)
+
+logger = logging.getLogger(__name__)
 
 
 class QueryRequest(BaseModel):
@@ -62,6 +71,36 @@ def create_app(db_path: Path | None = None, library_root: Path | None = None) ->
 
     if db_path is not None:
         _db_path = db_path
+
+        @_app.on_event("startup")
+        def _migrate_schema() -> None:
+            before = get_schema_version(_db_path)
+            try:
+                create_or_validate_schema(_db_path)
+            except SchemaVersionMismatchError:
+                logger.error(
+                    "Schema version mismatch: cannot auto-migrate DB at %s "
+                    "(current on-disk=%s, target=%s). "
+                    "Manual intervention required.",
+                    _db_path,
+                    before,
+                    CURRENT_SCHEMA_VERSION,
+                )
+                raise
+            after = get_schema_version(_db_path)
+            if before != after:
+                logger.info(
+                    "Schema migrated: %s → %s (db=%s)",
+                    before,
+                    after,
+                    _db_path,
+                )
+            else:
+                logger.info(
+                    "Schema up to date at version %s (db=%s)",
+                    after,
+                    _db_path,
+                )
 
         from rapidcull import api_faces  # noqa: PLC0415
 
