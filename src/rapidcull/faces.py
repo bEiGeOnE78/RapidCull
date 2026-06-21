@@ -76,7 +76,7 @@ def _store_faces(
 
 def detect_and_store_faces(
     db_path: Path,
-    image_paths: list[Path],
+    image_paths: list[tuple[Path, Path]] | list[Path],
     detector: FaceDetector,
 ) -> FaceDetectionResult:
     processed = 0
@@ -84,8 +84,14 @@ def detect_and_store_faces(
     failed = 0
     failed_items: list[FailedIngestItem] = []
 
-    for path in sorted(image_paths):
-        image_id = _lookup_image_id(db_path, str(path))
+    # Normalise: accept either plain paths or (db_path, decode_path) pairs.
+    pairs: list[tuple[Path, Path]] = [
+        (p, p) if isinstance(p, Path) else p
+        for p in image_paths
+    ]
+
+    for db_img_path, decode_path in sorted(pairs, key=lambda t: t[0]):
+        image_id = _lookup_image_id(db_path, str(db_img_path))
         if image_id is None:
             skipped += 1
             continue
@@ -94,11 +100,11 @@ def detect_and_store_faces(
             skipped += 1
             continue
 
-        outcome = detector.detect(path)
+        outcome = detector.detect(decode_path)
 
         if isinstance(outcome, FaceDetectionFailure):
             failed += 1
-            failed_items.append(FailedIngestItem(path=str(path), reason=outcome.reason))
+            failed_items.append(FailedIngestItem(path=str(db_img_path), reason=outcome.reason))
             continue
 
         _store_faces(db_path, image_id, outcome)

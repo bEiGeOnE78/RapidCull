@@ -188,16 +188,18 @@ class JobExecutor:
 
         log("Loading image list from DB ...")
         with sqlite3.connect(self._db_path) as conn:
-            rows = conn.execute("SELECT path FROM images").fetchall()
-        image_paths = [Path(r[0]) for r in rows]
-        log(f"Detecting faces in {len(image_paths)} images ...")
+            rows = conn.execute(
+                "SELECT path, COALESCE(display_path, path) FROM images"
+            ).fetchall()
+        image_path_pairs = [(Path(r[0]), Path(r[1])) for r in rows]
+        log(f"Detecting faces in {len(image_path_pairs)} images ...")
         detector = InsightFaceAdapter()
         if not detector.pipeline_available:
             raise RuntimeError(
                 "Face detection pipeline unavailable: insightface/onnxruntime not importable. "
                 "Run: pip install -e '.[face]' or pip install insightface onnxruntime opencv-python"
             )
-        result = detect_and_store_faces(self._db_path, image_paths, detector)
+        result = detect_and_store_faces(self._db_path, image_path_pairs, detector)
         log(f"Done: {result.processed_count} processed, {result.failed_count} failed")
         return dataclasses.asdict(result)
 
