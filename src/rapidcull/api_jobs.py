@@ -156,4 +156,10 @@ def get_job_progress(job_id: str) -> dict[str, Any]:
             message=f"Job '{job_id}' not found.",
             http_status=404,
         )
-    return ok({"entries": [_progress_to_dict(e) for e in job.progress]})
+    state_to_status = {
+        "running": "running",
+        "succeeded": "done",
+        "failed": "failed",
+    }
+    frontend_status = state_to_status.get(job.state, "running")
+    return ok({"entries": [_progress_to_dict(e) for e in job.progress], "status": frontend_status})
