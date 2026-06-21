@@ -192,6 +192,11 @@ class JobExecutor:
         image_paths = [Path(r[0]) for r in rows]
         log(f"Detecting faces in {len(image_paths)} images ...")
         detector = InsightFaceAdapter()
+        if not detector.pipeline_available:
+            raise RuntimeError(
+                "Face detection pipeline unavailable: insightface/onnxruntime not importable. "
+                "Run: pip install -e '.[face]' or pip install insightface onnxruntime opencv-python"
+            )
         result = detect_and_store_faces(self._db_path, image_paths, detector)
         log(f"Done: {result.processed_count} processed, {result.failed_count} failed")
         return dataclasses.asdict(result)

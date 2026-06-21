@@ -132,7 +132,7 @@ def delete_person_endpoint(person_id: str) -> dict[str, Any]:
     return ok(
         {
             "deleted_person_id": person_id,
-            "deleted_face_count": 0,
+            "deleted_face_count": deleted_face_count,
             "unlinked_face_count": deleted_face_count,
         }
     )
