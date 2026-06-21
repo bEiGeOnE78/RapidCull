@@ -115,17 +115,25 @@ def merge_person(person_id: str, body: MergePersonRequest) -> dict[str, Any]:
 
 
 @router.delete("/api/v1/persons/{person_id}")
-def delete_person_endpoint(person_id: str) -> dict[str, Any]:
+def delete_person_endpoint(
+    person_id: str,
+    delete_embeddings: bool = False,
+) -> dict[str, Any]:
     db_path = _get_db_path()
     # Check existence and collect counts before deletion
     _require_person(db_path, person_id)
     with sqlite3.connect(db_path) as conn:
-        deleted_face_count: int = conn.execute(
+        face_count: int = conn.execute(
             "SELECT COUNT(*) FROM faces WHERE person_id = ?", (person_id,)
         ).fetchone()[0]
+    lib_root = _library_root if _library_root is not None else db_path.parent
     try:
-        # unlink faces (don't delete embeddings)
-        delete_person(db_path, person_id, delete_embeddings=False)
+        delete_person(
+            db_path,
+            person_id,
+            delete_embeddings=delete_embeddings,
+            library_root=lib_root,
+        )
     except ValueError as exc:
         raise ApiError(
             code="PERSON_NOT_FOUND",
@@ -135,8 +143,9 @@ def delete_person_endpoint(person_id: str) -> dict[str, Any]:
     return ok(
         {
             "deleted_person_id": person_id,
-            "deleted_face_count": deleted_face_count,
-            "unlinked_face_count": deleted_face_count,
+            "delete_embeddings": delete_embeddings,
+            "deleted_face_count": face_count if delete_embeddings else 0,
+            "unlinked_face_count": face_count if not delete_embeddings else 0,
         }
     )
 

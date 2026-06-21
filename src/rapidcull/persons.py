@@ -45,15 +45,37 @@ def merge_persons(db_path: Path, source_id: str, target_id: str) -> PersonMergeR
     return PersonMergeResult(reassigned_count=count, deleted_person_id=source_id)
 
 
-def delete_person(db_path: Path, person_id: str, delete_embeddings: bool) -> None:
+def delete_person(
+    db_path: Path,
+    person_id: str,
+    delete_embeddings: bool,
+    library_root: Path | None = None,
+) -> None:
     with sqlite3.connect(db_path) as conn:
         row = conn.execute("SELECT 1 FROM persons WHERE person_id = ?", (person_id,)).fetchone()
         if row is None:
             raise ValueError(f"Person '{person_id}' not found.")
 
         if delete_embeddings:
+            face_ids: list[str] = [
+                r[0]
+                for r in conn.execute(
+                    "SELECT face_id FROM faces WHERE person_id = ?", (person_id,)
+                ).fetchall()
+            ]
             conn.execute("DELETE FROM faces WHERE person_id = ?", (person_id,))
         else:
+            face_ids = []
             conn.execute("UPDATE faces SET person_id = NULL WHERE person_id = ?", (person_id,))
         conn.execute("DELETE FROM persons WHERE person_id = ?", (person_id,))
         conn.commit()
+
+    # Unlink cached face thumbnails when hard-deleting embeddings.
+    if delete_embeddings and library_root is not None:
+        thumb_dir = library_root / ".rapidcull" / "face_thumbs"
+        for face_id in face_ids:
+            thumb = thumb_dir / f"{face_id}.webp"
+            try:
+                thumb.unlink()
+            except FileNotFoundError:
+                pass

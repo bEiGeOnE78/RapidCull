@@ -55,9 +55,9 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ into_person_id: intoPersonId }),
     }),
-  deletePerson: (personId: string) =>
-    request<{ deleted_person_id: string; deleted_face_count: number; unlinked_face_count: number }>(
-      `/persons/${personId}`,
+  deletePerson: (personId: string, deleteEmbeddings?: boolean) =>
+    request<{ deleted_person_id: string; delete_embeddings: boolean; deleted_face_count: number; unlinked_face_count: number }>(
+      `/persons/${personId}${deleteEmbeddings ? '?delete_embeddings=true' : ''}`,
       { method: 'DELETE' },
     ),
   getFaces: (imageId: string) => request<FacesData>(`/images/${imageId}/faces`),

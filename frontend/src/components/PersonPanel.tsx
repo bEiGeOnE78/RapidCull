@@ -4,6 +4,7 @@ import { api } from '../api/client'
 import type { Person } from '../api/client'
 import MergePersonPicker from './MergePersonPicker'
 import GalleryNameDialog from './GalleryNameDialog'
+import DeletePersonDialog from './DeletePersonDialog'
 
 interface PersonPanelProps {
   isOpen: boolean
@@ -18,6 +19,7 @@ export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPan
   const [mergeAnchor, setMergeAnchor] = useState<{ person: Person; rect: DOMRect } | null>(null)
   const [galleryPersonId, setGalleryPersonId] = useState<string | null>(null)
   const [galleryNameDialogOpen, setGalleryNameDialogOpen] = useState(false)
+  const [deleteCandidate, setDeleteCandidate] = useState<Person | null>(null)
 
   const personsQuery = useQuery({
     queryKey: ['persons'],
@@ -36,9 +38,12 @@ export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPan
   })
 
   const deleteMutation = useMutation({
-    mutationFn: (personId: string) => api.deletePerson(personId),
+    mutationFn: ({ personId, deleteEmbeddings }: { personId: string; deleteEmbeddings: boolean }) =>
+      api.deletePerson(personId, deleteEmbeddings),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['persons'] })
+      queryClient.invalidateQueries({ queryKey: ['image'] })
+      setDeleteCandidate(null)
     },
   })
 
@@ -86,10 +91,17 @@ export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPan
     setMergeAnchor({ person, rect: event.currentTarget.getBoundingClientRect() })
   }
 
-  const handleDelete = (personId: string) => {
-    if (window.confirm('Delete person and unlink faces?')) {
-      deleteMutation.mutate(personId)
-    }
+  const handleDeleteClick = (person: Person) => {
+    setDeleteCandidate(person)
+  }
+
+  const handleDeleteConfirm = (deleteEmbeddings: boolean) => {
+    if (!deleteCandidate) return
+    deleteMutation.mutate({ personId: deleteCandidate.person_id, deleteEmbeddings })
+  }
+
+  const handleDeleteCancel = () => {
+    setDeleteCandidate(null)
   }
 
   const handleMakeGalleryClick = (personId: string) => {
@@ -258,7 +270,7 @@ export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPan
                   </button>
                   <button
                     style={{ ...btnStyle, borderColor: '#744', color: '#f88' }}
-                    onClick={() => handleDelete(person.person_id)}
+                    onClick={() => handleDeleteClick(person)}
                     disabled={deleteMutation.isPending}
                   >
                     Delete
@@ -283,6 +295,14 @@ export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPan
       onSubmit={(name) => { void handleGalleryNameSubmit(name) }}
       onCancel={handleGalleryNameCancel}
     />
+    {deleteCandidate && (
+      <DeletePersonDialog
+        personName={deleteCandidate.name}
+        faceCount={deleteCandidate.face_count}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      />
+    )}
     </>
   )
 }
