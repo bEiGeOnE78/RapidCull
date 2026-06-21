@@ -53,6 +53,10 @@ class JobExecutor:
         self._backup_dir = db_path.parent / "backups"
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="job-executor")
 
+    def shutdown(self, wait: bool = True) -> None:
+        """Shut down the background thread pool. Call in test teardown to prevent leakage."""
+        self._pool.shutdown(wait=wait)
+
     def submit(
         self, job_id: str, kind: str, store: JobStore, params: dict[str, Any] | None = None
     ) -> None:

@@ -29,8 +29,15 @@ def _wait_for_terminal(client: TestClient, job_id: str, timeout: float = 10.0) -
 def _clear_job_store() -> pytest.Generator[None, None, None]:
     get_job_store().clear()
     yield
-    # Reset global executor after every test so the bare `app` singleton used
-    # by other test modules is not affected.
+    # Shut down the executor thread pool first so no background thread can
+    # race against get_job_store().clear() below.  Without wait=True the pool
+    # thread can still call mark_running/mark_failed on a job_id that the next
+    # test recreates, producing InvalidJobTransition errors.
+    from rapidcull.api_jobs import get_executor  # noqa: PLC0415
+
+    executor = get_executor()
+    if executor is not None:
+        executor.shutdown(wait=True)
     configure_executor(None)  # type: ignore[arg-type]
     get_job_store().clear()
 
