@@ -168,11 +168,16 @@ def list_galleries() -> dict[str, Any]:
             )
 
         # --- Virtual galleries (always present) ---
+        # JOIN with images to exclude orphan cull_decisions rows (images deleted via trash).
         picks_count: int = conn.execute(
-            "SELECT COUNT(*) FROM cull_decisions WHERE decision = 'pick'"
+            "SELECT COUNT(*) FROM cull_decisions c"
+            " INNER JOIN images i ON c.image_id = i.image_id"
+            " WHERE c.decision = 'pick'"
         ).fetchone()[0]
         rejects_count: int = conn.execute(
-            "SELECT COUNT(*) FROM cull_decisions WHERE decision = 'reject'"
+            "SELECT COUNT(*) FROM cull_decisions c"
+            " INNER JOIN images i ON c.image_id = i.image_id"
+            " WHERE c.decision = 'reject'"
         ).fetchone()[0]
         trash_count: int = conn.execute("SELECT COUNT(*) FROM trash").fetchone()[0]
 
@@ -259,11 +264,14 @@ def _get_virtual_gallery_images(
         ]
         return ok({"images": images, "total": total, "page": page, "page_size": page_size})
 
-    # Picks or Rejects: filter cull_decisions JOIN images
+    # Picks or Rejects: filter cull_decisions JOIN images (excludes orphan decision rows)
     decision_value = "pick" if gallery_id == VIRTUAL_PICKS else "reject"
     with connect(db_path) as conn:
         total = conn.execute(
-            "SELECT COUNT(*) FROM cull_decisions WHERE decision = ?", (decision_value,)
+            "SELECT COUNT(*) FROM cull_decisions c"
+            " INNER JOIN images i ON c.image_id = i.image_id"
+            " WHERE c.decision = ?",
+            (decision_value,),
         ).fetchone()[0]
         rows = conn.execute(
             """
