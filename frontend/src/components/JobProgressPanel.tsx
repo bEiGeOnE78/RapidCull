@@ -42,7 +42,7 @@ export default function JobProgressPanel({ jobId, label, op, activeGalleryId, on
   // Invalidate caches when job transitions to done
   useEffect(() => {
     const status = data?.status
-    if (status === 'done' && prevStatusRef.current === 'running' && op) {
+    if (status === 'done' && prevStatusRef.current !== 'done' && op) {
       invalidateForJobOp(op, activeGalleryId ?? undefined)
     }
     prevStatusRef.current = status

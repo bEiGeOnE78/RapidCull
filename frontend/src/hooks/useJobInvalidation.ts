@@ -1,8 +1,9 @@
+import { useCallback } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 export function useJobInvalidation() {
   const qc = useQueryClient()
-  return (op: string, galleryId?: string) => {
+  return useCallback((op: string, galleryId?: string) => {
     const map: Record<string, () => void> = {
       create_gallery_picks: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
       create_gallery_rejects: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
@@ -19,5 +20,5 @@ export function useJobInvalidation() {
       rebuild_galleries_index: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
     }
     map[op]?.()
-  }
+  }, [qc])
 }
