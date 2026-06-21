@@ -88,7 +88,7 @@ export default function App() {
         onJobStarted={handleJobStarted}
         activeGalleryId={activeGalleryId}
       />
-      <PersonPanel isOpen={personPanelOpen} onClose={() => setPersonPanelOpen(false)} />
+      <PersonPanel isOpen={personPanelOpen} onClose={() => setPersonPanelOpen(false)} onJobStarted={handleJobStarted} />
       <TrashPanel isOpen={trashPanelOpen} onClose={() => setTrashPanelOpen(false)} />
       {activeJobId !== null && (
         <JobProgressPanel

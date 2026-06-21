@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { api } from '../api/client'
-import type { Gallery } from '../api/client'
+import type { Gallery, Person } from '../api/client'
 import GalleryNameDialog from './GalleryNameDialog'
 import TrashConfirmDialog from './TrashConfirmDialog'
+import PersonPickerDialog from './PersonPickerDialog'
 
 interface Command {
   label: string
@@ -11,6 +12,7 @@ interface Command {
   dangerous?: boolean
   needsName?: boolean
   needsTrashCheck?: boolean
+  needsPerson?: boolean
 }
 
 const COMMANDS: Command[] = [
@@ -18,6 +20,7 @@ const COMMANDS: Command[] = [
   { label: 'Detect faces', op: 'detect_faces', params: {} },
   { label: 'Cluster faces', op: 'cluster_faces', params: {} },
   { label: 'Create gallery from picks', op: 'create_gallery_picks', params: {}, needsName: true },
+  { label: 'Create gallery from person', op: 'create_gallery_from_person', params: {}, needsPerson: true, needsName: true },
   { label: 'Move rejects to trash', op: 'move_rejects_to_trash', params: {}, needsTrashCheck: true },
   { label: 'Hard delete trash', op: 'hard_delete_trash', params: {}, dangerous: true },
   { label: 'Rebuild galleries index', op: 'rebuild_galleries_index', params: {} },
@@ -39,7 +42,9 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted, activeGa
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
   const [pendingCmd, setPendingCmd] = useState<Command | null>(null)
+  const [pendingPersonId, setPendingPersonId] = useState<string | null>(null)
   const [nameDialogOpen, setNameDialogOpen] = useState(false)
+  const [personDialogOpen, setPersonDialogOpen] = useState(false)
   const [trashDialogOpen, setTrashDialogOpen] = useState(false)
   const [trashAffected, setTrashAffected] = useState<Array<{ image_id: string; galleries: Gallery[] }>>([])
 
@@ -89,6 +94,12 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted, activeGa
           `Are you sure you want to run "${cmd.label}"? This action cannot be undone.`,
         )
         if (!confirmed) return
+      }
+
+      if (cmd.needsPerson) {
+        setPendingCmd(cmd)
+        setPersonDialogOpen(true)
+        return
       }
 
       if (cmd.needsName) {
@@ -143,19 +154,39 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted, activeGa
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
+  const handlePersonPick = useCallback(
+    (person: Person) => {
+      setPersonDialogOpen(false)
+      setPendingPersonId(person.person_id)
+      // After person is picked, always need a name next
+      setNameDialogOpen(true)
+    },
+    [],
+  )
+
+  const handlePersonCancel = useCallback(() => {
+    setPersonDialogOpen(false)
+    setPendingCmd(null)
+    setPendingPersonId(null)
+  }, [])
+
   const handleNameSubmit = useCallback(
     (name: string) => {
       if (!pendingCmd) return
       setNameDialogOpen(false)
-      void dispatchJob(pendingCmd, { name })
+      const extra: Record<string, unknown> = { name }
+      if (pendingPersonId) extra.person_id = pendingPersonId
+      void dispatchJob(pendingCmd, extra)
       setPendingCmd(null)
+      setPendingPersonId(null)
     },
-    [pendingCmd, dispatchJob],
+    [pendingCmd, pendingPersonId, dispatchJob],
   )
 
   const handleNameCancel = useCallback(() => {
     setNameDialogOpen(false)
     setPendingCmd(null)
+    setPendingPersonId(null)
   }, [])
 
   const handleTrashConfirm = useCallback(() => {
@@ -172,10 +203,16 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted, activeGa
     setPendingCmd(null)
   }, [])
 
-  if (!isOpen && !nameDialogOpen && !trashDialogOpen) return null
+  if (!isOpen && !nameDialogOpen && !personDialogOpen && !trashDialogOpen) return null
 
   return (
     <>
+    {personDialogOpen && (
+      <PersonPickerDialog
+        onPick={handlePersonPick}
+        onCancel={handlePersonCancel}
+      />
+    )}
     <GalleryNameDialog
       isOpen={nameDialogOpen}
       onSubmit={handleNameSubmit}

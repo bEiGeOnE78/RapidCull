@@ -7,6 +7,7 @@ export function useJobInvalidation() {
     const map: Record<string, () => void> = {
       create_gallery_picks: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
       create_gallery_rejects: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
+      create_gallery_from_person: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
       move_rejects_to_trash: () => {
         qc.invalidateQueries({ queryKey: ['galleries'] })
         if (galleryId) qc.invalidateQueries({ queryKey: ['gallery-images', galleryId] })

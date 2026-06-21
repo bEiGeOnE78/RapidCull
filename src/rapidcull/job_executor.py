@@ -83,6 +83,8 @@ class JobExecutor:
                 return self._cluster_faces(log)
             case "create_gallery_picks":
                 return self._create_gallery_picks(log, _params)
+            case "create_gallery_from_person":
+                return self._create_gallery_from_person(log, _params)
             case "move_rejects_to_trash":
                 return self._move_rejects_to_trash(log)
             case "hard_delete_trash":
@@ -231,6 +233,37 @@ class JobExecutor:
         return {
             "created_gallery_id": gallery.gallery_id,
             "image_count": gallery.count,
+        }
+
+    def _create_gallery_from_person(self, log: ProgressLog, params: dict[str, Any]) -> dict[str, Any]:
+        name: str | None = params.get("name")
+        person_id: str | None = params.get("person_id")
+        if not name:
+            raise ValueError("'name' param is required for create_gallery_from_person")
+        if not person_id:
+            raise ValueError("'person_id' param is required for create_gallery_from_person")
+        log(f"Querying images for person {person_id} ...")
+        from rapidcull.schema import connect  # noqa: PLC0415
+
+        with connect(self._db_path) as conn:
+            rows = conn.execute(
+                "SELECT DISTINCT image_id FROM faces WHERE person_id = ?",
+                (person_id,),
+            ).fetchall()
+        image_ids = [r[0] for r in rows]
+        log(f"Found {len(image_ids)} images for person")
+        log(f"Creating gallery '{name}' with {len(image_ids)} images ...")
+        gallery = create_user_gallery(
+            db_path=self._db_path,
+            name=name,
+            source="from_person",
+            image_ids=image_ids,
+        )
+        log(f"Done: gallery '{gallery.gallery_id}' created with {gallery.count} images")
+        return {
+            "created_gallery_id": gallery.gallery_id,
+            "image_count": gallery.count,
+            "person_id": person_id,
         }
 
     def _move_rejects_to_trash(self, log: ProgressLog) -> dict[str, Any]:

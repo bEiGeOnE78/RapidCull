@@ -1,19 +1,23 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../api/client'
 import type { Person } from '../api/client'
 import MergePersonPicker from './MergePersonPicker'
+import GalleryNameDialog from './GalleryNameDialog'
 
 interface PersonPanelProps {
   isOpen: boolean
   onClose: () => void
+  onJobStarted?: (jobId: string, label: string, op: string) => void
 }
 
-export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
+export default function PersonPanel({ isOpen, onClose, onJobStarted }: PersonPanelProps) {
   const queryClient = useQueryClient()
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [renameValue, setRenameValue] = useState('')
   const [mergeAnchor, setMergeAnchor] = useState<{ person: Person; rect: DOMRect } | null>(null)
+  const [galleryPersonId, setGalleryPersonId] = useState<string | null>(null)
+  const [galleryNameDialogOpen, setGalleryNameDialogOpen] = useState(false)
 
   const personsQuery = useQuery({
     queryKey: ['persons'],
@@ -37,6 +41,26 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
       queryClient.invalidateQueries({ queryKey: ['persons'] })
     },
   })
+
+  const handleGalleryNameSubmit = useCallback(
+    async (name: string) => {
+      if (!galleryPersonId) return
+      setGalleryNameDialogOpen(false)
+      try {
+        const result = await api.createJob('create_gallery_from_person', { name, person_id: galleryPersonId })
+        onJobStarted?.(result.job_id, 'Create gallery from person', 'create_gallery_from_person')
+      } catch (err) {
+        console.error('Failed to create gallery from person:', err)
+      }
+      setGalleryPersonId(null)
+    },
+    [galleryPersonId, onJobStarted],
+  )
+
+  const handleGalleryNameCancel = useCallback(() => {
+    setGalleryNameDialogOpen(false)
+    setGalleryPersonId(null)
+  }, [])
 
   if (!isOpen) return null
 
@@ -66,6 +90,11 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
     if (window.confirm('Delete person and unlink faces?')) {
       deleteMutation.mutate(personId)
     }
+  }
+
+  const handleMakeGalleryClick = (personId: string) => {
+    setGalleryPersonId(personId)
+    setGalleryNameDialogOpen(true)
   }
 
   const btnStyle: React.CSSProperties = {
@@ -222,6 +251,12 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
                     Merge
                   </button>
                   <button
+                    style={{ ...btnStyle, borderColor: '#46a', color: '#88f' }}
+                    onClick={() => handleMakeGalleryClick(person.person_id)}
+                  >
+                    Gallery
+                  </button>
+                  <button
                     style={{ ...btnStyle, borderColor: '#744', color: '#f88' }}
                     onClick={() => handleDelete(person.person_id)}
                     disabled={deleteMutation.isPending}
@@ -243,6 +278,11 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
         onClose={() => setMergeAnchor(null)}
       />
     )}
+    <GalleryNameDialog
+      isOpen={galleryNameDialogOpen}
+      onSubmit={(name) => { void handleGalleryNameSubmit(name) }}
+      onCancel={handleGalleryNameCancel}
+    />
     </>
   )
 }
