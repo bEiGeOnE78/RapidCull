@@ -74,7 +74,7 @@ class InsightFaceAdapter:
             return FaceDetectionFailure(reason="face_detection_pipeline_unavailable")
 
         if not image_path.exists():
-            return FaceDetectionFailure(reason="face_detection_pipeline_unavailable")
+            return FaceDetectionFailure(reason="face_detection_source_missing")
 
         try:
             import cv2  # noqa: PLC0415
