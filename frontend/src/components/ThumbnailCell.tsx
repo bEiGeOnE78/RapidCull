@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import type { GalleryImage } from '../api/client'
 
 interface ThumbnailCellProps {
   image: GalleryImage
   isSelected: boolean
   onClick: () => void
+  cellRef?: (el: HTMLDivElement | null) => void
 }
 
-export default function ThumbnailCell({ image, isSelected, onClick }: ThumbnailCellProps) {
+export default function ThumbnailCell({ image, isSelected, onClick, cellRef }: ThumbnailCellProps) {
+  const [isFocused, setIsFocused] = useState(false)
   const isPickDecision = image.decision === 'pick'
   const isRejectDecision = image.decision === 'reject'
 
@@ -21,9 +24,12 @@ export default function ThumbnailCell({ image, isSelected, onClick }: ThumbnailC
 
   return (
     <div
+      ref={cellRef}
       onClick={onClick}
       role="button"
       tabIndex={0}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
@@ -37,6 +43,8 @@ export default function ThumbnailCell({ image, isSelected, onClick }: ThumbnailC
         cursor: 'pointer',
         boxShadow,
         borderRadius: 2,
+        outline: isFocused ? '2px solid #5af' : 'none',
+        outlineOffset: '-2px',
       }}
     >
       {image.thumbnail_path ? (

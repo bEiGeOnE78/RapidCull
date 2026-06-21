@@ -1,3 +1,4 @@
+import { useRef, useCallback } from 'react'
 import type { GalleryImage } from '../api/client'
 import ThumbnailCell from './ThumbnailCell'
 import SortControl, { type SortOrder } from './SortControl'
@@ -68,6 +69,31 @@ export default function ThumbnailGrid({
   sortOrder,
   onSortChange,
 }: ThumbnailGridProps) {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const cellRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  const getColumnsPerRow = useCallback(() => {
+    if (!gridRef.current) return 7
+    return Math.max(1, Math.floor((gridRef.current.offsetWidth + 4) / (130 + 4)))
+  }, [])
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return
+    const cells = cellRefs.current
+    const idx = cells.findIndex(c => c === document.activeElement)
+    if (idx === -1) return
+    const cols = getColumnsPerRow()
+    let next = idx
+    if (e.key === 'ArrowRight') next = Math.min(idx + 1, cells.length - 1)
+    else if (e.key === 'ArrowLeft') next = Math.max(idx - 1, 0)
+    else if (e.key === 'ArrowDown') next = Math.min(idx + cols, cells.length - 1)
+    else if (e.key === 'ArrowUp') next = Math.max(idx - cols, 0)
+    if (next !== idx) {
+      e.preventDefault()
+      cells[next]?.focus()
+    }
+  }, [getColumnsPerRow])
+
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize))
   const startItem = totalCount === 0 ? 0 : (page - 1) * pageSize + 1
   const endItem = Math.min(page * pageSize, totalCount)
@@ -135,20 +161,22 @@ export default function ThumbnailGrid({
       </div>
 
       {/* Scrollable grid area */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: 4 }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: 4 }} onKeyDown={handleKeyDown}>
         <div
+          ref={gridRef}
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
             gap: 4,
           }}
         >
-          {sortedImages.map((image) => (
+          {sortedImages.map((image, idx) => (
             <ThumbnailCell
               key={image.image_id}
               image={image}
               isSelected={image.image_id === selectedImageId}
               onClick={() => onSelect(image.image_id)}
+              cellRef={(el) => { cellRefs.current[idx] = el }}
             />
           ))}
         </div>
