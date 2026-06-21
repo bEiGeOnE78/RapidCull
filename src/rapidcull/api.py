@@ -63,16 +63,20 @@ def create_app(db_path: Path | None = None, library_root: Path | None = None) ->
     if db_path is not None:
         _db_path = db_path
 
+        from rapidcull import api_faces  # noqa: PLC0415
+
         # Configure and mount the new domain routers.
         api_images.configure_router(_db_path)
         api_galleries.configure_router(_db_path)
-        api_persons.configure_router(_db_path)
+        api_persons.configure_router(_db_path, library_root=library_root)
         api_trash.configure_router(_db_path)
+        api_faces.configure_router(_db_path)
 
         _app.include_router(api_images.router)
         _app.include_router(api_galleries.router)
         _app.include_router(api_persons.router)
         _app.include_router(api_trash.router)
+        _app.include_router(api_faces.router)
 
         from rapidcull.api_jobs import configure_executor  # noqa: PLC0415
         from rapidcull.job_executor import JobExecutor  # noqa: PLC0415

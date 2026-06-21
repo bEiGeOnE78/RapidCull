@@ -168,6 +168,15 @@ export default function PersonPanel({ isOpen, onClose }: PersonPanelProps) {
               }}
             >
               {/* Name or inline edit */}
+              {/* Thumbnail */}
+              <img
+                src={api.getPersonThumbnailUrl(person.person_id, person.face_count)}
+                width={48}
+                height={48}
+                style={{ borderRadius: 4, objectFit: 'cover', flexShrink: 0 }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+                alt=""
+              />
               {renamingId === person.person_id ? (
                 <>
                   <input
