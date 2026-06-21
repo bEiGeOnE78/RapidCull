@@ -771,7 +771,7 @@ def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path)
     """FR-009: video proxy generation routes through FFmpegAdapter and records thumbnail/display paths."""
 
     class SuccessfulVideoAdapter(FFmpegAdapter):
-        def generate_video_proxies(self, source_path: Path, proxy_dir: Path) -> FFmpegProxyOutcome:
+        def generate_video_proxies(self, source_path: Path, proxy_dir: Path, thumb_path: Path | None = None, display_path: Path | None = None) -> FFmpegProxyOutcome:
             thumb = proxy_dir / (source_path.stem + ".thumb.webp")
             display = proxy_dir / (source_path.stem + ".display.webp")
             # Write placeholder files so path assertions are realistic
