@@ -86,7 +86,7 @@ def create_job(request: CreateJobRequest) -> JSONResponse:
     job = store.create(kind=request.kind, params=request.params)
     executor = get_executor()
     if executor is not None:
-        executor.submit(job.job_id, job.kind, store)
+        executor.submit(job.job_id, job.kind, store, job.params)
     return JSONResponse(status_code=201, content=ok(_job_to_dict(job)))
 
 

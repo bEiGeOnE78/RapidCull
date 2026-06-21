@@ -15,7 +15,9 @@ from rapidcull.schema import create_or_validate_schema
 def _make_db(db_path: Path) -> None:
     create_or_validate_schema(db_path)
     with sqlite3.connect(db_path) as conn:
-        conn.execute("INSERT INTO images (image_id, path, thumbnail_path) VALUES ('img1', '/photos/a.jpg', NULL)")
+        conn.execute(
+            "INSERT INTO images (image_id, path, thumbnail_path) VALUES ('img1', '/photos/a.jpg', NULL)"
+        )
 
 
 @pytest.mark.fr
@@ -102,7 +104,9 @@ def test_cli_check_reports_missing_files(tmp_path: Path) -> None:
     db_path = tmp_path / "rapidcull.db"
     create_or_validate_schema(db_path)
     with sqlite3.connect(db_path) as conn:
-        conn.execute("INSERT INTO images (image_id, path, thumbnail_path) VALUES ('img1', '/nonexistent/gone.jpg', NULL)")
+        conn.execute(
+            "INSERT INTO images (image_id, path, thumbnail_path) VALUES ('img1', '/nonexistent/gone.jpg', NULL)"
+        )
     runner = CliRunner()
 
     result = runner.invoke(cli, ["check", "--db", str(db_path)])

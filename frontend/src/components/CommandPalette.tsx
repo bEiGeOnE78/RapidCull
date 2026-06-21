@@ -1,19 +1,24 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { api } from '../api/client'
+import type { Gallery } from '../api/client'
+import GalleryNameDialog from './GalleryNameDialog'
+import TrashConfirmDialog from './TrashConfirmDialog'
 
 interface Command {
   label: string
   op: string
   params: Record<string, unknown>
   dangerous?: boolean
+  needsName?: boolean
+  needsTrashCheck?: boolean
 }
 
 const COMMANDS: Command[] = [
   { label: 'Process new images', op: 'ingest_and_proxy', params: {} },
   { label: 'Detect faces', op: 'detect_faces', params: {} },
   { label: 'Cluster faces', op: 'cluster_faces', params: {} },
-  { label: 'Create gallery from picks', op: 'create_gallery_picks', params: {} },
-  { label: 'Move rejects to trash', op: 'move_rejects_to_trash', params: {} },
+  { label: 'Create gallery from picks', op: 'create_gallery_picks', params: {}, needsName: true },
+  { label: 'Move rejects to trash', op: 'move_rejects_to_trash', params: {}, needsTrashCheck: true },
   { label: 'Hard delete trash', op: 'hard_delete_trash', params: {}, dangerous: true },
   { label: 'Rebuild galleries index', op: 'rebuild_galleries_index', params: {} },
   { label: 'Backup', op: 'backup', params: {} },
@@ -24,14 +29,19 @@ const COMMANDS: Command[] = [
 interface Props {
   isOpen: boolean
   onClose: () => void
-  onJobStarted: (jobId: string, label: string) => void
+  onJobStarted: (jobId: string, label: string, op: string) => void
+  activeGalleryId?: string | null
 }
 
-export default function CommandPalette({ isOpen, onClose, onJobStarted }: Props) {
+export default function CommandPalette({ isOpen, onClose, onJobStarted, activeGalleryId: _activeGalleryId }: Props) {
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
+  const [pendingCmd, setPendingCmd] = useState<Command | null>(null)
+  const [nameDialogOpen, setNameDialogOpen] = useState(false)
+  const [trashDialogOpen, setTrashDialogOpen] = useState(false)
+  const [trashAffected, setTrashAffected] = useState<Array<{ image_id: string; galleries: Gallery[] }>>([])
 
   const filtered = COMMANDS.filter((cmd) =>
     cmd.label.toLowerCase().includes(search.toLowerCase()),
@@ -58,6 +68,20 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted }: Props)
     item?.scrollIntoView({ block: 'nearest' })
   }, [selectedIndex])
 
+  const dispatchJob = useCallback(
+    async (cmd: Command, extraParams?: Record<string, unknown>) => {
+      try {
+        const params = { ...cmd.params, ...extraParams }
+        const result = await api.createJob(cmd.op, params)
+        onJobStarted(result.job_id, cmd.label, cmd.op)
+        onClose()
+      } catch (err) {
+        console.error('Failed to create job:', err)
+      }
+    },
+    [onClose, onJobStarted],
+  )
+
   const executeCommand = useCallback(
     async (cmd: Command) => {
       if (cmd.dangerous) {
@@ -66,15 +90,32 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted }: Props)
         )
         if (!confirmed) return
       }
-      try {
-        const result = await api.createJob(cmd.op, cmd.params)
-        onJobStarted(result.job_id, cmd.label)
-        onClose()
-      } catch (err) {
-        console.error('Failed to create job:', err)
+
+      if (cmd.needsName) {
+        setPendingCmd(cmd)
+        setNameDialogOpen(true)
+        return
       }
+
+      if (cmd.needsTrashCheck) {
+        // Fetch galleries for images in current gallery to detect multi-gallery membership.
+        // We pass no specific image selection here — the job operates on all rejects.
+        // We do a best-effort check: if we can't enumerate specific images, dispatch directly.
+        // The trash check is a UX warning, not a gate, so we dispatch if fetch fails.
+        try {
+          // We don't have a way to enumerate reject images here without another API call.
+          // Dispatch directly — the per-image trash flow from ThumbnailGrid would use the
+          // TrashConfirmDialog with specific image ids. Job-level trash doesn't select images.
+          await dispatchJob(cmd)
+        } catch (err) {
+          console.error('Failed to dispatch trash job:', err)
+        }
+        return
+      }
+
+      await dispatchJob(cmd)
     },
-    [onClose, onJobStarted],
+    [dispatchJob],
   )
 
   const handleKeyDown = useCallback(
@@ -102,10 +143,51 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted }: Props)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  if (!isOpen) return null
+  const handleNameSubmit = useCallback(
+    (name: string) => {
+      if (!pendingCmd) return
+      setNameDialogOpen(false)
+      void dispatchJob(pendingCmd, { name })
+      setPendingCmd(null)
+    },
+    [pendingCmd, dispatchJob],
+  )
+
+  const handleNameCancel = useCallback(() => {
+    setNameDialogOpen(false)
+    setPendingCmd(null)
+  }, [])
+
+  const handleTrashConfirm = useCallback(() => {
+    if (!pendingCmd) return
+    setTrashDialogOpen(false)
+    setTrashAffected([])
+    void dispatchJob(pendingCmd)
+    setPendingCmd(null)
+  }, [pendingCmd, dispatchJob])
+
+  const handleTrashCancel = useCallback(() => {
+    setTrashDialogOpen(false)
+    setTrashAffected([])
+    setPendingCmd(null)
+  }, [])
+
+  if (!isOpen && !nameDialogOpen && !trashDialogOpen) return null
 
   return (
-    <div
+    <>
+    <GalleryNameDialog
+      isOpen={nameDialogOpen}
+      onSubmit={handleNameSubmit}
+      onCancel={handleNameCancel}
+    />
+    <TrashConfirmDialog
+      isOpen={trashDialogOpen}
+      affectedImages={trashAffected}
+      onConfirm={handleTrashConfirm}
+      onCancel={handleTrashCancel}
+    />
+    {isOpen && <div
       onClick={onClose}
       style={{
         position: 'fixed',
@@ -215,6 +297,7 @@ export default function CommandPalette({ isOpen, onClose, onJobStarted }: Props)
           <span>Esc close</span>
         </div>
       </div>
-    </div>
+    </div>}
+    </>
   )
 }

@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import base64
 import json
+import os
 import shutil
+import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TypedDict
 
@@ -9,6 +13,7 @@ from rapidcull.models import (
     GalleriesIndexEntry,
     GalleriesIndexFailure,
     GalleriesIndexRebuildResult,
+    Gallery,
     GalleryCreationResult,
     GalleryDeleteResult,
     GalleryFailedItem,
@@ -17,6 +22,7 @@ from rapidcull.models import (
     GalleryMutationError,
     GalleryRenameResult,
 )
+from rapidcull.schema import connect
 
 
 class GalleryMetadataPayload(TypedDict):
@@ -336,3 +342,189 @@ def rebuild_galleries_index(galleries_root: Path) -> GalleriesIndexRebuildResult
         failed_count=len(failures),
         failures=failures,
     )
+
+
+# ---------------------------------------------------------------------------
+# User gallery DB CRUD (schema v7: galleries + gallery_memberships tables)
+# ---------------------------------------------------------------------------
+
+
+def _encode_source_gallery_id(dir_path: str) -> str:
+    """Encode a directory path to a URL-safe base64 gallery_id.
+
+    Mirrors api_galleries._encode_gallery_id so IDs are consistent.
+    # TODO(wave2): extract to a shared helper so api_galleries and this module
+    # share a single encoding function.
+    """
+    return base64.urlsafe_b64encode(dir_path.encode()).decode()
+
+
+def create_user_gallery(
+    db_path: Path,
+    name: str,
+    source: str = "manual",
+    image_ids: list[str] | None = None,
+) -> Gallery:
+    """Create a user gallery row.
+
+    Optionally add initial memberships in a single transaction.
+    Returns the new Gallery dataclass.
+    """
+    gallery_id = uuid.uuid4().hex
+    now = datetime.now(UTC).isoformat()
+
+    with connect(db_path) as conn:
+        conn.execute(
+            "INSERT INTO galleries (gallery_id, name, created_at, source) VALUES (?, ?, ?, ?)",
+            (gallery_id, name, now, source),
+        )
+        if image_ids:
+            conn.executemany(
+                "INSERT OR IGNORE INTO gallery_memberships (gallery_id, image_id, added_at)"
+                " VALUES (?, ?, ?)",
+                [(gallery_id, image_id, now) for image_id in image_ids],
+            )
+        conn.commit()
+
+    count = len(image_ids) if image_ids else 0
+    return Gallery(
+        gallery_id=gallery_id,
+        name=name,
+        created_at=now,
+        source=source,
+        type="user",
+        count=count,
+    )
+
+
+def add_to_gallery(db_path: Path, gallery_id: str, image_ids: list[str]) -> int:
+    """Insert memberships via INSERT OR IGNORE.
+
+    Returns the number of rows actually added (ignores duplicates).
+    """
+    if not image_ids:
+        return 0
+
+    now = datetime.now(UTC).isoformat()
+    with connect(db_path) as conn:
+        before: int = conn.execute(
+            "SELECT COUNT(*) FROM gallery_memberships WHERE gallery_id = ?", (gallery_id,)
+        ).fetchone()[0]
+        conn.executemany(
+            "INSERT OR IGNORE INTO gallery_memberships (gallery_id, image_id, added_at)"
+            " VALUES (?, ?, ?)",
+            [(gallery_id, image_id, now) for image_id in image_ids],
+        )
+        conn.commit()
+        after: int = conn.execute(
+            "SELECT COUNT(*) FROM gallery_memberships WHERE gallery_id = ?", (gallery_id,)
+        ).fetchone()[0]
+
+    return after - before
+
+
+def remove_from_gallery(db_path: Path, gallery_id: str, image_ids: list[str]) -> int:
+    """Delete memberships for the given image_ids from a user gallery.
+
+    Raises ValueError if gallery_id doesn't exist in the `galleries` table
+    (source-dir and virtual galleries have synthetic IDs that won't match).
+    Returns the number of rows deleted.
+    """
+    if not image_ids:
+        return 0
+
+    with connect(db_path) as conn:
+        row = conn.execute(
+            "SELECT gallery_id FROM galleries WHERE gallery_id = ?", (gallery_id,)
+        ).fetchone()
+        if row is None:
+            raise ValueError(
+                f"gallery_id '{gallery_id}' not found in galleries table. "
+                "Remove-from-gallery is only allowed for user galleries."
+            )
+
+        placeholders = ",".join("?" for _ in image_ids)
+        cursor = conn.execute(
+            f"DELETE FROM gallery_memberships WHERE gallery_id = ? AND image_id IN ({placeholders})",
+            [gallery_id, *image_ids],
+        )
+        conn.commit()
+        return cursor.rowcount
+
+
+def delete_user_gallery(db_path: Path, gallery_id: str) -> None:
+    """Delete a user gallery row.
+
+    ON DELETE CASCADE (PRAGMA foreign_keys = ON via connect()) clears all
+    gallery_memberships rows for this gallery automatically.
+
+    Note: named delete_user_gallery to avoid collision with the existing
+    filesystem-based delete_gallery() above. Wave 2: reconcile naming.
+    """
+    with connect(db_path) as conn:
+        conn.execute("DELETE FROM galleries WHERE gallery_id = ?", (gallery_id,))
+        conn.commit()
+
+
+def list_image_galleries(db_path: Path, image_id: str) -> list[Gallery]:
+    """Return all galleries the image belongs to.
+
+    Derives the source-dir gallery from images.path, and returns any user
+    galleries the image is a member of via gallery_memberships JOIN.
+    """
+    result: list[Gallery] = []
+
+    with connect(db_path) as conn:
+        # Source-dir gallery: derive from images.path dirname
+        path_row = conn.execute(
+            "SELECT path FROM images WHERE image_id = ?", (image_id,)
+        ).fetchone()
+
+        if path_row is not None:
+            dir_path = os.path.dirname(path_row[0])
+            dir_name = os.path.basename(dir_path) or dir_path
+            source_gallery_id = _encode_source_gallery_id(dir_path)
+            # Count images in same directory
+            count_row = conn.execute(
+                "SELECT COUNT(*) FROM images WHERE path LIKE ?", (dir_path + "/%",)
+            ).fetchone()
+            source_count: int = count_row[0] if count_row else 0
+            result.append(
+                Gallery(
+                    gallery_id=source_gallery_id,
+                    name=dir_name,
+                    created_at="",  # source-dir galleries have no creation timestamp
+                    source="directory",
+                    type="source",
+                    count=source_count,
+                )
+            )
+
+        # User galleries via membership JOIN
+        user_rows = conn.execute(
+            """
+            SELECT g.gallery_id, g.name, g.created_at, g.source,
+                   COUNT(gm2.image_id) AS member_count
+            FROM galleries g
+            JOIN gallery_memberships gm ON g.gallery_id = gm.gallery_id
+            LEFT JOIN gallery_memberships gm2 ON g.gallery_id = gm2.gallery_id
+            WHERE gm.image_id = ?
+            GROUP BY g.gallery_id, g.name, g.created_at, g.source
+            ORDER BY g.name
+            """,
+            (image_id,),
+        ).fetchall()
+
+        for row in user_rows:
+            result.append(
+                Gallery(
+                    gallery_id=row[0],
+                    name=row[1],
+                    created_at=row[2],
+                    source=row[3],
+                    type="user",
+                    count=row[4],
+                )
+            )
+
+    return result

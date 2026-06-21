@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api/client'
+import { useJobInvalidation } from '../hooks/useJobInvalidation'
 
 interface Props {
   jobId: string | null
   label: string
+  op: string
+  activeGalleryId?: string | null
   onClose: () => void
 }
 
@@ -14,8 +17,10 @@ const STATUS_COLOR: Record<string, string> = {
   failed: '#f44336',
 }
 
-export default function JobProgressPanel({ jobId, label, onClose }: Props) {
+export default function JobProgressPanel({ jobId, label, op, activeGalleryId, onClose }: Props) {
   const logRef = useRef<HTMLDivElement>(null)
+  const invalidateForJobOp = useJobInvalidation()
+  const prevStatusRef = useRef<string | undefined>(undefined)
 
   const { data } = useQuery({
     queryKey: ['job-progress', jobId],
@@ -33,6 +38,15 @@ export default function JobProgressPanel({ jobId, label, onClose }: Props) {
       logRef.current.scrollTop = logRef.current.scrollHeight
     }
   }, [data?.entries?.length])
+
+  // Invalidate caches when job transitions to done
+  useEffect(() => {
+    const status = data?.status
+    if (status === 'done' && prevStatusRef.current === 'running' && op) {
+      invalidateForJobOp(op, activeGalleryId ?? undefined)
+    }
+    prevStatusRef.current = status
+  }, [data?.status, op, activeGalleryId, invalidateForJobOp])
 
   const status = data?.status ?? 'running'
   const entries = data?.entries ?? []

@@ -65,15 +65,19 @@ def _insert_decision(db_path: Path, image_id: str, decision: str) -> None:
 
 class TestListGalleries:
     def test_list_galleries_empty(self, client: TestClient) -> None:
-        """No images in DB → empty galleries list."""
+        """No images in DB → only the 3 virtual galleries (picks/rejects/trash)."""
         resp = client.get("/api/v1/galleries")
         assert resp.status_code == 200
         body = resp.json()
         assert body["ok"] is True
-        assert body["data"]["galleries"] == []
+        galleries = body["data"]["galleries"]
+        virtual_ids = {g["gallery_id"] for g in galleries if g["type"] == "virtual"}
+        assert virtual_ids == {"virtual:picks", "virtual:rejects", "virtual:trash"}
+        # No source-dir or user galleries when DB is empty
+        assert all(g["type"] == "virtual" for g in galleries)
 
     def test_list_galleries_groups_by_directory(self, db_path: Path, client: TestClient) -> None:
-        """3 images in 2 directories → 2 galleries with correct image counts."""
+        """3 images in 2 directories → 2 source-dir galleries plus 3 virtuals."""
         _insert_image(db_path, "img_001", "/photos/2024/a.jpg")
         _insert_image(db_path, "img_002", "/photos/2024/b.jpg")
         _insert_image(db_path, "img_003", "/photos/2023/c.jpg")
@@ -83,24 +87,38 @@ class TestListGalleries:
         body = resp.json()
         assert body["ok"] is True
         galleries = body["data"]["galleries"]
-        assert len(galleries) == 2
 
-        # Sort by path for deterministic assertion
-        by_path = {g["path"]: g for g in galleries}
-        assert by_path["/photos/2023"]["image_count"] == 1
-        assert by_path["/photos/2024"]["image_count"] == 2
+        source_galleries = [g for g in galleries if g["type"] == "source"]
+        assert len(source_galleries) == 2
+
+        # Sort source galleries by name for deterministic assertion
+        by_name = {g["name"]: g for g in source_galleries}
+        assert by_name["2023"]["count"] == 1
+        assert by_name["2024"]["count"] == 2
+
+        # All source galleries must have required fields including type
+        for g in source_galleries:
+            assert "gallery_id" in g
+            assert "name" in g
+            assert g["type"] == "source"
+            assert "count" in g
+
+        virtual_galleries = [g for g in galleries if g["type"] == "virtual"]
+        assert len(virtual_galleries) == 3
 
     def test_list_galleries_single_directory(self, db_path: Path, client: TestClient) -> None:
-        """Single directory → one gallery with correct count."""
+        """Single directory → one source-dir gallery plus virtuals."""
         _insert_image(db_path, "img_001", "/shots/a.jpg")
         _insert_image(db_path, "img_002", "/shots/b.jpg")
 
         resp = client.get("/api/v1/galleries")
         assert resp.status_code == 200
         galleries = resp.json()["data"]["galleries"]
-        assert len(galleries) == 1
-        assert galleries[0]["image_count"] == 2
-        assert galleries[0]["path"] == "/shots"
+        source = [g for g in galleries if g["type"] == "source"]
+        assert len(source) == 1
+        assert source[0]["count"] == 2
+        assert source[0]["name"] == "shots"
+        assert source[0]["type"] == "source"
 
 
 # ---------------------------------------------------------------------------

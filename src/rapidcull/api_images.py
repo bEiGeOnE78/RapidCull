@@ -17,6 +17,7 @@ from pydantic import BaseModel
 
 from rapidcull.api_envelope import ApiError, ok
 from rapidcull.culling import get_decision, set_decision, undo_decision
+from rapidcull.galleries import list_image_galleries
 
 router = APIRouter()
 
@@ -173,6 +174,28 @@ def get_image_faces(image_id: str) -> dict[str, Any]:
         for row in rows
     ]
     return ok({"image_id": image_id, "faces": faces})
+
+
+@router.get("/api/v1/images/{image_id}/galleries")
+def get_image_galleries(image_id: str) -> dict[str, Any]:
+    """Return all galleries the image belongs to (source-dir + user). Used for trash warning."""
+    db_path = _get_db_path()
+    _require_image(db_path, image_id)
+    galleries = list_image_galleries(db_path, image_id)
+    return ok(
+        {
+            "image_id": image_id,
+            "galleries": [
+                {
+                    "gallery_id": g.gallery_id,
+                    "name": g.name,
+                    "type": g.type,
+                    "count": g.count,
+                }
+                for g in galleries
+            ],
+        }
+    )
 
 
 @router.get("/api/v1/images/{image_id}/media")

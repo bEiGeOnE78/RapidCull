@@ -16,8 +16,18 @@ from rapidcull.backup import backup
 from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.culling import hard_delete, list_decisions, list_trash, move_to_trash
 from rapidcull.faces import cluster_faces, detect_and_store_faces
-from rapidcull.galleries import create_gallery_from_mode, rebuild_galleries_index
-from rapidcull.identity import create_image_record, get_paths_with_missing_proxies, update_display_path, update_full_path, update_metadata, update_thumbnail_path
+from rapidcull.galleries import (
+    create_user_gallery,
+    rebuild_galleries_index,
+)
+from rapidcull.identity import (
+    create_image_record,
+    get_paths_with_missing_proxies,
+    update_display_path,
+    update_full_path,
+    update_metadata,
+    update_thumbnail_path,
+)
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -43,22 +53,27 @@ class JobExecutor:
         self._backup_dir = db_path.parent / "backups"
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="job-executor")
 
-    def submit(self, job_id: str, kind: str, store: JobStore) -> None:
-        self._pool.submit(self._run, job_id, kind, store)
+    def submit(
+        self, job_id: str, kind: str, store: JobStore, params: dict[str, Any] | None = None
+    ) -> None:
+        self._pool.submit(self._run, job_id, kind, store, params or {})
 
-    def _run(self, job_id: str, kind: str, store: JobStore) -> None:
+    def _run(self, job_id: str, kind: str, store: JobStore, params: dict[str, Any]) -> None:
         store.mark_running(job_id)
 
         def log(msg: str) -> None:
             store.append_progress(job_id, msg)
 
         try:
-            result = self._dispatch(kind, log)
+            result = self._dispatch(kind, log, params)
             store.mark_succeeded(job_id, result)
         except Exception as exc:
             store.mark_failed(job_id, str(exc))
 
-    def _dispatch(self, kind: str, log: ProgressLog) -> dict[str, Any]:
+    def _dispatch(
+        self, kind: str, log: ProgressLog, params: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        _params: dict[str, Any] = params or {}
         match kind:
             case "ingest_and_proxy":
                 return self._ingest_and_proxy(log)
@@ -67,7 +82,7 @@ class JobExecutor:
             case "cluster_faces":
                 return self._cluster_faces(log)
             case "create_gallery_picks":
-                return self._create_gallery_picks(log)
+                return self._create_gallery_picks(log, _params)
             case "move_rejects_to_trash":
                 return self._move_rejects_to_trash(log)
             case "hard_delete_trash":
@@ -112,12 +127,16 @@ class JobExecutor:
                 plan.to_process,
                 raw_pipeline_available=True,
                 proxy_dir=self._proxy_dir,
-                library_root=self._library_root if self._library_root is not None else self._proxy_dir,
+                library_root=(
+                    self._library_root if self._library_root is not None else self._proxy_dir
+                ),
             )
             failed_items.extend(proxy_result.failed)
             for gp in proxy_result.generated:
                 if gp.thumbnail_path:
-                    update_thumbnail_path(self._db_path, Path(gp.source_path), Path(gp.thumbnail_path))
+                    update_thumbnail_path(
+                        self._db_path, Path(gp.source_path), Path(gp.thumbnail_path)
+                    )
                 if gp.display_path:
                     update_display_path(self._db_path, Path(gp.source_path), Path(gp.display_path))
                 if gp.full_path:
@@ -128,19 +147,27 @@ class JobExecutor:
         if self._db_path is not None and self._db_path.exists():
             missing_proxy_paths = get_paths_with_missing_proxies(self._db_path)
             if missing_proxy_paths:
-                log(f"Filling proxies for {len(missing_proxy_paths)} files with missing proxy paths ...")
+                log(
+                    f"Filling proxies for {len(missing_proxy_paths)} files with missing proxy paths ..."
+                )
                 fill_result = execute_proxy_generation(
                     missing_proxy_paths,
                     raw_pipeline_available=True,
                     proxy_dir=self._proxy_dir,
-                    library_root=self._library_root if self._library_root is not None else self._proxy_dir,
+                    library_root=(
+                        self._library_root if self._library_root is not None else self._proxy_dir
+                    ),
                 )
                 failed_items.extend(fill_result.failed)
                 for gp in fill_result.generated:
                     if gp.thumbnail_path:
-                        update_thumbnail_path(self._db_path, Path(gp.source_path), Path(gp.thumbnail_path))
+                        update_thumbnail_path(
+                            self._db_path, Path(gp.source_path), Path(gp.thumbnail_path)
+                        )
                     if gp.display_path:
-                        update_display_path(self._db_path, Path(gp.source_path), Path(gp.display_path))
+                        update_display_path(
+                            self._db_path, Path(gp.source_path), Path(gp.display_path)
+                        )
                     if gp.full_path:
                         update_full_path(self._db_path, Path(gp.source_path), Path(gp.full_path))
                 filled_count = fill_result.processed_count
@@ -178,26 +205,25 @@ class JobExecutor:
         )
         return dataclasses.asdict(result)
 
-    def _create_gallery_picks(self, log: ProgressLog) -> dict[str, Any]:
+    def _create_gallery_picks(self, log: ProgressLog, params: dict[str, Any]) -> dict[str, Any]:
+        name: str | None = params.get("name")
+        if not name:
+            raise ValueError("'name' param is required for create_gallery_picks")
         log("Loading pick decisions ...")
         decisions = list_decisions(self._db_path, filter="pick")
-        log(f"Found {len(decisions)} picks")
-        pick_paths: list[Path] = []
-        with sqlite3.connect(self._db_path) as conn:
-            for d in decisions:
-                row = conn.execute(
-                    "SELECT path FROM images WHERE image_id = ?", (d.image_id,)
-                ).fetchone()
-                if row:
-                    pick_paths.append(Path(row[0]))
-        gallery_dir = self._gallery_dir / "picks"
-        log(f"Creating gallery at {gallery_dir} with {len(pick_paths)} assets ...")
-        result = create_gallery_from_mode(gallery_dir, "picks", {"picks": pick_paths})
-        log(f"Done: {len(result.created_paths)} hardlinks created")
+        image_ids = [d.image_id for d in decisions]
+        log(f"Found {len(image_ids)} picks")
+        log(f"Creating user gallery '{name}' with {len(image_ids)} images ...")
+        gallery = create_user_gallery(
+            db_path=self._db_path,
+            name=name,
+            source="from_picks",
+            image_ids=image_ids,
+        )
+        log(f"Done: gallery '{gallery.gallery_id}' created with {gallery.count} images")
         return {
-            "gallery_path": result.gallery_path,
-            "created_count": len(result.created_paths),
-            "skipped_count": len(result.skipped_paths),
+            "created_gallery_id": gallery.gallery_id,
+            "image_count": gallery.count,
         }
 
     def _move_rejects_to_trash(self, log: ProgressLog) -> dict[str, Any]:

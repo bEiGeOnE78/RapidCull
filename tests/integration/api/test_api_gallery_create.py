@@ -1,4 +1,8 @@
-"""Integration tests: FR-013 gallery creation via POST /api/v1/galleries."""
+"""Integration tests: FR-013 gallery creation via POST /api/v1/galleries.
+
+New shape (wave 1-2 refactor): POST body is {name: string}, creates a manual
+user gallery stored in the `galleries` DB table. Old mode-based approach is gone.
+"""
 
 from __future__ import annotations
 
@@ -26,61 +30,71 @@ def client_and_db(tmp_path: Path):
     return client, db_path
 
 
-def _add_image(db_path: Path, image_id: str, path: str) -> None:
-    with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            "INSERT INTO images (image_id, path, thumbnail_path) VALUES (?, ?, ?)",
-            (image_id, path, None),
-        )
-
-
-def _add_decision(db_path: Path, image_id: str, decision: str) -> None:
-    with sqlite3.connect(db_path) as conn:
-        conn.execute(
-            "INSERT INTO cull_decisions VALUES (?, ?, ?)",
-            (image_id, decision, "2026-01-01T00:00:00Z"),
-        )
-
-
 @pytest.mark.fr
 @pytest.mark.integration
-def test_create_gallery_from_picks(tmp_path: Path, client_and_db) -> None:
+def test_create_gallery_creates_db_row(tmp_path: Path, client_and_db) -> None:
+    """POST /api/v1/galleries with {name} → 201, row in galleries table."""
     client, db_path = client_and_db
-    photo = tmp_path / "photo.jpg"
-    photo.write_bytes(b"fake")
-    _add_image(db_path, "img1", str(photo))
-    _add_decision(db_path, "img1", "pick")
 
-    resp = client.post("/api/v1/galleries", json={"name": "my-picks", "mode": "picks"})
+    resp = client.post("/api/v1/galleries", json={"name": "my-picks"})
     assert resp.status_code == 201
+
     data = resp.json()["data"]
-    assert data["created_count"] >= 0  # hardlinks may fail on tmp_path but gallery dir created
+    assert data["name"] == "my-picks"
+    assert data["type"] == "user"
+    assert data["source"] == "manual"
+    assert "gallery_id" in data
+
+    # Verify row exists in DB
+    with sqlite3.connect(db_path) as conn:
+        row = conn.execute(
+            "SELECT name, source FROM galleries WHERE gallery_id = ?",
+            (data["gallery_id"],),
+        ).fetchone()
+    assert row is not None
+    assert row[0] == "my-picks"
+    assert row[1] == "manual"
 
 
 @pytest.mark.fr
 @pytest.mark.integration
-def test_create_gallery_unknown_mode_returns_422(client_and_db) -> None:
+def test_create_gallery_returns_gallery_shape(client_and_db) -> None:
+    """Response contains all required Gallery fields."""
     client, _ = client_and_db
-    resp = client.post("/api/v1/galleries", json={"name": "x", "mode": "invalid"})
-    assert resp.status_code == 422
-    assert resp.json()["error"]["code"] == "INVALID_MODE"
+
+    resp = client.post("/api/v1/galleries", json={"name": "test-gallery"})
+    assert resp.status_code == 201
+
+    data = resp.json()["data"]
+    assert "gallery_id" in data
+    assert "name" in data
+    assert "type" in data
+    assert "source" in data
+    assert "count" in data
+    assert data["count"] == 0  # empty on creation
 
 
 @pytest.mark.fr
 @pytest.mark.integration
-def test_create_gallery_query_mode_missing_query_returns_422(client_and_db) -> None:
+def test_create_gallery_appears_in_list(client_and_db) -> None:
+    """Newly created gallery appears in GET /api/v1/galleries as type='user'."""
     client, _ = client_and_db
-    resp = client.post("/api/v1/galleries", json={"name": "x", "mode": "query"})
-    assert resp.status_code == 422
-    assert resp.json()["error"]["code"] == "QUERY_REQUIRED"
+
+    create_resp = client.post("/api/v1/galleries", json={"name": "visible-gallery"})
+    gallery_id = create_resp.json()["data"]["gallery_id"]
+
+    list_resp = client.get("/api/v1/galleries")
+    assert list_resp.status_code == 200
+    galleries = list_resp.json()["data"]["galleries"]
+    user_galleries = [g for g in galleries if g["type"] == "user"]
+    ids = {g["gallery_id"] for g in user_galleries}
+    assert gallery_id in ids
 
 
 @pytest.mark.fr
 @pytest.mark.integration
-def test_create_gallery_bad_query_returns_422(client_and_db) -> None:
+def test_create_gallery_missing_name_returns_422(client_and_db) -> None:
+    """POST with empty body → 422 validation error."""
     client, _ = client_and_db
-    resp = client.post(
-        "/api/v1/galleries", json={"name": "x", "mode": "query", "query": "NOT VALID !!!"}
-    )
+    resp = client.post("/api/v1/galleries", json={})
     assert resp.status_code == 422
-    assert resp.json()["error"]["code"] == "QUERY_PARSE_ERROR"

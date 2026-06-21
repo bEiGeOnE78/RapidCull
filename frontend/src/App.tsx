@@ -21,6 +21,7 @@ export default function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [activeJobId, setActiveJobId] = useState<string | null>(null)
   const [activeJobLabel, setActiveJobLabel] = useState('')
+  const [activeJobOp, setActiveJobOp] = useState('')
   const [personPanelOpen, setPersonPanelOpen] = useState(false)
   const [trashPanelOpen, setTrashPanelOpen] = useState(false)
   const [sortOrder, setSortOrder] = useState<SortOrder>('filename')
@@ -51,9 +52,10 @@ export default function App() {
     enabled: activeGalleryId !== null,
   })
 
-  const handleJobStarted = useCallback((jobId: string, label: string) => {
+  const handleJobStarted = useCallback((jobId: string, label: string, op: string) => {
     setActiveJobId(jobId)
     setActiveJobLabel(label)
+    setActiveJobOp(op)
     setCommandPaletteOpen(false)
   }, [])
 
@@ -84,6 +86,7 @@ export default function App() {
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
         onJobStarted={handleJobStarted}
+        activeGalleryId={activeGalleryId}
       />
       <PersonPanel isOpen={personPanelOpen} onClose={() => setPersonPanelOpen(false)} />
       <TrashPanel isOpen={trashPanelOpen} onClose={() => setTrashPanelOpen(false)} />
@@ -91,6 +94,8 @@ export default function App() {
         <JobProgressPanel
           jobId={activeJobId}
           label={activeJobLabel}
+          op={activeJobOp}
+          activeGalleryId={activeGalleryId}
           onClose={() => setActiveJobId(null)}
         />
       )}

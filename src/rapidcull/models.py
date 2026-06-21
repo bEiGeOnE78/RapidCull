@@ -216,6 +216,19 @@ class PersonDeleteResult:
     unlinked_face_count: int
 
 
+GalleryType: TypeAlias = Literal["source", "user", "virtual"]
+
+
+@dataclass(frozen=True)
+class Gallery:
+    gallery_id: str
+    name: str
+    created_at: str
+    source: str  # 'manual' | 'from_picks' | 'from_query'
+    type: GalleryType
+    count: int = 0  # populated by listing endpoint
+
+
 @dataclass(frozen=True)
 class CullDecision:
     image_id: str

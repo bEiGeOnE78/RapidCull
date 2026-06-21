@@ -11,7 +11,6 @@ from rapidcull.adapters.ffmpeg import FFmpegAdapter, FFmpegProxyOutcome
 from rapidcull.adapters.imagemagick import ImageMagickProxyOutcome, detect_heif_support
 from rapidcull.models import (
     FailedIngestItem,
-    GeneratedProxy,
     OrphanCleanupReport,
     RegenerationSelectionResult,
 )
@@ -144,7 +143,14 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
 @pytest.mark.integration
 def test_fr_006a_generates_still_thumbnail_proxy_via_proxy_execution(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -237,7 +243,14 @@ def test_fr_008b_batch_proxy_orchestration_accounts_each_input_exactly_once(
     tmp_path: Path,
 ) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -275,7 +288,14 @@ def test_fr_008b_batch_proxy_orchestration_accounts_each_input_exactly_once(
 @pytest.mark.integration
 def test_fr_007a_generates_heic_proxy_when_heif_capability_is_available(tmp_path: Path) -> None:
     class SuccessfulHeicAdapter(ImageMagickAdapter):
-        def generate_heic_proxy(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_heic_proxy(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -334,7 +354,14 @@ def test_fr_007a_detect_heif_support_is_true_in_current_environment() -> None:
 @pytest.mark.integration
 def test_fr_008b_returns_generated_and_failed_lists_sorted_by_path(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -363,7 +390,14 @@ def test_fr_008b_returns_generated_and_failed_lists_sorted_by_path(tmp_path: Pat
 @pytest.mark.integration
 def test_fr_050a_proxy_result_exposes_deterministic_per_tool_summary(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -408,7 +442,14 @@ def test_fr_050a_proxy_result_exposes_deterministic_per_tool_summary(tmp_path: P
 @pytest.mark.integration
 def test_fr_050_proxy_result_exposes_run_summary_counts(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -437,7 +478,14 @@ def test_fr_050_proxy_result_exposes_run_summary_counts(tmp_path: Path) -> None:
 @pytest.mark.integration
 def test_fr_006a_normalizes_imagemagick_still_failure_reason(tmp_path: Path) -> None:
     class FailingStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=False, reason="thumbnail command failed")
@@ -468,7 +516,14 @@ def test_fr_007a_normalizes_heic_subprocess_detail_to_canonical_reason(
     tmp_path: Path,
 ) -> None:
     class HeicExitDetailAdapter(ImageMagickAdapter):
-        def generate_heic_proxy(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_heic_proxy(
+            self,
+            path: Path,
+            output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
+        ) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=False, reason="imagemagick_exit_1")
@@ -771,14 +826,22 @@ def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path)
     """FR-009: video proxy generation routes through FFmpegAdapter and records thumbnail/display paths."""
 
     class SuccessfulVideoAdapter(FFmpegAdapter):
-        def generate_video_proxies(self, source_path: Path, proxy_dir: Path, thumb_path: Path | None = None, display_path: Path | None = None) -> FFmpegProxyOutcome:
+        def generate_video_proxies(
+            self,
+            source_path: Path,
+            proxy_dir: Path,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+        ) -> FFmpegProxyOutcome:
             thumb = proxy_dir / (source_path.stem + ".thumb.webp")
             display = proxy_dir / (source_path.stem + ".display.webp")
             # Write placeholder files so path assertions are realistic
             proxy_dir.mkdir(parents=True, exist_ok=True)
             thumb.write_text("thumb")
             display.write_text("display")
-            return FFmpegProxyOutcome(ok=True, reason=None, thumbnail_path=thumb, display_path=display)
+            return FFmpegProxyOutcome(
+                ok=True, reason=None, thumbnail_path=thumb, display_path=display
+            )
 
     video = tmp_path / "clip.mov"
     video.write_text("video-data")
@@ -833,9 +896,12 @@ def test_fr_009_real_ffmpeg_extracts_thumbnail_from_video(tmp_path: Path) -> Non
     # Generate a minimal 3-second test video using lavfi testsrc
     gen_cmd = [
         "ffmpeg",
-        "-f", "lavfi",
-        "-i", "testsrc=duration=3:size=64x64:rate=1",
-        "-c:v", "libx264",
+        "-f",
+        "lavfi",
+        "-i",
+        "testsrc=duration=3:size=64x64:rate=1",
+        "-c:v",
+        "libx264",
         "-y",
         str(test_video),
     ]

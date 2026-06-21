@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { api } from '../api/client'
 import type { Gallery } from '../api/client'
 
 interface GallerySelectorProps {
@@ -7,12 +9,31 @@ interface GallerySelectorProps {
   isOpen: boolean
 }
 
+const TYPE_ICON: Record<string, string> = {
+  source: '📁',
+  user: '⭐',
+  virtual: '🔍',
+}
+
 export default function GallerySelector({
   galleries,
   activeGalleryId,
   onSelect,
   isOpen,
 }: GallerySelectorProps) {
+  const qc = useQueryClient()
+
+  const handleDelete = async (e: React.MouseEvent, gallery: Gallery) => {
+    e.stopPropagation()
+    if (!window.confirm(`Delete gallery "${gallery.name}"? Images will not be deleted.`)) return
+    try {
+      await api.deleteGallery(gallery.gallery_id)
+      void qc.invalidateQueries({ queryKey: ['galleries'] })
+    } catch (err) {
+      console.error('Failed to delete gallery:', err)
+    }
+  }
+
   if (!isOpen) return null
 
   return (
@@ -46,60 +67,86 @@ export default function GallerySelector({
           const isActive = gallery.gallery_id === activeGalleryId
           return (
             <li key={gallery.gallery_id}>
-              <button
-                onClick={() => onSelect(gallery.gallery_id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  padding: '10px 16px',
-                  background: isActive ? '#2a2a2a' : 'transparent',
-                  border: 'none',
-                  borderLeft: isActive ? '3px solid #4a9eff' : '3px solid transparent',
-                  color: isActive ? '#fff' : '#ccc',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  fontSize: 13,
-                  transition: 'background 0.1s',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    ;(e.currentTarget as HTMLButtonElement).style.background = '#282828'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    ;(e.currentTarget as HTMLButtonElement).style.background = 'transparent'
-                  }
-                }}
-              >
-                <span
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button
+                  onClick={() => onSelect(gallery.gallery_id)}
                   style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                     flex: 1,
-                    marginRight: 8,
+                    padding: '10px 16px',
+                    background: isActive ? '#2a2a2a' : 'transparent',
+                    border: 'none',
+                    borderLeft: isActive ? '3px solid #4a9eff' : '3px solid transparent',
+                    color: isActive ? '#fff' : '#ccc',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    fontSize: 13,
+                    transition: 'background 0.1s',
+                    minWidth: 0,
                   }}
-                  title={gallery.name}
-                >
-                  {gallery.name}
-                </span>
-                <span
-                  style={{
-                    fontSize: 11,
-                    background: '#333',
-                    color: '#aaa',
-                    borderRadius: 10,
-                    padding: '1px 7px',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0,
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      ;(e.currentTarget as HTMLButtonElement).style.background = '#282828'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      ;(e.currentTarget as HTMLButtonElement).style.background = 'transparent'
+                    }
                   }}
                 >
-                  {gallery.image_count}
-                </span>
-              </button>
+                  <span style={{ fontSize: 12, marginRight: 6, flexShrink: 0 }}>
+                    {TYPE_ICON[gallery.type] ?? '📁'}
+                  </span>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      flex: 1,
+                      marginRight: 8,
+                    }}
+                    title={gallery.name}
+                  >
+                    {gallery.name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      background: '#333',
+                      color: '#aaa',
+                      borderRadius: 10,
+                      padding: '1px 7px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {gallery.count}
+                  </span>
+                </button>
+                {gallery.type === 'user' && (
+                  <button
+                    onClick={(e) => void handleDelete(e, gallery)}
+                    title="Delete gallery"
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      color: '#666',
+                      cursor: 'pointer',
+                      fontSize: 14,
+                      padding: '10px 10px',
+                      flexShrink: 0,
+                      lineHeight: 1,
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#f66' }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#666' }}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </li>
           )
         })}

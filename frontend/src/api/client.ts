@@ -20,6 +20,21 @@ export const api = {
   getGalleries: () => request<GalleriesData>('/galleries'),
   getGalleryImages: (galleryId: string, page = 1, pageSize = 50) =>
     request<GalleryImagesData>(`/galleries/${encodeURIComponent(galleryId)}/images?page=${page}&page_size=${pageSize}`),
+  createUserGallery: (name: string) =>
+    request<Gallery>('/galleries', { method: 'POST', body: JSON.stringify({ name }) }),
+  deleteGallery: (galleryId: string) =>
+    request<void>(`/galleries/${encodeURIComponent(galleryId)}`, { method: 'DELETE' }),
+  addImagesToGallery: (galleryId: string, imageIds: string[]) =>
+    request<{ added: number }>(`/galleries/${encodeURIComponent(galleryId)}/images`, {
+      method: 'POST',
+      body: JSON.stringify({ image_ids: imageIds }),
+    }),
+  removeImageFromGallery: (galleryId: string, imageId: string) =>
+    request<void>(`/galleries/${encodeURIComponent(galleryId)}/images/${encodeURIComponent(imageId)}`, {
+      method: 'DELETE',
+    }),
+  getImageGalleries: (imageId: string) =>
+    request<{ galleries: Gallery[] }>(`/images/${encodeURIComponent(imageId)}/galleries`),
   getImage: (imageId: string) => request<ImageData>(`/images/${imageId}`),
   getDecision: (imageId: string) => request<DecisionData | null>(`/images/${imageId}/decision`),
   setDecision: (imageId: string, decision: 'pick' | 'reject') =>
@@ -58,8 +73,8 @@ export const api = {
 export interface Gallery {
   gallery_id: string
   name: string
-  path: string
-  image_count: number
+  type: 'source' | 'user' | 'virtual'
+  count: number
 }
 
 export interface GalleriesData {

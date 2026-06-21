@@ -102,6 +102,11 @@ def move_to_trash(db_path: Path, image_ids: list[str], trash_dir: Path) -> Trash
     moved = 0
     failed: list[TrashFailedItem] = []
 
+    # Use plain sqlite3.connect (FK OFF by default) because the legacy trash and
+    # cull_decisions tables use bare REFERENCES without ON DELETE CASCADE — enabling
+    # FK globally would reject the DELETE FROM images while those child rows exist.
+    # We explicitly delete gallery_memberships before images to achieve the same
+    # effect as CASCADE for the new table added in v7.
     with sqlite3.connect(db_path) as conn:
         for image_id in image_ids:
             row = conn.execute("SELECT path FROM images WHERE image_id = ?", (image_id,)).fetchone()
@@ -125,6 +130,11 @@ def move_to_trash(db_path: Path, image_ids: list[str], trash_dir: Path) -> Trash
                     " ON CONFLICT(image_id) DO NOTHING",
                     (image_id, original_path, trashed_at),
                 )
+                # Explicitly remove all child rows before deleting from images.
+                # gallery_memberships: the ON DELETE CASCADE would fire with FK ON,
+                # but since we use FK OFF here we do it manually.
+                conn.execute("DELETE FROM cull_decisions WHERE image_id = ?", (image_id,))
+                conn.execute("DELETE FROM gallery_memberships WHERE image_id = ?", (image_id,))
                 conn.execute("DELETE FROM images WHERE image_id = ?", (image_id,))
                 moved += 1
             except OSError as exc:
