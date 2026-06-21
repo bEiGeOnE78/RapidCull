@@ -14,7 +14,7 @@ from rapidcull.backup import backup as run_backup
 from rapidcull.backup import restore as run_restore
 from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.exiftool_adapter import RealExifToolBatchExtractor
-from rapidcull.identity import create_image_record, update_thumbnail_path
+from rapidcull.identity import create_image_record, update_display_path, update_full_path, update_metadata, update_thumbnail_path
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -255,6 +255,8 @@ def process_new(
         # Persist image records to DB for fingerprint-based skip on re-runs
         for path in extraction_result.metadata_by_path:
             create_image_record(_db_path, path)
+        for path, meta in extraction_result.metadata_by_path.items():
+            update_metadata(_db_path, path, meta)
 
         # Generate proxies
         proxy_result = execute_proxy_generation(
@@ -267,6 +269,10 @@ def process_new(
         for gp in proxy_result.generated:
             if gp.thumbnail_path:
                 update_thumbnail_path(_db_path, Path(gp.source_path), Path(gp.thumbnail_path))
+            if gp.display_path:
+                update_display_path(_db_path, Path(gp.source_path), Path(gp.display_path))
+            if gp.full_path:
+                update_full_path(_db_path, Path(gp.source_path), Path(gp.full_path))
 
     # Build summary
     summary = build_ingest_run_summary(

@@ -115,9 +115,9 @@ export default function MetadataSidebar({ imageData, isOpen }: MetadataSidebarPr
   }
 
   // EXIF table rows
-  const dateTime = getMetaStr(meta, 'DateTimeOriginal', 'DateTime')
-  const make = getMetaStr(meta, 'Make')
-  const model = getMetaStr(meta, 'Model')
+  const dateTime = getMetaStr(meta, 'DateTimeOriginal', 'DateTime', 'capture_datetime')
+  const make = getMetaStr(meta, 'Make', 'camera_make')
+  const model = getMetaStr(meta, 'Model', 'camera_model')
   const camera = [make, model].filter(Boolean).join(' ')
   const lens = getMetaStr(meta, 'LensModel')
   const focal35 = getMetaStr(meta, 'FocalLengthIn35mmFormat', 'FocalLengthIn35mmFilm')

@@ -54,6 +54,9 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
             path: Path,
             pipeline_available: bool,
             output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
         ) -> RawTherapeeProxyOutcome:
             _ = path
             _ = pipeline_available
@@ -138,7 +141,7 @@ def test_fr_008_generates_raw_jpg_proxy_or_actionable_error(tmp_path: Path) -> N
 @pytest.mark.integration
 def test_fr_006a_generates_still_thumbnail_proxy_via_proxy_execution(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -231,7 +234,7 @@ def test_fr_008b_batch_proxy_orchestration_accounts_each_input_exactly_once(
     tmp_path: Path,
 ) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -269,7 +272,7 @@ def test_fr_008b_batch_proxy_orchestration_accounts_each_input_exactly_once(
 @pytest.mark.integration
 def test_fr_007a_generates_heic_proxy_when_heif_capability_is_available(tmp_path: Path) -> None:
     class SuccessfulHeicAdapter(ImageMagickAdapter):
-        def generate_heic_proxy(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_heic_proxy(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -328,7 +331,7 @@ def test_fr_007a_detect_heif_support_is_true_in_current_environment() -> None:
 @pytest.mark.integration
 def test_fr_008b_returns_generated_and_failed_lists_sorted_by_path(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -357,7 +360,7 @@ def test_fr_008b_returns_generated_and_failed_lists_sorted_by_path(tmp_path: Pat
 @pytest.mark.integration
 def test_fr_050a_proxy_result_exposes_deterministic_per_tool_summary(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -402,7 +405,7 @@ def test_fr_050a_proxy_result_exposes_deterministic_per_tool_summary(tmp_path: P
 @pytest.mark.integration
 def test_fr_050_proxy_result_exposes_run_summary_counts(tmp_path: Path) -> None:
     class SuccessfulStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=True, reason=None)
@@ -431,7 +434,7 @@ def test_fr_050_proxy_result_exposes_run_summary_counts(tmp_path: Path) -> None:
 @pytest.mark.integration
 def test_fr_006a_normalizes_imagemagick_still_failure_reason(tmp_path: Path) -> None:
     class FailingStillAdapter(ImageMagickAdapter):
-        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_still_thumbnail(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=False, reason="thumbnail command failed")
@@ -462,7 +465,7 @@ def test_fr_007a_normalizes_heic_subprocess_detail_to_canonical_reason(
     tmp_path: Path,
 ) -> None:
     class HeicExitDetailAdapter(ImageMagickAdapter):
-        def generate_heic_proxy(self, path: Path, output_path: Path | None = None) -> ImageMagickProxyOutcome:
+        def generate_heic_proxy(self, path: Path, output_path: Path | None = None, thumb_path: Path | None = None, display_path: Path | None = None, full_path: Path | None = None) -> ImageMagickProxyOutcome:
             _ = path
             _ = output_path
             return ImageMagickProxyOutcome(ok=False, reason="imagemagick_exit_1")
@@ -498,6 +501,9 @@ def test_fr_008a_normalizes_rawtherapee_subprocess_detail_to_canonical_reason(
             path: Path,
             pipeline_available: bool,
             output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
         ) -> RawTherapeeProxyOutcome:
             _ = path
             _ = pipeline_available
@@ -536,6 +542,9 @@ def test_fr_008a_uses_subprocess_capable_rawtherapee_adapter_contract(tmp_path: 
             path: Path,
             pipeline_available: bool,
             output_path: Path | None = None,
+            thumb_path: Path | None = None,
+            display_path: Path | None = None,
+            full_path: Path | None = None,
         ) -> RawTherapeeProxyOutcome:
             _ = output_path
             self.invocations.append((path.resolve(), pipeline_available))
@@ -595,9 +604,6 @@ def test_fr_008a_rawtherapee_adapter_invokes_subprocess_when_pipeline_available(
     assert cmd[4] == "-c"
     assert cmd[5] == str(raw.resolve())
     assert outcome == RawTherapeeProxyOutcome(ok=True, reason=None)
-    # The final proxy file should be placed next to the source, not in the temp dir
-    expected_output = raw.with_name(raw.stem + ".proxy.jpg")
-    assert expected_output.exists()
 
 
 @pytest.mark.fr
@@ -647,6 +653,10 @@ def test_fr_006a_imagemagick_adapter_invokes_subprocess_for_still_thumbnail(
         [
             "magick",
             str(still.resolve()),
+            "-resize",
+            "400x400>",
+            "-quality",
+            "75",
             str(expected_output.resolve()),
         ]
     ]
@@ -679,6 +689,10 @@ def test_fr_007a_imagemagick_adapter_invokes_subprocess_for_heic_proxy(
         [
             "magick",
             str(heic.resolve()),
+            "-resize",
+            "400x400>",
+            "-quality",
+            "75",
             str(expected_output.resolve()),
         ]
     ]

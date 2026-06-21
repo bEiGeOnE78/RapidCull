@@ -11,7 +11,7 @@ from rapidcull.schema import create_or_validate_schema
 
 def _add_image(db_path: Path, image_id: str, path: str) -> None:
     with sqlite3.connect(db_path) as conn:
-        conn.execute("INSERT INTO images VALUES (?, ?, ?)", (image_id, path, None))
+        conn.execute("INSERT INTO images (image_id, path, thumbnail_path) VALUES (?, ?, ?)", (image_id, path, None))
 
 
 def test_fr_029_set_decision_persists_pick(tmp_path: Path) -> None:

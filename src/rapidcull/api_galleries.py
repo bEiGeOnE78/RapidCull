@@ -206,7 +206,7 @@ def get_gallery_images(
     with sqlite3.connect(db_path) as conn:
         rows = conn.execute(
             f"""
-            SELECT i.image_id, i.path, i.thumbnail_path, cd.decision
+            SELECT i.image_id, i.path, i.thumbnail_path, i.display_path, i.full_path, cd.decision
             FROM images i
             LEFT JOIN cull_decisions cd ON i.image_id = cd.image_id
             WHERE i.path IN ({placeholders})
@@ -220,7 +220,9 @@ def get_gallery_images(
             "image_id": row[0],
             "path": row[1],
             "thumbnail_path": _thumbnail_url(row[2], db_path),
-            "decision": row[3],
+            "display_path": _thumbnail_url(row[3], db_path),
+            "full_path": _thumbnail_url(row[4], db_path),
+            "decision": row[5],
         }
         for row in rows
     ]

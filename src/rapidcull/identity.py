@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sqlite3
 import uuid
 from pathlib import Path
+from typing import Any
 
 from .models import ImageRecord
 from .schema import create_or_validate_schema
@@ -48,6 +50,36 @@ def update_thumbnail_path(db_path: Path, file_path: Path, thumbnail_path: Path) 
         connection.execute(
             "UPDATE images SET thumbnail_path = ? WHERE path = ?",
             (str(thumbnail_path.resolve()), normalized_path),
+        )
+        connection.commit()
+
+
+def update_display_path(db_path: Path, file_path: Path, display_path: Path) -> None:
+    normalized_path = str(file_path.resolve())
+    with sqlite3.connect(db_path) as connection:
+        connection.execute(
+            "UPDATE images SET display_path = ? WHERE path = ?",
+            (str(display_path.resolve()), normalized_path),
+        )
+        connection.commit()
+
+
+def update_full_path(db_path: Path, file_path: Path, full_path: Path) -> None:
+    normalized_path = str(file_path.resolve())
+    with sqlite3.connect(db_path) as connection:
+        connection.execute(
+            "UPDATE images SET full_path = ? WHERE path = ?",
+            (str(full_path.resolve()), normalized_path),
+        )
+        connection.commit()
+
+
+def update_metadata(db_path: Path, file_path: Path, metadata: dict[str, Any]) -> None:
+    normalized_path = str(file_path.resolve())
+    with sqlite3.connect(db_path) as connection:
+        connection.execute(
+            "UPDATE images SET metadata = ? WHERE path = ?",
+            (json.dumps(metadata), normalized_path),
         )
         connection.commit()
 

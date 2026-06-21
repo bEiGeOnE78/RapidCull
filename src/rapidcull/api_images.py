@@ -5,6 +5,7 @@ All responses use the standard {ok, data|error} envelope from api_envelope.py.
 
 from __future__ import annotations
 
+import json
 import sqlite3
 from pathlib import Path
 from typing import Any, Literal
@@ -18,12 +19,27 @@ from rapidcull.culling import get_decision, set_decision, undo_decision
 router = APIRouter()
 
 _db_path: Path | None = None
+_proxy_root: Path | None = None
 
 
 def configure_router(db_path: Path) -> None:
     """Set the DB path used by all image endpoints."""
-    global _db_path
+    global _db_path, _proxy_root
     _db_path = db_path
+    _proxy_root = db_path.parent / "proxies"
+
+
+def _thumbnail_url(abs_path: str | None) -> str | None:
+    """Convert absolute proxy path to /proxies/ URL, or None if unavailable."""
+    if not abs_path:
+        return None
+    if _proxy_root is None:
+        return None
+    try:
+        rel = Path(abs_path).relative_to(_proxy_root)
+        return "/proxies/" + str(rel)
+    except ValueError:
+        return None
 
 
 def _get_db_path() -> Path:
@@ -50,9 +66,14 @@ def _require_image(db_path: Path, image_id: str) -> tuple[str, str]:
 @router.get("/api/v1/images/{image_id}")
 def get_image(image_id: str) -> dict[str, Any]:
     db_path = _get_db_path()
-    img_id, path = _require_image(db_path, image_id)
+    _require_image(db_path, image_id)
 
     with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        img_row = conn.execute(
+            "SELECT image_id, path, thumbnail_path, display_path, full_path, metadata FROM images WHERE image_id = ?",
+            (image_id,),
+        ).fetchone()
         decision_row = conn.execute(
             "SELECT decision FROM cull_decisions WHERE image_id = ?", (image_id,)
         ).fetchone()
@@ -62,12 +83,16 @@ def get_image(image_id: str) -> dict[str, Any]:
 
     decision: str | None = decision_row[0] if decision_row else None
     face_count: int = face_row[0] if face_row else 0
+    metadata: dict[str, Any] = json.loads(img_row["metadata"]) if img_row["metadata"] else {}
 
     return ok(
         {
-            "image_id": img_id,
-            "path": path,
-            "metadata": {},
+            "image_id": img_row["image_id"],
+            "path": img_row["path"],
+            "thumbnail_path": _thumbnail_url(img_row["thumbnail_path"]),
+            "display_path": _thumbnail_url(img_row["display_path"]),
+            "full_path": _thumbnail_url(img_row["full_path"]),
+            "metadata": metadata,
             "decision": decision,
             "face_count": face_count,
         }

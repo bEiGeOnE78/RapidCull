@@ -31,33 +31,42 @@ def _pick_string_value(
 def normalize_exif_metadata(
     metadata: dict[str, str | int | float | bool | None],
 ) -> dict[str, str | int | float | bool | None]:
-    return {
-        "file_type": _pick_string_value(
-            metadata,
-            ["File:FileType", "Unknown:FileType", "FileType"],
-        ),
-        "capture_datetime": _pick_string_value(
-            metadata,
-            [
-                "EXIF:DateTimeOriginal",
-                "Unknown:DateTimeOriginal",
-                "DateTimeOriginal",
-                "EXIF:CreateDate",
-                "Unknown:CreateDate",
-                "CreateDate",
-                "Copy1:DateTimeOriginal",
-                "Copy1:CreateDate",
-            ],
-        ),
-        "camera_make": _pick_string_value(
-            metadata,
-            ["IFD0:Make", "EXIF:Make", "Unknown:Make", "Copy1:Make", "Make"],
-        ),
-        "camera_model": _pick_string_value(
-            metadata,
-            ["IFD0:Model", "EXIF:Model", "Unknown:Model", "Copy1:Model", "Model"],
-        ),
-    }
+    result: dict[str, str | int | float | bool | None] = {}
+    for key, value in metadata.items():
+        base_key = key.split(":")[-1] if ":" in key else key
+        if base_key not in result:
+            result[base_key] = value
+
+    result["file_type"] = _pick_string_value(
+        metadata,
+        ["File:FileType", "Unknown:FileType", "FileType"],
+    )
+
+    result["capture_datetime"] = _pick_string_value(
+        metadata,
+        [
+            "EXIF:DateTimeOriginal",
+            "Unknown:DateTimeOriginal",
+            "DateTimeOriginal",
+            "EXIF:CreateDate",
+            "Unknown:CreateDate",
+            "CreateDate",
+            "Copy1:DateTimeOriginal",
+            "Copy1:CreateDate",
+        ],
+    )
+
+    result["camera_make"] = _pick_string_value(
+        metadata,
+        ["IFD0:Make", "EXIF:Make", "Unknown:Make", "Copy1:Make", "Make"],
+    )
+
+    result["camera_model"] = _pick_string_value(
+        metadata,
+        ["IFD0:Model", "EXIF:Model", "Unknown:Model", "Copy1:Model", "Model"],
+    )
+
+    return result
 
 
 SUPPORTED_MEDIA_EXTENSIONS = {

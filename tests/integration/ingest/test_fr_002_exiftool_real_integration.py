@@ -60,12 +60,13 @@ def test_fr_002b_002c_real_exiftool_batch_mode_extracts_known_metadata(tmp_path:
     assert result.failed_items == []
     metadata = result.metadata_by_path[target.resolve()]
 
-    assert metadata == {
+    expected = {
         "file_type": "JPEG",
         "capture_datetime": "2026:03:14 12:34:56",
         "camera_make": "RapidCull",
         "camera_model": "FixtureCam",
     }
+    assert expected.items() <= metadata.items()
 
 
 @pytest.mark.fr
@@ -103,15 +104,17 @@ def test_fr_002c_real_exiftool_batch_mode_maps_multiple_assets_deterministically
     first_metadata = result.metadata_by_path[first.resolve()]
     second_metadata = result.metadata_by_path[second.resolve()]
 
-    assert first_metadata == {
+    expected_first = {
         "file_type": "JPEG",
         "capture_datetime": "2026:03:14 10:00:00",
         "camera_make": "RapidCull",
         "camera_model": "FirstCam",
     }
-    assert second_metadata == {
+    assert expected_first.items() <= first_metadata.items()
+    expected_second = {
         "file_type": "JPEG",
         "capture_datetime": "2026:03:14 11:00:00",
         "camera_make": "RapidCull",
         "camera_model": "SecondCam",
     }
+    assert expected_second.items() <= second_metadata.items()

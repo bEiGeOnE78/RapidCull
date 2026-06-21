@@ -32,7 +32,7 @@ function decisionRank(decision: string | null | undefined, mode: SortOrder): num
   return 2
 }
 
-function sortImages(images: GalleryImage[], order: SortOrder): GalleryImage[] {
+export function sortImages(images: GalleryImage[], order: SortOrder): GalleryImage[] {
   const sorted = [...images]
   switch (order) {
     case 'date_asc':

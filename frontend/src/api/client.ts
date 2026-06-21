@@ -49,8 +49,8 @@ export const api = {
   getTrash: () => request<TrashData>('/trash'),
   restoreTrash: (imageId: string) =>
     request<{ image_id: string; success: boolean }>(`/trash/${imageId}/restore`, { method: 'POST' }),
-  createJob: (op: string, params?: Record<string, unknown>) =>
-    request<JobCreated>('/jobs', { method: 'POST', body: JSON.stringify({ op, params: params ?? {} }) }),
+  createJob: (kind: string, params?: Record<string, unknown>) =>
+    request<JobCreated>('/jobs', { method: 'POST', body: JSON.stringify({ kind, params: params ?? {} }) }),
   getJobProgress: (jobId: string) =>
     request<JobProgress>(`/jobs/${jobId}/progress`),
 }
@@ -70,6 +70,8 @@ export interface GalleryImage {
   image_id: string
   path: string
   thumbnail_path: string | null
+  display_path: string | null
+  full_path: string | null
   decision: 'pick' | 'reject' | null
 }
 
@@ -83,6 +85,9 @@ export interface GalleryImagesData {
 export interface ImageData {
   image_id: string
   path: string
+  thumbnail_path: string | null
+  display_path: string | null
+  full_path: string | null
   metadata: Record<string, unknown>
   decision: 'pick' | 'reject' | null
   face_count: number

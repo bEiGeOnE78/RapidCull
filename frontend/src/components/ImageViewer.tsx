@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../api/client'
 import type { GalleryImage } from '../api/client'
@@ -19,6 +19,7 @@ interface ImageViewerProps {
 export default function ImageViewer({ imageId, images, onClose, onNavigate }: ImageViewerProps) {
   const queryClient = useQueryClient()
   const [zoomMode, setZoomMode] = useState(false)
+  const [fullSrc, setFullSrc] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [metaSidebarOpen, setMetaSidebarOpen] = useState(false)
   const [faceOverlayVisible, setFaceOverlayVisible] = useState(false)
@@ -54,6 +55,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
   const invalidateDecision = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['decision', imageId] })
     queryClient.invalidateQueries({ queryKey: ['image', imageId] })
+    queryClient.invalidateQueries({ queryKey: ['gallery-images'] })
   }, [queryClient, imageId])
 
   const setDecisionMutation = useMutation({
@@ -119,12 +121,14 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
       M: () => setMetaSidebarOpen((prev) => !prev),
       o: () => setFaceOverlayVisible((prev) => !prev),
       O: () => setFaceOverlayVisible((prev) => !prev),
+      u: () => handleUndo(),
+      U: () => handleUndo(),
       ' ': (e: KeyboardEvent) => {
         e.preventDefault()
         setZoomMode((prev) => !prev)
       },
     }),
-    [goPrev, goNext, handlePick, handleReject, onClose],
+    [goPrev, goNext, handlePick, handleReject, handleUndo, onClose],
   )
 
   useKeyboard(keyMap(), true)
@@ -135,7 +139,31 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
     : imageId
 
   // Proxy path construction
-  const imageSrc = `/proxies/${imageId}/display.jpg`
+  const displaySrc = imageData?.display_path ?? imageData?.thumbnail_path ?? null
+  const imageSrc = (zoomMode && fullSrc) ? fullSrc : displaySrc
+  const isVideo = /\.(mov|mp4|avi|mkv|webm|mts|m2ts)$/i.test(filename ?? '')
+
+  useEffect(() => {
+    ;[-1, 1].forEach(offset => {
+      const adj = images[currentIndex + offset]
+      if (adj?.display_path) {
+        const img = new window.Image()
+        img.src = adj.display_path
+      }
+    })
+  }, [currentIndex, images])
+
+  useEffect(() => {
+    setFullSrc(null)
+  }, [imageData?.image_id])
+
+  useEffect(() => {
+    if (zoomMode && imageData?.full_path && !fullSrc) {
+      const img = new window.Image()
+      img.onload = () => setFullSrc(imageData.full_path!)
+      img.src = imageData.full_path
+    }
+  }, [zoomMode, imageData?.full_path, fullSrc, imageData])
 
   // Decision styling
   const containerBorderStyle =
@@ -348,31 +376,50 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
                 </div>
               ) : (
                 <>
-                  <img
-                    ref={imgRef}
-                    src={imageSrc}
-                    alt={filename}
-                    draggable={false}
-                    onLoad={handleImageLoad}
-                    onError={(e) => {
-                      // Fallback to original path if proxy doesn't exist
-                      if (imageData?.path) {
-                        const target = e.currentTarget
-                        if (target.src !== imageData.path) {
-                          target.src = imageData.path
+                  {isVideo && !imageSrc ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 12,
+                        color: '#666',
+                        fontSize: 14,
+                        userSelect: 'none',
+                      }}
+                    >
+                      <span style={{ fontSize: 48 }}>▶</span>
+                      <span>No video preview available</span>
+                      <span style={{ fontSize: 11, color: '#444' }}>{filename}</span>
+                    </div>
+                  ) : (
+                    <img
+                      ref={imgRef}
+                      src={imageSrc ?? undefined}
+                      alt={filename}
+                      draggable={false}
+                      onLoad={handleImageLoad}
+                      onError={(e) => {
+                        // Fallback to original path if proxy doesn't exist
+                        if (imageData?.path) {
+                          const target = e.currentTarget
+                          if (target.src !== imageData.path) {
+                            target.src = imageData.path
+                          }
                         }
-                      }
-                    }}
-                    style={{
-                      display: 'block',
-                      maxWidth: zoomMode ? 'none' : '100%',
-                      maxHeight: zoomMode ? 'none' : 'calc(100vh - 100px)',
-                      objectFit: zoomMode ? 'none' : 'contain',
-                      imageRendering: zoomMode ? 'pixelated' : 'auto',
-                      userSelect: 'none',
-                      pointerEvents: 'none',
-                    }}
-                  />
+                      }}
+                      style={{
+                        display: 'block',
+                        maxWidth: zoomMode ? 'none' : '100%',
+                        maxHeight: zoomMode ? 'none' : 'calc(100vh - 100px)',
+                        objectFit: zoomMode ? 'none' : 'contain',
+                        imageRendering: zoomMode ? 'pixelated' : 'auto',
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  )}
                   <FaceOverlay
                     imageId={imageId}
                     imageNaturalWidth={naturalWidth}

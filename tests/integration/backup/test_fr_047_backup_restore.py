@@ -15,7 +15,7 @@ from rapidcull.schema import create_or_validate_schema
 def _make_db(db_path: Path) -> None:
     create_or_validate_schema(db_path)
     with sqlite3.connect(db_path) as conn:
-        conn.execute("INSERT INTO images VALUES ('img1', '/photos/a.jpg', NULL)")
+        conn.execute("INSERT INTO images (image_id, path, thumbnail_path) VALUES ('img1', '/photos/a.jpg', NULL)")
 
 
 def _make_json(path: Path, data: dict) -> None:  # type: ignore[type-arg]

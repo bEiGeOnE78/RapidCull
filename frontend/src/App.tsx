@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from './api/client'
 import GallerySelector from './components/GallerySelector'
-import ThumbnailGrid from './components/ThumbnailGrid'
+import ThumbnailGrid, { sortImages } from './components/ThumbnailGrid'
 import ImageViewer from './components/ImageViewer'
 import CommandPalette from './components/CommandPalette'
 import JobProgressPanel from './components/JobProgressPanel'
@@ -66,6 +66,7 @@ export default function App() {
 
   const galleries = galleriesQuery.data?.galleries ?? []
   const images = imagesQuery.data?.images ?? []
+  const sortedImages = sortImages(images, sortOrder)
   const totalCount = imagesQuery.data?.total ?? 0
 
   return (
@@ -96,7 +97,7 @@ export default function App() {
       {selectedImageId && (
         <ImageViewer
           imageId={selectedImageId}
-          images={images}
+          images={sortedImages}
           onClose={() => setSelectedImageId(null)}
           onNavigate={(id) => setSelectedImageId(id)}
         />

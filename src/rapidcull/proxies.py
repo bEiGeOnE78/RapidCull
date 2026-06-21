@@ -23,6 +23,30 @@ def _proxy_output_path(source: Path, proxy_dir: Path, library_root: Path) -> Pat
     return proxy_dir / rel.parent / (source.stem + ".proxy.jpg")
 
 
+def _proxy_thumb_path(source: Path, proxy_dir: Path, library_root: Path) -> Path:
+    try:
+        rel = source.relative_to(library_root)
+    except ValueError:
+        return proxy_dir / (source.stem + ".thumb.webp")
+    return proxy_dir / rel.parent / (source.stem + ".thumb.webp")
+
+
+def _proxy_display_path(source: Path, proxy_dir: Path, library_root: Path) -> Path:
+    try:
+        rel = source.relative_to(library_root)
+    except ValueError:
+        return proxy_dir / (source.stem + ".display.webp")
+    return proxy_dir / rel.parent / (source.stem + ".display.webp")
+
+
+def _proxy_full_path(source: Path, proxy_dir: Path, library_root: Path) -> Path:
+    try:
+        rel = source.relative_to(library_root)
+    except ValueError:
+        return proxy_dir / (source.stem + ".full.webp")
+    return proxy_dir / rel.parent / (source.stem + ".full.webp")
+
+
 def build_proxy_generation_plan(paths: list[Path]) -> ProxyGenerationPlan:
     still_image_suffixes = {".jpg", ".jpeg", ".png", ".heic", ".cr2", ".nef", ".arw", ".dng"}
     heic_suffixes = {".heic"}
@@ -89,15 +113,20 @@ def execute_proxy_generation(
             continue
 
         if suffix in still_suffixes:
-            still_out = _proxy_output_path(path, _proxy_dir, _library_root)
-            if still_out.exists():
+            thumb_path = _proxy_thumb_path(path, _proxy_dir, _library_root)
+            display_path = _proxy_display_path(path, _proxy_dir, _library_root)
+            full_path = _proxy_full_path(path, _proxy_dir, _library_root)
+            if thumb_path.exists() and display_path.exists() and full_path.exists():
                 skipped_count += 1
                 continue
+            old_out = _proxy_output_path(path, _proxy_dir, _library_root)
+            if old_out.exists():
+                old_out.unlink()
             increment_tool_counter(tool_summary, tool="imagemagick", counter="processed")
-            still_outcome = imagemagick.generate_still_thumbnail(path, output_path=still_out)
+            still_outcome = imagemagick.generate_still_thumbnail(path, thumb_path=thumb_path, display_path=display_path, full_path=full_path)
             if still_outcome.ok:
                 generated.append(
-                    GeneratedProxy(source_path=resolved_path, proxy_kind="thumbnail_still", thumbnail_path=str(still_out.resolve()))
+                    GeneratedProxy(source_path=resolved_path, proxy_kind="thumbnail_still", thumbnail_path=str(thumb_path), display_path=str(display_path), full_path=str(full_path))
                 )
                 increment_tool_counter(tool_summary, tool="imagemagick", counter="generated")
             else:
@@ -112,15 +141,20 @@ def execute_proxy_generation(
             continue
 
         if suffix in heic_suffixes:
-            heic_out = _proxy_output_path(path, _proxy_dir, _library_root)
-            if heic_out.exists():
+            thumb_path = _proxy_thumb_path(path, _proxy_dir, _library_root)
+            display_path = _proxy_display_path(path, _proxy_dir, _library_root)
+            full_path = _proxy_full_path(path, _proxy_dir, _library_root)
+            if thumb_path.exists() and display_path.exists() and full_path.exists():
                 skipped_count += 1
                 continue
+            old_out = _proxy_output_path(path, _proxy_dir, _library_root)
+            if old_out.exists():
+                old_out.unlink()
             increment_tool_counter(tool_summary, tool="imagemagick", counter="processed")
-            heic_outcome = imagemagick.generate_heic_proxy(path, output_path=heic_out)
+            heic_outcome = imagemagick.generate_heic_proxy(path, thumb_path=thumb_path, display_path=display_path, full_path=full_path)
             if heic_outcome.ok:
                 generated.append(
-                    GeneratedProxy(source_path=resolved_path, proxy_kind="heic_display_proxy", thumbnail_path=str(heic_out.resolve()))
+                    GeneratedProxy(source_path=resolved_path, proxy_kind="heic_display_proxy", thumbnail_path=str(thumb_path), display_path=str(display_path), full_path=str(full_path))
                 )
                 increment_tool_counter(tool_summary, tool="imagemagick", counter="generated")
             else:
@@ -141,16 +175,21 @@ def execute_proxy_generation(
             record_failure(tool_summary, tool="orchestrator", reason=reason)
             continue
 
-        raw_out = _proxy_output_path(path, _proxy_dir, _library_root)
-        if raw_out.exists():
+        thumb_path = _proxy_thumb_path(path, _proxy_dir, _library_root)
+        display_path = _proxy_display_path(path, _proxy_dir, _library_root)
+        full_path = _proxy_full_path(path, _proxy_dir, _library_root)
+        if thumb_path.exists() and display_path.exists() and full_path.exists():
             skipped_count += 1
             continue
+        old_out = _proxy_output_path(path, _proxy_dir, _library_root)
+        if old_out.exists():
+            old_out.unlink()
         increment_tool_counter(tool_summary, tool="rawtherapee", counter="processed")
         raw_outcome = rawtherapee.generate_raw_proxy(
-            path=path, pipeline_available=raw_pipeline_available, output_path=raw_out
+            path=path, pipeline_available=raw_pipeline_available, thumb_path=thumb_path, display_path=display_path, full_path=full_path
         )
         if raw_outcome.ok:
-            generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="raw_jpg", thumbnail_path=str(raw_out.resolve())))
+            generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="raw_jpg", thumbnail_path=str(thumb_path), display_path=str(display_path), full_path=str(full_path)))
             increment_tool_counter(tool_summary, tool="rawtherapee", counter="generated")
         else:
             reason = normalize_rawtherapee_reason(raw_outcome.reason)

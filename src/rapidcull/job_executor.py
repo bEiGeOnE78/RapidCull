@@ -17,7 +17,7 @@ from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.culling import hard_delete, list_decisions, list_trash, move_to_trash
 from rapidcull.faces import cluster_faces, detect_and_store_faces
 from rapidcull.galleries import create_gallery_from_mode, rebuild_galleries_index
-from rapidcull.identity import create_image_record, update_thumbnail_path
+from rapidcull.identity import create_image_record, update_display_path, update_full_path, update_metadata, update_thumbnail_path
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -103,6 +103,8 @@ class JobExecutor:
             for path in extraction.metadata_by_path:
                 create_image_record(self._db_path, path)
                 processed += 1
+            for path, meta in extraction.metadata_by_path.items():
+                update_metadata(self._db_path, path, meta)
             failed_items.extend(extraction.failed_items)
             log(f"Stored {processed} image records")
             log("Generating proxies ...")
@@ -116,6 +118,10 @@ class JobExecutor:
             for gp in proxy_result.generated:
                 if gp.thumbnail_path:
                     update_thumbnail_path(self._db_path, Path(gp.source_path), Path(gp.thumbnail_path))
+                if gp.display_path:
+                    update_display_path(self._db_path, Path(gp.source_path), Path(gp.display_path))
+                if gp.full_path:
+                    update_full_path(self._db_path, Path(gp.source_path), Path(gp.full_path))
             log(f"Proxies: {proxy_result.processed_count} generated")
         log(
             f"Ingest complete: {processed} processed, "
