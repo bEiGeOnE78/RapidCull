@@ -36,6 +36,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
   )
   const scrollRef = useRef<HTMLDivElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const imageQuery = useQuery({
     queryKey: ['image', imageId],
@@ -106,6 +107,16 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
     deleteDecisionMutation.mutate()
   }, [deleteDecisionMutation])
 
+  const imageData = imageQuery.data
+  const filename = imageData
+    ? imageData.path.split('/').pop() ?? imageData.path
+    : imageId
+
+  // Proxy path construction
+  const displaySrc = imageData?.display_path ?? imageData?.thumbnail_path ?? null
+  const imageSrc = (zoomMode && fullSrc) ? fullSrc : displaySrc
+  const isVideo = /\.(mov|mp4|avi|mkv|webm|mts|m2ts)$/i.test(filename ?? '')
+
   const keyMap = useCallback(
     () => ({
       ArrowLeft: () => goPrev(),
@@ -124,24 +135,23 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
       u: () => handleUndo(),
       U: () => handleUndo(),
       ' ': (e: KeyboardEvent) => {
-        e.preventDefault()
-        setZoomMode((prev) => !prev)
+        if (isVideo && videoRef.current) {
+          e.preventDefault()
+          if (videoRef.current.paused) {
+            videoRef.current.play()
+          } else {
+            videoRef.current.pause()
+          }
+        } else {
+          e.preventDefault()
+          setZoomMode((prev) => !prev)
+        }
       },
     }),
-    [goPrev, goNext, handlePick, handleReject, handleUndo, onClose],
+    [goPrev, goNext, handlePick, handleReject, handleUndo, onClose, isVideo],
   )
 
   useKeyboard(keyMap(), true)
-
-  const imageData = imageQuery.data
-  const filename = imageData
-    ? imageData.path.split('/').pop() ?? imageData.path
-    : imageId
-
-  // Proxy path construction
-  const displaySrc = imageData?.display_path ?? imageData?.thumbnail_path ?? null
-  const imageSrc = (zoomMode && fullSrc) ? fullSrc : displaySrc
-  const isVideo = /\.(mov|mp4|avi|mkv|webm|mts|m2ts)$/i.test(filename ?? '')
 
   useEffect(() => {
     ;[-1, 1].forEach(offset => {
@@ -376,23 +386,22 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
                 </div>
               ) : (
                 <>
-                  {isVideo && !imageSrc ? (
-                    <div
+                  {isVideo ? (
+                    <video
+                      key={imageId}
+                      ref={videoRef}
+                      controls
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 12,
-                        color: '#666',
-                        fontSize: 14,
-                        userSelect: 'none',
+                        display: 'block',
+                        maxWidth: '100%',
+                        maxHeight: 'calc(100vh - 100px)',
+                        outline: 'none',
                       }}
+                      poster={displaySrc ?? undefined}
                     >
-                      <span style={{ fontSize: 48 }}>▶</span>
-                      <span>No video preview available</span>
-                      <span style={{ fontSize: 11, color: '#444' }}>{filename}</span>
-                    </div>
+                      <source src={`/api/v1/images/${imageId}/media`} />
+                      No video support in this browser.
+                    </video>
                   ) : (
                     <img
                       ref={imgRef}
@@ -401,7 +410,6 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
                       draggable={false}
                       onLoad={handleImageLoad}
                       onError={(e) => {
-                        // Fallback to original path if proxy doesn't exist
                         if (imageData?.path) {
                           const target = e.currentTarget
                           if (target.src !== imageData.path) {
@@ -514,7 +522,7 @@ export default function ImageViewer({ imageId, images, onClose, onNavigate }: Im
         <span>
           {currentIndex + 1} / {images.length}
         </span>
-        <span>{zoomMode ? 'Zoom mode' : 'Fit mode'} — Space to toggle</span>
+        <span>{isVideo ? 'Video — Space to play/pause' : `${zoomMode ? 'Zoom mode' : 'Fit mode'} — Space to toggle`}</span>
         <span>P: pick · X: reject · ←→: navigate · M: metadata · O: faces · Q/Esc: close</span>
       </div>
     </div>

@@ -6,11 +6,13 @@ All responses use the standard {ok, data|error} envelope from api_envelope.py.
 from __future__ import annotations
 
 import json
+import mimetypes
 import sqlite3
 from pathlib import Path
 from typing import Any, Literal
 
 from fastapi import APIRouter
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from rapidcull.api_envelope import ApiError, ok
@@ -171,3 +173,23 @@ def get_image_faces(image_id: str) -> dict[str, Any]:
         for row in rows
     ]
     return ok({"image_id": image_id, "faces": faces})
+
+
+@router.get("/api/v1/images/{image_id}/media")
+def get_image_media(image_id: str) -> FileResponse:
+    """Stream the original media file for the given image (used for video playback)."""
+    db_path = _get_db_path()
+    _, path = _require_image(db_path, image_id)
+    file_path = Path(path)
+    if not file_path.exists():
+        raise ApiError(
+            code="MEDIA_NOT_FOUND",
+            message="Media file not found on disk.",
+            http_status=404,
+        )
+    media_type, _ = mimetypes.guess_type(str(file_path))
+    return FileResponse(
+        path=file_path,
+        media_type=media_type or "application/octet-stream",
+        filename=file_path.name,
+    )
