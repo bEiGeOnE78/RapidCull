@@ -17,7 +17,7 @@ from rapidcull.consistency import check_consistency, repair_consistency
 from rapidcull.culling import hard_delete, list_decisions, list_trash, move_to_trash
 from rapidcull.faces import cluster_faces, detect_and_store_faces
 from rapidcull.galleries import create_gallery_from_mode, rebuild_galleries_index
-from rapidcull.identity import create_image_record, update_display_path, update_full_path, update_metadata, update_thumbnail_path
+from rapidcull.identity import create_image_record, get_paths_with_missing_proxies, update_display_path, update_full_path, update_metadata, update_thumbnail_path
 from rapidcull.ingest import (
     discover_supported_media,
     extract_metadata_for_ingest,
@@ -123,6 +123,28 @@ class JobExecutor:
                 if gp.full_path:
                     update_full_path(self._db_path, Path(gp.source_path), Path(gp.full_path))
             log(f"Proxies: {proxy_result.processed_count} generated")
+        # Fill proxies for already-ingested files with null proxy paths
+        filled_count = 0
+        if self._db_path is not None and self._db_path.exists():
+            missing_proxy_paths = get_paths_with_missing_proxies(self._db_path)
+            if missing_proxy_paths:
+                log(f"Filling proxies for {len(missing_proxy_paths)} files with missing proxy paths ...")
+                fill_result = execute_proxy_generation(
+                    missing_proxy_paths,
+                    raw_pipeline_available=True,
+                    proxy_dir=self._proxy_dir,
+                    library_root=self._library_root if self._library_root is not None else self._proxy_dir,
+                )
+                failed_items.extend(fill_result.failed)
+                for gp in fill_result.generated:
+                    if gp.thumbnail_path:
+                        update_thumbnail_path(self._db_path, Path(gp.source_path), Path(gp.thumbnail_path))
+                    if gp.display_path:
+                        update_display_path(self._db_path, Path(gp.source_path), Path(gp.display_path))
+                    if gp.full_path:
+                        update_full_path(self._db_path, Path(gp.source_path), Path(gp.full_path))
+                filled_count = fill_result.processed_count
+                log(f"Fill pass: {filled_count} proxies generated")
         log(
             f"Ingest complete: {processed} processed, "
             f"{len(plan.skipped)} skipped, {len(failed_items)} failed"
@@ -131,6 +153,7 @@ class JobExecutor:
             "processed_count": processed,
             "skipped_count": len(plan.skipped),
             "failed_count": len(failed_items),
+            "filled_proxy_count": filled_count,
         }
 
     def _detect_faces(self, log: ProgressLog) -> dict[str, Any]:

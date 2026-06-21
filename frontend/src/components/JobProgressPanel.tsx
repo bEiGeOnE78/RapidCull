@@ -51,7 +51,7 @@ export default function JobProgressPanel({ jobId, label, onClose }: Props) {
         boxShadow: '-4px -4px 24px rgba(0,0,0,0.5)',
         display: 'flex',
         flexDirection: 'column',
-        zIndex: 50,
+        zIndex: 200,
         fontFamily: 'inherit',
       }}
     >

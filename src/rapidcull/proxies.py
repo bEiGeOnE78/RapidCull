@@ -4,6 +4,7 @@ import time
 from pathlib import Path
 
 from .adapters import ImageMagickAdapter, RawTherapeeAdapter
+from .adapters.ffmpeg import FFmpegAdapter
 from .models import (
     FailedIngestItem,
     GeneratedProxy,
@@ -80,12 +81,14 @@ def execute_proxy_generation(
     raw_pipeline_available: bool,
     imagemagick_adapter: ImageMagickAdapter | None = None,
     rawtherapee_adapter: RawTherapeeAdapter | None = None,
+    ffmpeg_adapter: FFmpegAdapter | None = None,
     proxy_dir: Path | None = None,
     library_root: Path | None = None,
 ) -> ProxyGenerationResult:
     start = time.perf_counter()
     imagemagick = imagemagick_adapter or ImageMagickAdapter()
     rawtherapee = rawtherapee_adapter or RawTherapeeAdapter()
+    ffmpeg = ffmpeg_adapter or FFmpegAdapter()
 
     _proxy_dir = proxy_dir if proxy_dir is not None else (paths[0].parent if paths else Path("."))
     _library_root = library_root if library_root is not None else _proxy_dir
@@ -109,7 +112,24 @@ def execute_proxy_generation(
         resolved_path = str(path.resolve())
 
         if suffix in video_suffixes:
-            generated.append(GeneratedProxy(source_path=resolved_path, proxy_kind="video_mp4_h264"))
+            thumb_path = _proxy_thumb_path(path, _proxy_dir, _library_root)
+            display_path = _proxy_display_path(path, _proxy_dir, _library_root)
+            increment_tool_counter(tool_summary, tool="orchestrator", counter="processed")
+            video_outcome = ffmpeg.generate_video_proxies(path, _proxy_dir, thumb_path=thumb_path, display_path=display_path)
+            if video_outcome.ok:
+                generated.append(
+                    GeneratedProxy(
+                        source_path=resolved_path,
+                        proxy_kind="video_mp4_h264",
+                        thumbnail_path=str(thumb_path) if video_outcome.thumbnail_path is not None else None,
+                        display_path=str(display_path) if video_outcome.display_path is not None else None,
+                    )
+                )
+                increment_tool_counter(tool_summary, tool="orchestrator", counter="generated")
+            else:
+                reason = video_outcome.reason or "ffmpeg_video_thumbnail_failed"
+                failed.append(FailedIngestItem(path=resolved_path, reason=reason))
+                record_failure(tool_summary, tool="orchestrator", reason=reason)
             continue
 
         if suffix in still_suffixes:

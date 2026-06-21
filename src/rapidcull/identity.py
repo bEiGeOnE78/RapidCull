@@ -84,6 +84,15 @@ def update_metadata(db_path: Path, file_path: Path, metadata: dict[str, Any]) ->
         connection.commit()
 
 
+def get_paths_with_missing_proxies(db_path: Path) -> list[Path]:
+    with sqlite3.connect(db_path) as connection:
+        cursor = connection.cursor()
+        cursor.execute(
+            "SELECT path FROM images WHERE thumbnail_path IS NULL OR display_path IS NULL"
+        )
+        return [Path(row[0]) for row in cursor.fetchall()]
+
+
 def _generate_image_id(path: str) -> str:
     stable_hash = hashlib.sha1(path.encode("utf-8")).hexdigest()[:16]
     namespace = uuid.UUID("12345678-1234-5678-1234-567812345678")

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
 
 from rapidcull.adapters import ImageMagickAdapter, RawTherapeeAdapter, RawTherapeeProxyOutcome
+from rapidcull.adapters.ffmpeg import FFmpegAdapter, FFmpegProxyOutcome
 from rapidcull.adapters.imagemagick import ImageMagickProxyOutcome, detect_heif_support
 from rapidcull.models import (
     FailedIngestItem,
@@ -765,18 +768,32 @@ def test_fr_007a_imagemagick_adapter_maps_heic_timeout_to_detail_reason(
 @pytest.mark.fr
 @pytest.mark.integration
 def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path) -> None:
+    """FR-009: video proxy generation routes through FFmpegAdapter and records thumbnail/display paths."""
+
+    class SuccessfulVideoAdapter(FFmpegAdapter):
+        def generate_video_proxies(self, source_path: Path, proxy_dir: Path) -> FFmpegProxyOutcome:
+            thumb = proxy_dir / (source_path.stem + ".thumb.webp")
+            display = proxy_dir / (source_path.stem + ".display.webp")
+            # Write placeholder files so path assertions are realistic
+            proxy_dir.mkdir(parents=True, exist_ok=True)
+            thumb.write_text("thumb")
+            display.write_text("display")
+            return FFmpegProxyOutcome(ok=True, reason=None, thumbnail_path=thumb, display_path=display)
+
     video = tmp_path / "clip.mov"
     video.write_text("video-data")
 
     result = execute_proxy_generation(
         [video],
         raw_pipeline_available=True,
+        ffmpeg_adapter=SuccessfulVideoAdapter(),
     )
 
     assert len(result.generated) == 1
     assert result.generated[0].source_path == str(video.resolve())
     assert result.generated[0].proxy_kind == "video_mp4_h264"
-    assert result.generated[0].thumbnail_path is None  # video proxies don't have thumbnail_path
+    assert result.generated[0].thumbnail_path is not None
+    assert result.generated[0].display_path is not None
     assert result.failed == []
     assert result.processed_count == 1
     assert result.skipped_count == 0
@@ -796,12 +813,45 @@ def test_fr_009_generates_video_proxy_for_supported_video_inputs(tmp_path: Path)
             "reasons": {},
         },
         "orchestrator": {
-            "processed": 0,
-            "generated": 0,
+            "processed": 1,
+            "generated": 1,
             "failed": 0,
             "reasons": {},
         },
     }
+
+
+@pytest.mark.fr
+@pytest.mark.integration
+@pytest.mark.skipif(
+    shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None,
+    reason="ffmpeg/ffprobe not available in current environment",
+)
+def test_fr_009_real_ffmpeg_extracts_thumbnail_from_video(tmp_path: Path) -> None:
+    """FR-009: real FFmpeg integration — extracts a thumbnail WebP from a generated test video."""
+    test_video = tmp_path / "test_clip.mp4"
+    # Generate a minimal 3-second test video using lavfi testsrc
+    gen_cmd = [
+        "ffmpeg",
+        "-f", "lavfi",
+        "-i", "testsrc=duration=3:size=64x64:rate=1",
+        "-c:v", "libx264",
+        "-y",
+        str(test_video),
+    ]
+    gen_result = subprocess.run(gen_cmd, check=False, capture_output=True)
+    if gen_result.returncode != 0:
+        pytest.skip("Could not generate test video with ffmpeg lavfi testsrc")
+
+    proxy_dir = tmp_path / "proxies"
+    adapter = FFmpegAdapter()
+    outcome = adapter.generate_video_proxies(test_video, proxy_dir)
+
+    assert outcome.ok, f"FFmpeg proxy generation failed: {outcome.reason}"
+    assert outcome.thumbnail_path is not None
+    assert outcome.display_path is not None
+    assert outcome.thumbnail_path.exists(), "thumbnail WebP was not created on disk"
+    assert outcome.display_path.exists(), "display WebP was not created on disk"
 
 
 @pytest.mark.fr

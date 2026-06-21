@@ -1,3 +1,4 @@
+from .ffmpeg import FFmpegAdapter, FFmpegProxyOutcome
 from .imagemagick import ImageMagickAdapter, ImageMagickProxyOutcome
 from .insightface_adapter import (
     DetectedFace,
@@ -11,6 +12,8 @@ from .rawtherapee import RawTherapeeAdapter, RawTherapeeProxyOutcome
 
 __all__ = [
     "DetectedFace",
+    "FFmpegAdapter",
+    "FFmpegProxyOutcome",
     "FaceDetectionFailure",
     "FaceDetectionOutcome",
     "FaceDetectionSuccess",
