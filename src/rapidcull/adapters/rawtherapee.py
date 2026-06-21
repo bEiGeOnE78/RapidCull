@@ -19,9 +19,25 @@ class RawTherapeeAdapter:
 
     def _convert_webp(self, source: Path, output: Path, size: str | None, quality: int) -> bool:
         if size is not None:
-            command = ["magick", str(source.resolve()), "-resize", size, "-quality", str(quality), str(output.resolve())]
+            command = [
+                "magick",
+                str(source.resolve()),
+                "-auto-orient",
+                "-resize",
+                size,
+                "-quality",
+                str(quality),
+                str(output.resolve()),
+            ]
         else:
-            command = ["magick", str(source.resolve()), "-quality", str(quality), str(output.resolve())]
+            command = [
+                "magick",
+                str(source.resolve()),
+                "-auto-orient",
+                "-quality",
+                str(quality),
+                str(output.resolve()),
+            ]
         try:
             return self._run_command(command) == 0
         except OSError:

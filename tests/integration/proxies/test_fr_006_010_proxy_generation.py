@@ -711,6 +711,7 @@ def test_fr_006a_imagemagick_adapter_invokes_subprocess_for_still_thumbnail(
         [
             "magick",
             str(still.resolve()),
+            "-auto-orient",
             "-resize",
             "400x400>",
             "-quality",
@@ -747,6 +748,7 @@ def test_fr_007a_imagemagick_adapter_invokes_subprocess_for_heic_proxy(
         [
             "magick",
             str(heic.resolve()),
+            "-auto-orient",
             "-resize",
             "400x400>",
             "-quality",

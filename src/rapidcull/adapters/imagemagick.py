@@ -25,12 +25,28 @@ class ImageMagickAdapter:
 
     def _run_resize(self, input_path: Path, output_path: Path, size: str, quality: int) -> bool:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        command = ["magick", str(input_path.resolve()), "-resize", size, "-quality", str(quality), str(output_path.resolve())]
+        command = [
+            "magick",
+            str(input_path.resolve()),
+            "-auto-orient",
+            "-resize",
+            size,
+            "-quality",
+            str(quality),
+            str(output_path.resolve()),
+        ]
         return self._run_command(command) == 0
 
     def _run_convert(self, input_path: Path, output_path: Path, quality: int) -> bool:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        command = ["magick", str(input_path.resolve()), "-quality", str(quality), str(output_path.resolve())]
+        command = [
+            "magick",
+            str(input_path.resolve()),
+            "-auto-orient",
+            "-quality",
+            str(quality),
+            str(output_path.resolve()),
+        ]
         return self._run_command(command) == 0
 
     def generate_still_thumbnail(
